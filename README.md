@@ -13,6 +13,9 @@ Write a shell in C:
 
 https://brennan.io/2015/01/16/write-a-shell-in-c/
 
+Write a shell in 10 minutes:
+https://www.youtube.com/watch?v=k6TTj4C0LF0&t=189s
+
 FDs, pipe, fork, dups...:
 https://www.youtube.com/watch?v=EqndHT606Tw
 https://www.youtube.com/watch?v=uHH7nHkgZ4w
