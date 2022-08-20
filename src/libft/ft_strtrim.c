@@ -25,7 +25,7 @@
 static size_t	trimstart(char const *set, char const	*trim)
 {
 	size_t	start;
-	int		found;
+	int	found;
 
 	start = 0;
 	found = 0;
@@ -50,11 +50,9 @@ static size_t	trimend(char const *set, char const	*trim)
 {
 	size_t	length;
 	size_t	end;
-	int		found;
 
 	length = ft_strlen(trim);
 	end = 0;
-	found = 0;
 	while (end < length)
 	{
 		if (ft_strchr(set, trim[length - end - 1]) == 0)

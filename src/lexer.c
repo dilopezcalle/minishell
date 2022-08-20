@@ -21,6 +21,7 @@ char	**lexer(char *command_line)
 	command_line = check_quotation_marks_and_symbols(command_line);
 	if (!command_line)
 		return (0); // Provisional
+	printf("%s\n", command_line);
 	separate_commands = ft_split(command_line, ' ');
 	i = 0;
 	while (separate_commands[i])

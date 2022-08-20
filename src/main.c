@@ -24,7 +24,7 @@ int	main(void)
 {
 	char	*str;
 
-	str = ft_substr("ls -la | grep me < file1", 0, 24);
+	str = ft_substr("ls -la | grep 'me<file1'", 0, 24);
 	parser(str);
 	return (0);
 }
