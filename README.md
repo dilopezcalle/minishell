@@ -24,3 +24,4 @@ https://www.youtube.com/watch?v=xVSPv-9x3gk
 Github project summary:
 
 https://github.com/Swoorup/mysh
+https://www.big-meter.com/opensource/en/60d00460ec41d21e72706e3b.html#iii---le-parsing
