@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:14:32 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/08/19 18:38:26 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/08/23 11:44:09 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(void)
 {
 	char	*str;
 
-	str = ft_substr("ls -la | grep me < file1", 0, 24);
+	str = ft_substr("  ls -l -a < file1 |  grep me  ", 0, 40);
 	parser(str);
 	return (0);
 }

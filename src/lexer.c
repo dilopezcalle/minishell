@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 09:34:54 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/08/19 19:16:26 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/08/23 11:47:35 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,30 @@
 // Separar en "argumentos" los comandos con sus argumentos, el input y el output
 char	**lexer(char *command_line)
 {
-	char	**separate_commands;
+	char	**separate_line;
+	int		start;
+	int		end;
 	int		i;
 
 	command_line = check_quotation_marks_and_symbols(command_line);
 	if (!command_line)
-		return (0); // Provisional
-	separate_commands = ft_split(command_line, ' ');
+		return (0);
+	separate_line = ft_split(command_line, ' ');
 	i = 0;
-	while (separate_commands[i])
+	start = 0;
+	while (separate_line[i])
 	{
-		printf("%s\n", separate_commands[i]);
+		end = check_end_command(separate_line, i);
+		if (end != -1 && start <= end)
+		{
+			printf("\nstart: %d\nend: %d\n\n", start, end);
+			start = i;
+		}
+		if (end != -1 && (start > end || \
+			(separate_line[i][0] != '>' && separate_line[i][0] != '<')))
+			start++;
 		i++;
 	}
-	free(command_line);
 	return (0);
 }
 
@@ -45,8 +55,7 @@ static char	*check_quotation_marks_and_symbols(char *command_line)
 			|| command_line[i] == '\''))
 		{
 			symbol = command_line[i];
-			i++;
-			while (command_line[i] != symbol)
+			while (command_line[i] && command_line[++i] != symbol)
 				i++;
 		}
 		if (command_line[i] == '|' || command_line[i] == '>' \
@@ -91,4 +100,20 @@ static char	*put_spaces_around_char(char *command_line, int index, char symbol)
 	free(aux2);
 	free(command_line);
 	return (new_command_line);
+}
+
+// Comprueba si hay un >, < ó | que represente el final del comando
+static int	check_end_command(char **separate_line, int i)
+{
+	int	end;
+
+	end = -1;
+	if (separate_line[i][0] == '|' || separate_line[i][0] == '>' \
+		|| separate_line[i][0] == '<')
+		end = i - 1;
+	else if (!separate_line[i + 1] || (i > 0 \
+			&& (separate_line[i - 1][0] == '>' \
+			|| separate_line[i - 1][0] == '<')))
+		end = i;
+	return (end);
 }
