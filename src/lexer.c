@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 09:34:54 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/08/23 11:47:35 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/08/24 14:20:39 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,30 +16,37 @@
 char	**lexer(char *command_line)
 {
 	char	**separate_line;
+	char	**command_args;
 	int		start;
-	int		end;
 	int		i;
 
+	i = 1;
+	start = -1;
 	command_line = check_quotation_marks_and_symbols(command_line);
-	if (!command_line)
-		return (0);
 	separate_line = ft_split(command_line, ' ');
-	i = 0;
+	while (separate_line[++start])
+		if (separate_line[start][0] == '|' || separate_line[start][0] == '>' \
+			|| separate_line[start][0] == '<')
+			i++;
+	command_args = (char **)ft_calloc((i + 5), sizeof(char *));
+	if (!command_line || !command_args)
+		return (0);
+	i = -1;
 	start = 0;
-	while (separate_line[i])
+	while (separate_line[++i])
 	{
-		end = check_end_command(separate_line, i);
-		if (end != -1 && start <= end)
-		{
-			printf("\nstart: %d\nend: %d\n\n", start, end);
-			start = i;
-		}
-		if (end != -1 && (start > end || \
-			(separate_line[i][0] != '>' && separate_line[i][0] != '<')))
-			start++;
+		start = check_end_command(&command_args, separate_line, i, start);
+		if (start == -1)
+			return (0);
+	}
+
+	i = 0;
+	while (command_args[i])
+	{
+		printf("%s\n", command_args[i]);
 		i++;
 	}
-	return (0);
+	return (command_args);
 }
 
 // Verifica que los simbolos <, > y \ no estén entre comillas
@@ -103,7 +110,83 @@ static char	*put_spaces_around_char(char *command_line, int index, char symbol)
 }
 
 // Comprueba si hay un >, < ó | que represente el final del comando
-static int	check_end_command(char **separate_line, int i)
+static int	check_end_command(char ***command_args, char **separate_line, \
+								int i, int start)
+{
+	int	end;
+
+	end = -1;
+	if (separate_line[i][0] == '|' || separate_line[i][0] == '>' || separate_line[i][0] == '<')
+		end = i - 1;
+	else if (!separate_line[i + 1])
+		end = i;
+	if (i > 0 && (separate_line[i - 1][0] == '>' || separate_line[i - 1][0] == '<'))
+		end = i;
+	if (end != -1)
+	{
+		//printf("\nstart: %d\nend: %d\n", start, end);
+		if (append_command_array(command_args, separate_line, start, end))
+			return (-1);
+		if (separate_line[i][0] == '>' || separate_line[i][0] == '<')
+		{
+			if (separate_line[i - 1][0] == '>' || separate_line[i - 1][0] == '<')
+				start = i - 1;
+			else
+				start = i;
+		}
+		else
+			start = i + 1;		
+	}
+	return (start);
+}
+
+// Agrega al final de el array command_args los strings 
+// de los indices start y end de separate_line
+static int	append_command_array(char ***command_args, char **separate_line, \
+									int start, int end)
+{
+	char	**commands;
+	char	*aux;
+	int		i;
+
+	commands = *command_args;
+	i = 0;
+	while (commands[i])
+		i++;
+	if ((start > end && (separate_line[start][0] == '>' || separate_line[start][0] == '<')) \
+		|| end - 1 == start && (separate_line[end][0] == '>' || separate_line[end][0] == '<'))
+		return (0);
+	commands[i] = ft_substr(separate_line[start], 0, ft_strlen(separate_line[start]));
+	start++;
+	while (start <= end)
+	{
+		if (separate_line[start - 1][0] != '>' && separate_line[start - 1][0] != '<')
+			aux = ft_strjoin(commands[i], " ");
+		else
+			aux = ft_strjoin(commands[i], "");
+		if (!aux)
+			return (1);
+		free(commands[i]);
+		commands[i] = ft_strjoin(aux, separate_line[start]);
+		if (!commands[i])
+			return (1);
+		free(aux);
+		start++;
+	}
+	if (!commands[i])
+		return (1);
+	return (0);
+}
+
+
+
+
+/*
+
+Funciona sin >>
+
+static int	check_end_command(char ***command_args, char **separate_line, \
+								int i, int start)
 {
 	int	end;
 
@@ -111,9 +194,23 @@ static int	check_end_command(char **separate_line, int i)
 	if (separate_line[i][0] == '|' || separate_line[i][0] == '>' \
 		|| separate_line[i][0] == '<')
 		end = i - 1;
-	else if (!separate_line[i + 1] || (i > 0 \
-			&& (separate_line[i - 1][0] == '>' \
-			|| separate_line[i - 1][0] == '<')))
+	else if (!separate_line[i + 1])
 		end = i;
-	return (end);
+	if (i > 0 && (separate_line[i - 1][0] == '>' \
+		|| separate_line[i - 1][0] == '<'))
+		end = i;
+	if (end != -1 && start <= end)
+	{
+		if (append_command_array(command_args, separate_line, start, end))
+			return (-1);
+		if (separate_line[i][0] == '>' || separate_line[i][0] == '<')
+			start = i;
+		else
+			start = i + 1;
+	}
+	else if (end != -1 && start > end \
+			&& separate_line[i][0] != '>' && separate_line[i][0] != '<')
+		start++;
+	return (start);
 }
+*/
