@@ -39,7 +39,6 @@ char	**lexer(char *command_line)
 		if (start == -1)
 			return (0);
 	}
-
 	i = 0;
 	while (command_args[i])
 	{
@@ -94,9 +93,11 @@ static char	*put_spaces_around_char(char *command_line, int index, char symbol)
 	i = -1;
 	while (aux[++i])
 		aux2[i] = aux[i];
-	aux2[i++] = ' ';
+	if (command_line[index - 1] != symbol)
+		aux2[i++] = ' ';
 	aux2[i++] = symbol;
-	aux2[i++] = ' ';
+	if (command_line[index + 1] != symbol)
+		aux2[i++] = ' ';
 	aux2[i] = '\0';
 	free(aux);
 	aux = ft_substr(command_line, index + 1, ft_strlen(command_line));
@@ -116,6 +117,9 @@ static int	check_end_command(char ***command_args, char **separate_line, \
 	int	end;
 
 	end = -1;
+	if (i > 0 && separate_line[i - 1][0] == '|')
+		if (append_command_array(command_args, separate_line, start - 1, start - 1))
+			return (-1);
 	if (separate_line[i][0] == '|' || separate_line[i][0] == '>' || separate_line[i][0] == '<')
 		end = i - 1;
 	else if (!separate_line[i + 1])
@@ -124,7 +128,6 @@ static int	check_end_command(char ***command_args, char **separate_line, \
 		end = i;
 	if (end != -1)
 	{
-		//printf("\nstart: %d\nend: %d\n", start, end);
 		if (append_command_array(command_args, separate_line, start, end))
 			return (-1);
 		if (separate_line[i][0] == '>' || separate_line[i][0] == '<')
@@ -177,40 +180,3 @@ static int	append_command_array(char ***command_args, char **separate_line, \
 		return (1);
 	return (0);
 }
-
-
-
-
-/*
-
-Funciona sin >>
-
-static int	check_end_command(char ***command_args, char **separate_line, \
-								int i, int start)
-{
-	int	end;
-
-	end = -1;
-	if (separate_line[i][0] == '|' || separate_line[i][0] == '>' \
-		|| separate_line[i][0] == '<')
-		end = i - 1;
-	else if (!separate_line[i + 1])
-		end = i;
-	if (i > 0 && (separate_line[i - 1][0] == '>' \
-		|| separate_line[i - 1][0] == '<'))
-		end = i;
-	if (end != -1 && start <= end)
-	{
-		if (append_command_array(command_args, separate_line, start, end))
-			return (-1);
-		if (separate_line[i][0] == '>' || separate_line[i][0] == '<')
-			start = i;
-		else
-			start = i + 1;
-	}
-	else if (end != -1 && start > end \
-			&& separate_line[i][0] != '>' && separate_line[i][0] != '<')
-		start++;
-	return (start);
-}
-*/

@@ -24,7 +24,7 @@ int	main(void)
 {
 	char	*str;
 
-	str = ft_substr("  ls -l -a  | > file  grep me | ls -a << file1 ", 0, 70);
+	str = ft_substr("  ls -l -a  | >file  grep me | ls -a << file1 ", 0, 70);
 	parser(str);
 	return (0);
 }
