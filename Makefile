@@ -6,7 +6,7 @@
 #    By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 15:17:17 by dilopez-          #+#    #+#              #
-#    Updated: 2022/08/24 08:40:56 by dilopez-         ###   ########.fr        #
+#    Updated: 2022/08/27 07:29:43 by dilopez-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,15 +36,15 @@ RESET			=	"\\x1b[37m"
 
 # =================================== RULES ===================================
 
-$(NAME) : print_init $(PREFIXED)
+$(NAME):	print_init $(PREFIXED)
 	@echo "\n$(YELLOW)----------- Compiling libft's files ----------$(RESET)\n"
 	@make -C ./$(SRC_DIR)/libft
 	@cp ./$(SRC_DIR)/libft/$(LIBFT) .
 	@$(CC) $(CFLAGS) $(PREFIXED) $(LIBFT) -o $(NAME)
 	@echo "\n${GREEN}---------- Mandatory part compiled! ----------${RESET}\n"
 
-$(OBJ_DIR)/%.o : %.c
-	@mkdir -p $(OBJ_DIR)/src/libft
+$(OBJ_DIR)/%.o:	%.c
+	@mkdir -p $(OBJ_DIR)/src
 	@echo "$(CC) $(CFLAGS) : \t $<"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
@@ -53,17 +53,17 @@ $(OBJ_DIR)/%.o : %.c
 print_init:
 	@echo "\n$(YELLOW)---------- Compiling project's files ---------$(RESET)\n"
 
-all: $(NAME)
+all:	$(NAME)
 
 clean:
 	@make -C ./src/libft clean
 	@$(RM) $(OBJ) $(OBJ_DIR)
 	@echo "\n${GREEN}------------------ Cleaned! ------------------${RESET}\n"
 
-fclean: clean
+fclean:	clean
 	@make -C ./src/libft fclean
 	@$(RM) $(NAME) $(LIBFT) minishell.dSYM
 
-re: fclean all
+re:		fclean all
 
 .PHONY: all clean fclean re bonus
