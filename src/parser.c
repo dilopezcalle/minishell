@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:16:19 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/08/31 10:37:03 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/08/31 10:39:32 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,22 +107,3 @@ static int	create_and_append_simple_command(t_simple_command **command_info, cha
 	*/
 	return (0);
 }
-
-/*
-
-	i = 0;
-	while ((commands->simple_commands)[i])
-	{
-		printf("\n\n");
-		printf("out: %s (%d)\nin: %s (%d)\n", ((commands->simple_commands)[i])->outfile, ((commands->simple_commands)[i])->redirection_outfile, ((commands->simple_commands)[i])->infile, ((commands->simple_commands)[i])->redirection_infile);
-		num_command = 0;
-		if (((commands->simple_commands)[i])->arguments)
-			while ((((commands->simple_commands)[i])->arguments)[num_command])
-			{
-				printf("arg: %s\n", (((commands->simple_commands)[i])->arguments)[num_command]);
-				num_command++;
-			}
-		i++;
-	}
-
-*/

@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:14:32 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/08/31 10:36:45 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/03 12:24:08 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int	main(void)
 {
 	char	*str;
 
-	str = ft_substr("cat -e < file1 | ls > file2 >> file3", 0, 200);
+	str = ft_substr("cat -e >> file1 >> hola | ls > file2 >> file3 |", 0, 200);
 	// ls > file cat
 	parser(str);
 	return (0);
