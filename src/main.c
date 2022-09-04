@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:14:32 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/03 12:24:08 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/04 09:40:32 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,15 +17,14 @@
 #include "libft.h"
 
 t_command	*parser(char *command_line);
-char	*ft_substr(char const *s, unsigned int start, size_t len);
-size_t	ft_strlen(const char *s);
+char		*ft_substr(char const *s, unsigned int start, size_t len);
+size_t		ft_strlen(const char *s);
 
 int	main(void)
 {
 	char	*str;
 
 	str = ft_substr("cat -e >> file1 >> hola | ls > file2 >> file3 |", 0, 200);
-	// ls > file cat
 	parser(str);
 	return (0);
 }

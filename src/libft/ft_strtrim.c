@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/01 11:40:37 by almirand          #+#    #+#             */
-/*   Updated: 2022/04/10 16:50:51 by almirand         ###   ########.fr       */
+/*   Updated: 2022/09/04 09:32:30 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 static size_t	trimstart(char const *set, char const	*trim)
 {
 	size_t	start;
-	int	found;
+	int		found;
 
 	start = 0;
 	found = 0;

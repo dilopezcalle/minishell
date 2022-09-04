@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 09:34:54 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/03 12:08:36 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/04 10:17:03 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@ char	**lexer(char *command_line)
 	size = 1;
 	i = -1;
 	separate_line = ft_split(command_line, ' ');
-	/*
-	if (ft_check_syntax_errors(separate_line))
-		return (0);
-	*/
+	// if (ft_check_syntax_errors(separate_line))
+	// 	return (0);
 	while (separate_line[++i])
 		if (separate_line[i][0] == '|' || separate_line[i][0] == '>' \
 			|| separate_line[i][0] == '<')
@@ -35,7 +33,7 @@ char	**lexer(char *command_line)
 	if (!command_line || !command_args)
 		return (0);
 	i = -1;
-	if (check_end_commands(&command_args, separate_line, i) == -1)
+	if (mix_args_command(&command_args, separate_line, i) == -1)
 		return (0);
 	while (separate_line[++i])
 		free(separate_line[i]);
@@ -43,9 +41,8 @@ char	**lexer(char *command_line)
 	return (command_args);
 }
 
-// Comprueba si hay un >, < ó | que represente el final 
-// de cada comando / archivo
-static int	check_end_commands(char ***command_args, char **separate, int i)	
+//Comprueba si hay un >, < ó | que represente el final de cada comando / archivo
+static int	mix_args_command(char ***command_args, char **separate, int i)
 {
 	int	end;
 	int	start;
@@ -53,30 +50,41 @@ static int	check_end_commands(char ***command_args, char **separate, int i)
 	start = 0;
 	while (separate[++i])
 	{
-		end = -1;
-		if (separate[i][0] == '|' || separate[i][0] == '>' \
-			|| separate[i][0] == '<')
-			end = i - 1;
-		if (i > 0 && (separate[i - 1][0] == '|' || separate[i - 1][0] == '>' || separate[i - 1][0] == '<'))
-		{
-			start = i;
-			if (separate[i - 1][0] == '>' || separate[i - 1][0] == '<')
-				end = i;
-		}
-		if (!separate[i + 1])
-			end = i;
-		if (end != -1 && separate[end][0] == '|')
-			end--;
+		end = check_end_command(separate, i, &start);
 		if (end != -1 && start <= end)
 		{
 			if (append_command_array(command_args, separate, start, end))
 				return (-1);
 			start = i + 1;
 		}
-		if ((separate[i][0] == '|' || separate[i][0] == '>' || separate[i][0] == '<') && append_command_array(command_args, separate, i, i))
+		if ((separate[i][0] == '|' || separate[i][0] == '>' \
+			|| separate[i][0] == '<') \
+			&& append_command_array(command_args, separate, i, i))
 			return (-1);
 	}
 	return (0);
+}
+
+static int	check_end_command(char **separate, int i, int *start)
+{
+	int	end;
+
+	end = -1;
+	if (separate[i][0] == '|' || separate[i][0] == '>' \
+		|| separate[i][0] == '<')
+		end = i - 1;
+	if (i > 0 && (separate[i - 1][0] == '|' || separate[i - 1][0] == '>' \
+		|| separate[i - 1][0] == '<'))
+	{
+		*start = i;
+		if (separate[i - 1][0] == '>' || separate[i - 1][0] == '<')
+			end = i;
+	}
+	if (!separate[i + 1])
+		end = i;
+	if (end != -1 && separate[end][0] == '|')
+		end--;
+	return (end);
 }
 
 // Agrega al final de el array command_args los strings 

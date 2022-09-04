@@ -6,7 +6,7 @@
 #    By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 15:17:17 by dilopez-          #+#    #+#              #
-#    Updated: 2022/08/27 07:29:43 by dilopez-         ###   ########.fr        #
+#    Updated: 2022/09/04 09:05:42 by dilopez-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ INC_DIR			=	includes
 
 RM				=	rm -rf
 CC				=	gcc
-CFLAGS			=	-I $(INC_DIR) -g #-Wall -Werror -Wextra
+CFLAGS			=	-I $(INC_DIR) -g -Wall -Werror -Wextra
 
 SRCS			=	$(SRC_DIR)/main.c			\
 					$(SRC_DIR)/parser.c			\
