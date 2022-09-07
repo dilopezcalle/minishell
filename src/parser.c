@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:16:19 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/04 10:23:29 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/07 12:31:11 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,22 +38,19 @@ t_command	*parser(char *command_line)
 		return (0);
 	if (create_and_append_simple_command(commands, &command_args))
 		return (0);
-	print_commands(&commands);
-	return (0);
+	return (commands);
 }
 
 // Iterar y juntar argumentos para construir la estructura
 static int	create_and_append_simple_command(t_command	*commands, \
-											char ***command_args_dir)
+											char ***command_args)
 {
 	int			i;
 	int			num_command;
-	char		**command_args;
 
 	i = -1;
 	num_command = 0;
-	command_args = *command_args_dir;
-	while (command_args[++i] && command_args[i][0])
+	while ((*command_args)[++i] && (*command_args)[i][0])
 	{
 		if (!(commands->simple_commands)[num_command])
 		{
@@ -62,18 +59,15 @@ static int	create_and_append_simple_command(t_command	*commands, \
 			if (!((commands->simple_commands)[num_command]))
 				return (1);
 		}
-		if (command_args[i][0] == '|')
+		if ((*command_args)[i][0] == '|')
 			num_command++;
 		else if (create_simple_command(\
-				&(commands->simple_commands)[num_command], command_args, i))
+				&(commands->simple_commands)[num_command], *command_args, i))
 			return (1);
-		if (command_args[i][0] == '>' || command_args[i][0] == '<')
+		if ((*command_args)[i][0] == '>' || (*command_args)[i][0] == '<')
 			i++;
 	}
-	i = -1;
-	while (command_args[++i])
-		free(command_args[i]);
-	free(command_args);
+	free_double_array((void **)(*command_args));
 	return (0);
 }
 
@@ -105,7 +99,7 @@ static void	fill_simple_command(t_simple_command *command, \
 			command->redirection_outfile++;
 		if (command->outfile)
 			free(command->outfile);
-		command->outfile = ft_substr(command_arg[index + 1], 0, len);
+		check_access_outfile(command, command_arg[index + 1], len);
 	}
 	else if (command_arg[index][0] == '<')
 	{
@@ -114,48 +108,8 @@ static void	fill_simple_command(t_simple_command *command, \
 			command->redirection_infile++;
 		if (command->infile)
 			free(command->infile);
-		command->infile = ft_substr(command_arg[index + 1], 0, len);
+		check_access_infile(command, command_arg[index + 1], len);
 	}
 	else
 		command->arguments = ft_split(command_arg[index], ' ');
-}
-
-// Imprimir algunos datos de cada comando y free de las estructuras
-static void	print_commands(t_command **commands_dir)
-{
-	int			i;
-	int			num_command;
-	t_command	*commands;
-
-	i = 0;
-	commands = *commands_dir;
-	while ((commands->simple_commands)[i])
-	{
-		printf("\n\n");
-		printf("out: %s (%d)\nin: %s (%d)\n", \
-		((commands->simple_commands)[i])->outfile, \
-		((commands->simple_commands)[i])->redirection_outfile, \
-		((commands->simple_commands)[i])->infile, \
-		((commands->simple_commands)[i])->redirection_infile);
-		num_command = 0;
-		if (((commands->simple_commands)[i])->arguments)
-		{
-			while ((((commands->simple_commands)[i])->arguments)[num_command])
-			{
-				printf("arg: %s\n", \
-				(((commands->simple_commands)[i])->arguments)[num_command]);
-				free((((commands->simple_commands)[i])->arguments) \
-					[num_command]);
-				num_command++;
-			}
-			free(((commands->simple_commands)[i])->arguments);
-		}
-		free(((commands->simple_commands)[i])->outfile);
-		free(((commands->simple_commands)[i])->infile);
-		free((commands->simple_commands)[i]);
-		i++;
-	}
-	printf("\n\n");
-	free(commands->simple_commands);
-	free(commands);
 }

@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer.h                                            :+:      :+:    :+:   */
+/*   access_parser.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/19 19:09:56 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/04 11:07:29 by dilopez-         ###   ########.fr       */
+/*   Created: 2022/09/06 14:42:26 by dilopez-          #+#    #+#             */
+/*   Updated: 2022/09/06 14:49:32 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LEXER_H
-# define LEXER_H
+#ifndef ACCESS_PARSER_H
+# define ACCESS_PARSER_H
 
+# include "structs.h"
 # include "libft.h"
 
-static int	mix_args_command(char ***command_args, char **separate, int i);
-static int	check_end_command(char **separate, int i, int *start);
-static int	append_command_array(char ***command_args, char **separate, \
-								int start, int end);
+static 	char	**ft_get_paths(char *envp[]);
+static char		*ft_get_commands_path(char *command, char **paths);
 
-int			check_syntax_errors(char **separate);
+void			free_double_array(void **array);
 
 #endif
