@@ -6,13 +6,15 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:11:18 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/07 12:23:43 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/08 10:50:44 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "access_parser.h"
 
-#include <fcntl.h>
+#include <readline/readline.h>
+
+static void	readline_infile(char* end_word);
 
 int	access_parser(t_command *commands, char *envp[])
 {
@@ -98,9 +100,10 @@ void	check_access_infile(t_simple_command *command, char *file_name, int len)
 	int	fd;
 
 	fd = -1;
+	command->infile = ft_substr(file_name, 0, len);
 	if (command->redirection_infile == 2)
 	{
-		printf("READLINE para infile (2)\n");
+		readline_infile(command->infile);
 		return ;
 	}
 	fd = open(file_name, O_RDONLY);
@@ -109,6 +112,34 @@ void	check_access_infile(t_simple_command *command, char *file_name, int len)
 		printf("ERROR infile: \'%s\'\n", file_name);
 		return ;
 	}
-	command->infile = ft_substr(file_name, 0, len);
 	close(fd);
+}
+
+static void	readline_infile(char* end_word)
+{
+	char	*actual;
+	char	*join;
+	char	*aux;
+	int		len;
+
+	len = ft_strlen(end_word);
+	aux = readline("> ");
+	join = 0;
+	while (ft_strncmp(aux, end_word, len + 1) != 0)
+	{
+		actual = ft_strjoin(aux, "\n");
+		free(aux);
+		if (!join)
+			aux = ft_substr(actual, 0, ft_strlen(actual));
+		else
+		{
+			aux = ft_strjoin(join, actual);
+			free(join);
+		}
+		join = ft_substr(aux, 0, ft_strlen(aux));
+		free(actual);
+		free(aux);
+		aux = readline("> ");
+	}
+	free(aux);
 }

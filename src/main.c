@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:14:32 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/07 11:58:48 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/10 14:58:46 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,11 @@ int	main(int argc, char *argv[], char *envp[])
 
 	argc = 0;
 	argv = 0;
-	str = ft_substr("cat -e >> outfile | ls < infile > outfile", 0, 200);
+	str = ft_substr("infile < ls -l", 0, 200);
 	commands = parser(str);
 	if (access_parser(commands, envp))
 		return (1);
+	//executor(commands, envp);
 	print_commands(&commands);
 	return (0);
 }

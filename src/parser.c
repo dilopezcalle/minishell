@@ -6,11 +6,13 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:16:19 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/07 12:31:11 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/10 14:59:28 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
+
+static void	create_argument(t_simple_command *command, char *arg);
 
 // Crea la estructura general de los comandos que se utilizarán
 t_command	*parser(char *command_line)
@@ -56,6 +58,7 @@ static int	create_and_append_simple_command(t_command	*commands, \
 		{
 			(commands->simple_commands)[num_command] = (t_simple_command *) \
 			ft_calloc(1, sizeof(t_simple_command));
+			//((commands->simple_commands)[num_command])......................................
 			if (!((commands->simple_commands)[num_command]))
 				return (1);
 		}
@@ -67,6 +70,7 @@ static int	create_and_append_simple_command(t_command	*commands, \
 		if ((*command_args)[i][0] == '>' || (*command_args)[i][0] == '<')
 			i++;
 	}
+	commands->number_simple_commands = ++num_command;
 	free_double_array((void **)(*command_args));
 	return (0);
 }
@@ -111,5 +115,33 @@ static void	fill_simple_command(t_simple_command *command, \
 		check_access_infile(command, command_arg[index + 1], len);
 	}
 	else
-		command->arguments = ft_split(command_arg[index], ' ');
+		create_argument(command, command_arg[index]);
+		//command->arguments = ft_split(command_arg[index], ' ');
 }
+
+static void	create_argument(t_simple_command *command, char *arg)
+{
+	char	*command_line;
+	//char	*aux;
+	int		i;
+
+	printf("%s\n", arg);
+	if (!command->arguments)
+	{
+		command->arguments = ft_split(arg, ' ');
+		return ;
+	}
+	command_line = 0;
+	i = 0;
+	while ((command->arguments)[i])
+	{
+		// if (!command_line)
+		// 	command_line = ft_substr((command->arguments)[i], 0, ft_strlen((command->arguments)[i]));
+		// else
+		// {
+			
+		// }
+		i++;
+	}
+}
+

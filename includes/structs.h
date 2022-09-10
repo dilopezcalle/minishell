@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 07:48:56 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/08/28 10:12:25 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/07 17:51:52 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,12 @@ typedef struct s_simple_command
 	char				*outfile;
 	char				*infile;
 	char				*path;
-}	t_simple_command;
+}						t_simple_command;
 
 typedef struct s_command
 {
 	int					number_simple_commands;
 	t_simple_command	**simple_commands;
-}	t_command;
+}						t_command;
 
 #endif

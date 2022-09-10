@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 14:42:26 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/06 14:49:32 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/07 14:33:28 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,11 @@
 # include "structs.h"
 # include "libft.h"
 
-static 	char	**ft_get_paths(char *envp[]);
-static char		*ft_get_commands_path(char *command, char **paths);
+# include <fcntl.h>
 
-void			free_double_array(void **array);
+static char	**ft_get_paths(char *envp[]);
+static char	*ft_get_commands_path(char *command, char **paths);
+
+void		free_double_array(void **array);
 
 #endif

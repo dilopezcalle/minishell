@@ -6,7 +6,7 @@
 #    By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 15:17:17 by dilopez-          #+#    #+#              #
-#    Updated: 2022/09/06 14:54:45 by dilopez-         ###   ########.fr        #
+#    Updated: 2022/09/08 09:50:42 by dilopez-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ $(NAME):	print_init $(PREFIXED)
 	@echo "\n$(YELLOW)----------- Compiling libft's files ----------$(RESET)\n"
 	@make -C ./$(SRC_DIR)/libft
 	@cp ./$(SRC_DIR)/libft/$(LIBFT) .
-	@$(CC) $(CFLAGS) $(PREFIXED) $(LIBFT) -o $(NAME)
+	@$(CC) $(CFLAGS) -lreadline $(PREFIXED) $(LIBFT) -o $(NAME)
 	@echo "\n${GREEN}---------- Mandatory part compiled! ----------${RESET}\n"
 
 $(OBJ_DIR)/%.o:	%.c
