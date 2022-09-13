@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/19 19:09:56 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/04 11:07:29 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/12 16:40:13 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,5 +21,6 @@ static int	append_command_array(char ***command_args, char **separate, \
 								int start, int end);
 
 int			check_syntax_errors(char **separate);
+void		free_double_array(void **array);
 
 #endif

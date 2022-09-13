@@ -1,24 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   access_parser.h                                    :+:      :+:    :+:   */
+/*   files_access.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/06 14:42:26 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/12 16:57:54 by dilopez-         ###   ########.fr       */
+/*   Created: 2022/09/12 16:53:27 by dilopez-          #+#    #+#             */
+/*   Updated: 2022/09/12 16:57:30 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef ACCESS_PARSER_H
-# define ACCESS_PARSER_H
+#ifndef FILES_ACCESS_H
+# define FILES_ACCESS_H
 
 # include "structs.h"
 # include "libft.h"
 
-static char	**ft_get_paths(char *envp[]);
-static char	*ft_get_commands_path(char *command, char **paths);
+# include <readline/readline.h>
+# include <fcntl.h>
 
-void		free_double_array(void **array);
+static void	readline_infile(char *end_word);
 
 #endif

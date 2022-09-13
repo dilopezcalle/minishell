@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 09:34:54 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/04 11:02:12 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/12 16:46:27 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,20 @@ char	**lexer(char *command_line)
 	if (check_syntax_errors(separate_line))
 		return (0);
 	while (separate_line[++i])
+	{
 		if (separate_line[i][0] == '|' || separate_line[i][0] == '>' \
 			|| separate_line[i][0] == '<')
 			size += 2;
+		if (i > 2 && (separate_line[i - 2][0] == '>' \
+			|| separate_line[i - 2][0] == '<'))
+			size++;
+	}
 	command_args = (char **)ft_calloc((size + 1), sizeof(char *));
 	if (!command_line || !command_args)
 		return (0);
-	i = -1;
-	if (mix_args_command(&command_args, separate_line, i) == -1)
+	if (mix_args_command(&command_args, separate_line, -1) == -1)
 		return (0);
-	while (separate_line[++i])
-		free(separate_line[i]);
-	free(separate_line);
-	return (command_args);
+	return (free_double_array((void **)separate_line), command_args);
 }
 
 //Comprueba si hay un >, < ó | que represente el final de cada comando / archivo
