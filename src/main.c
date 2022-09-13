@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:14:32 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/12 16:43:12 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/13 14:30:46 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ t_command	*parser(char *command_line);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 int			access_parser(t_command *commands, char *envp[]);
 void		print_commands(t_command **commands_dir);
+void		executor(t_command *commands, char *envp[]);
 
 int	main(int argc, char *argv[], char *envp[])
 {
@@ -28,11 +29,11 @@ int	main(int argc, char *argv[], char *envp[])
 
 	argc = 0;
 	argv = 0;
-	str = ft_substr("ls < infile > outfile -l -ñ", 0, 200);
+	str = ft_substr("ls -la | ls -la | grep git", 0, 200);
 	commands = parser(str);
 	if (access_parser(commands, envp))
 		return (1);
-	//executor(commands, envp);
-	print_commands(&commands);
+	executor(commands, envp);
+	//print_commands(&commands);
 	return (0);
 }

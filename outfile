@@ -1,0 +1,15 @@
+total 242$
+drwxr-xr-x  8 dilopez-  2022_urduliz   4096 Sep 13 13:28 .$
+drwx------  8 dilopez-  2022_urduliz   4096 Sep 13 09:31 ..$
+drwxr-xr-x  7 dilopez-  2022_urduliz   4096 Sep 13 13:10 .git$
+-rw-r--r--  1 dilopez-  2022_urduliz     18 Sep 13 09:24 .gitignore$
+drwxr-xr-x  2 dilopez-  2022_urduliz   4096 Sep  4 09:16 .vscode$
+-rw-r--r--  1 dilopez-  2022_urduliz   2507 Sep 13 11:29 Makefile$
+drwxr-xr-x  2 dilopez-  2022_urduliz   4096 Sep 12 16:53 includes$
+-rw-r--r--  1 dilopez-  2022_urduliz     19 Sep 13 13:18 infile$
+-rw-r--r--  1 dilopez-  2022_urduliz  32416 Sep 13 14:30 libft.a$
+-rwxr-xr-x  1 dilopez-  2022_urduliz  54712 Sep 13 14:30 minishell$
+drwxr-xr-x  3 dilopez-  2022_urduliz   4096 Sep 13 13:28 minishell.dSYM$
+drwxr-xr-x  4 dilopez-  2022_urduliz   4096 Sep 13 13:25 obj$
+-rw-r--r--  1 dilopez-  2022_urduliz      0 Sep 13 14:30 outfile$
+drwxr-xr-x  3 dilopez-  2022_urduliz   4096 Sep 12 16:51 src$

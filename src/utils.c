@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 13:23:51 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/06 15:12:09 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/13 10:06:03 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	print_commands(t_command **commands_dir)
 	while ((commands->simple_commands)[i])
 	{
 		printf("\n\n");
-		printf("out: %s (%d)\nin: %s (%d)\npath: %s\n", \
+		printf("out: %d (%d)\nin: %d (%d)\npath: %s\n", \
 		((commands->simple_commands)[i])->outfile, \
 		((commands->simple_commands)[i])->redirection_outfile, \
 		((commands->simple_commands)[i])->infile, \
@@ -58,8 +58,8 @@ void	print_commands(t_command **commands_dir)
 			}
 			free(((commands->simple_commands)[i])->arguments);
 		}
-		free(((commands->simple_commands)[i])->outfile);
-		free(((commands->simple_commands)[i])->infile);
+		// free(((commands->simple_commands)[i])->outfile);
+		// free(((commands->simple_commands)[i])->infile);
 		free(((commands->simple_commands)[i])->path);
 		free((commands->simple_commands)[i]);
 		i++;

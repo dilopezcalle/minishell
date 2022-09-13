@@ -6,14 +6,13 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 16:52:00 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/12 16:55:11 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/13 11:48:28 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "files_access.h"
 
-void	check_access_outfile(t_simple_command *command, char *file_name, \
-							int len)
+void	check_access_outfile(t_simple_command *command, char *file_name)
 {
 	int	fd;
 
@@ -27,19 +26,19 @@ void	check_access_outfile(t_simple_command *command, char *file_name, \
 		printf("ERROR outfile: \'%s\'\n", file_name);
 		return ;
 	}
-	command->outfile = ft_substr(file_name, 0, len);
-	close(fd);
+	if (command->outfile != 1)
+		close(command->outfile);
+	command->outfile = fd;
 }
 
-void	check_access_infile(t_simple_command *command, char *file_name, int len)
+void	check_access_infile(t_simple_command *command, char *file_name)
 {
 	int	fd;
 
 	fd = -1;
-	command->infile = ft_substr(file_name, 0, len);
 	if (command->redirection_infile == 2)
 	{
-		readline_infile(command->infile);
+		readline_infile(file_name);
 		return ;
 	}
 	fd = open(file_name, O_RDONLY);
@@ -48,7 +47,9 @@ void	check_access_infile(t_simple_command *command, char *file_name, int len)
 		printf("ERROR infile: \'%s\'\n", file_name);
 		return ;
 	}
-	close(fd);
+	if (command->infile != 0)
+		close(command->infile);
+	command->infile = fd;
 }
 
 static void	readline_infile(char *end_word)

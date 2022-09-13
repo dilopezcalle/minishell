@@ -6,7 +6,7 @@
 #    By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 15:17:17 by dilopez-          #+#    #+#              #
-#    Updated: 2022/09/12 16:55:26 by dilopez-         ###   ########.fr        #
+#    Updated: 2022/09/13 11:29:30 by dilopez-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,6 +29,7 @@ SRCS			=	$(SRC_DIR)/main.c			\
 					$(SRC_DIR)/lexer.c			\
 					$(SRC_DIR)/access_parser.c	\
 					$(SRC_DIR)/files_access.c	\
+					$(SRC_DIR)/executor.c	\
 
 OBJS			=	$(SRCS:.c=.o)
 PREFIXED		=	$(addprefix $(OBJ_DIR)/, $(OBJS))
