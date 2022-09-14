@@ -6,11 +6,12 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 16:52:00 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/13 11:48:28 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/14 12:33:37 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "files_access.h"
+#include "libft.h"
 
 void	check_access_outfile(t_simple_command *command, char *file_name)
 {
@@ -24,6 +25,7 @@ void	check_access_outfile(t_simple_command *command, char *file_name)
 	if (fd < 0)
 	{
 		printf("ERROR outfile: \'%s\'\n", file_name);
+		command->outfile = -1;
 		return ;
 	}
 	if (command->outfile != 1)
@@ -33,18 +35,48 @@ void	check_access_outfile(t_simple_command *command, char *file_name)
 
 void	check_access_infile(t_simple_command *command, char *file_name)
 {
-	int	fd;
+	int		fd;
+	int		fd_pipe[2];
+	int		pid;
+	char	*join;
 
 	fd = -1;
 	if (command->redirection_infile == 2)
 	{
-		readline_infile(file_name);
+		command->infile = 0;
+		join = readline_infile(file_name);
+		if (pipe(fd_pipe) == -1)
+		{
+			printf("ERROR pipe\n");
+			exit(1);
+		}
+		pid = fork();
+		if (pid == -1)
+		{
+			printf("ERROR fork\n");
+			exit(1);
+		}
+		else if (!pid)
+		{
+			close(fd_pipe[0]);
+			dup2(fd_pipe[1], 1);
+			close(fd_pipe[1]);
+			write(1, join, ft_strlen(join));
+			exit(0);
+		}
+		else
+		{
+			close(fd_pipe[1]);
+			wait(NULL);
+			command->infile = fd_pipe[0];
+		}
 		return ;
 	}
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
 	{
 		printf("ERROR infile: \'%s\'\n", file_name);
+		command->infile = -1;
 		return ;
 	}
 	if (command->infile != 0)
@@ -52,7 +84,7 @@ void	check_access_infile(t_simple_command *command, char *file_name)
 	command->infile = fd;
 }
 
-static void	readline_infile(char *end_word)
+static char	*readline_infile(char *end_word)
 {
 	char	*actual;
 	char	*join;
@@ -79,4 +111,5 @@ static void	readline_infile(char *end_word)
 		aux = readline("> ");
 	}
 	free(aux);
+	return (join);
 }

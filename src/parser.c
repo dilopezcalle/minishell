@@ -6,13 +6,14 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:16:19 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/13 10:51:40 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/14 12:34:29 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
 static void	create_argument(t_simple_command *command, char *arg);
+void		free_commands(t_command **commands_dir);
 
 // Crea la estructura general de los comandos que se utilizarán
 t_command	*parser(char *command_line)
@@ -39,7 +40,8 @@ t_command	*parser(char *command_line)
 	if (!commands->simple_commands)
 		return (0);
 	if (create_and_append_simple_command(commands, &command_args))
-		return (0);
+		return (free_commands(&commands), \
+				free_double_array((void **)command_args), NULL);
 	return (commands);
 }
 
@@ -89,6 +91,8 @@ static int	create_simple_command(t_simple_command **command_info, \
 		if (command_arg[index][1] == '>')
 			command->redirection_outfile++;
 		check_access_outfile(command, command_arg[index + 1]);
+		if (command->outfile == -1)
+			return (1);
 	}
 	else if (command_arg[index][0] == '<')
 	{
@@ -96,6 +100,8 @@ static int	create_simple_command(t_simple_command **command_info, \
 		if (command_arg[index][1] == '<')
 			command->redirection_infile++;
 		check_access_infile(command, command_arg[index + 1]);
+		if (command->infile == -1)
+			return (1);
 	}
 	else if (command->arguments)
 		create_argument(command, command_arg[index]);
