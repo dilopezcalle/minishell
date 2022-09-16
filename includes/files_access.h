@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   files_access.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/18 08:14:32 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/15 09:51:08 by dilopez-         ###   ########.fr       */
+/*   Created: 2022/09/12 16:53:27 by dilopez-          #+#    #+#             */
+/*   Updated: 2022/09/14 11:49:45 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	minishell(char *envp[]);
+#ifndef FILES_ACCESS_H
+# define FILES_ACCESS_H
 
-int	main(int argc, char *argv[], char *envp[])
-{
-	argc = 0;
-	argv = 0;
-	minishell(envp);
-	return (0);
-}
+# include "structs.h"
+# include "libft.h"
+
+# include <readline/readline.h>
+# include <fcntl.h>
+
+static char	*readline_infile(char *end_word);
+
+#endif

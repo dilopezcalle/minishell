@@ -1,21 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   utils.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/08/18 08:14:32 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/15 09:51:08 by dilopez-         ###   ########.fr       */
+/*   Created: 2022/09/06 14:49:00 by dilopez-          #+#    #+#             */
+/*   Updated: 2022/09/06 15:04:47 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-void	minishell(char *envp[]);
+#ifndef UTILS_H
+# define UTILS_H
 
-int	main(int argc, char *argv[], char *envp[])
-{
-	argc = 0;
-	argv = 0;
-	minishell(envp);
-	return (0);
-}
+# include "structs.h"
+
+# include <stdio.h>
+# include <stdlib.h>
+
+#endif
