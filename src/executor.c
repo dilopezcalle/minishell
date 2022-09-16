@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 14:38:24 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/14 12:36:52 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/15 08:59:55 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,5 @@ static void	execute_command(t_simple_command *command, int fd[2], \
 	else if (last == 0)
 		dup2(fd[1], 1);
 	close(fd[1]);
-	close(command->infile);
 	execve(command->path, command->arguments, envp);
 }
