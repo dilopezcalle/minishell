@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:11:18 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/14 09:00:57 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/18 09:45:48 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ int	access_parser(t_command *commands, char *envp[])
 		if (!command_path)
 		{
 			free_double_array((void **)paths);
-			printf("ACCESS \'%s\'\n", (command->arguments)[0]);
+			printf("minishell: %s: command not found\n", \
+					(command->arguments)[0]);
 			return (1);
 		}
 		command->path = command_path;

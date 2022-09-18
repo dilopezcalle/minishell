@@ -6,12 +6,15 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 16:52:00 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/14 12:33:37 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/18 16:01:47 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "files_access.h"
 #include "libft.h"
+#include <errno.h>
+#include <string.h>
+
 
 void	check_access_outfile(t_simple_command *command, char *file_name)
 {
@@ -24,7 +27,7 @@ void	check_access_outfile(t_simple_command *command, char *file_name)
 		fd = open(file_name, O_RDWR | O_APPEND | O_CREAT, 0644);
 	if (fd < 0)
 	{
-		printf("ERROR outfile: \'%s\'\n", file_name);
+		printf("minishell: %s: %s\n", file_name, strerror(2));
 		command->outfile = -1;
 		return ;
 	}
@@ -47,13 +50,13 @@ void	check_access_infile(t_simple_command *command, char *file_name)
 		join = readline_infile(file_name);
 		if (pipe(fd_pipe) == -1)
 		{
-			printf("ERROR pipe\n");
+			perror("minishell: pipe");
 			exit(1);
 		}
 		pid = fork();
 		if (pid == -1)
 		{
-			printf("ERROR fork\n");
+			perror("minishell: fork");
 			exit(1);
 		}
 		else if (!pid)
@@ -66,6 +69,7 @@ void	check_access_infile(t_simple_command *command, char *file_name)
 		}
 		else
 		{
+			signal(SIGINT, sig_handler);
 			close(fd_pipe[1]);
 			wait(NULL);
 			command->infile = fd_pipe[0];
@@ -75,7 +79,7 @@ void	check_access_infile(t_simple_command *command, char *file_name)
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
 	{
-		printf("ERROR infile: \'%s\'\n", file_name);
+		printf("minishell: %s: %s\n", file_name, strerror(errno));
 		command->infile = -1;
 		return ;
 	}

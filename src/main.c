@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:14:32 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/15 09:51:08 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/18 09:56:19 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,6 @@ int	main(int argc, char *argv[], char *envp[])
 	argc = 0;
 	argv = 0;
 	minishell(envp);
+	envp = 0;
 	return (0);
 }

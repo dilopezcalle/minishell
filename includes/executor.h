@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 14:31:26 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/13 14:39:39 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/18 15:50:32 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,9 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <stdio.h>
+
+void		sig_handler(int signum);
+static void	sig_handler_without_input(int signum);
 
 static void	execute_command(t_simple_command *command, int fd[2], \
 							char *envp[], int last);

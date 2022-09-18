@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 14:38:24 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/15 08:59:55 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/18 15:50:34 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,23 @@ void	executor(t_command *commands, char *envp[])
 {
 	int	pid;
 
+	signal(SIGINT, 0);
 	pid = fork();
 	if (pid == -1)
 	{
-		printf("ERROR fork\n");
+		perror("minishell: fork");
 		exit(1);
 	}
 	else if (!pid)
+	{
+		signal(SIGINT, 0);
 		iter_execute_commands(commands, envp);
+	}
 	else
+	{
+		signal(SIGINT, sig_handler_without_input);
 		wait(NULL);
+	}
 }
 
 static void	iter_execute_commands(t_command *commands, char *envp[])
@@ -38,7 +45,7 @@ static void	iter_execute_commands(t_command *commands, char *envp[])
 	{
 		if (pipe(fd) == -1)
 		{
-			printf("ERROR pipe\n");
+			perror("minishell: pipe");
 			exit(1);
 		}
 		create_and_execute_child(commands, fd, envp, i);
@@ -54,10 +61,12 @@ static void	create_and_execute_child(t_command *commands, int fd[2], \
 	pid = fork();
 	if (pid == -1)
 	{
-		printf("ERROR fork\n");
+		perror("minishell: fork");
 		exit(1);
 	}
-	else if (!pid && i + 1 < commands->number_simple_commands)
+	if (!pid)
+		signal(SIGINT, 0);
+	if (!pid && i + 1 < commands->number_simple_commands)
 		execute_command((commands->simple_commands)[i], fd, envp, 0);
 	else if (!pid && i + 1 >= commands->number_simple_commands)
 		execute_command((commands->simple_commands)[i], fd, envp, 1);
@@ -82,7 +91,15 @@ static void	execute_command(t_simple_command *command, int fd[2], \
 		close(command->outfile);
 	}
 	else if (last == 0)
+	{
 		dup2(fd[1], 1);
+	}
 	close(fd[1]);
 	execve(command->path, command->arguments, envp);
+}
+
+static void	sig_handler_without_input(int signum)
+{
+	signum = 0;
+	printf("\n");
 }

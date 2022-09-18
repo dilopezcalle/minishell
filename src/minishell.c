@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 08:33:15 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/16 11:19:03 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/18 15:54:16 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	minishell(char *envp[])
 	char		*line;
 
 	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, sig_handler);
+	//signal(SIGQUIT, sig_handler);
 	while (1)
 	{
 		line = get_line();
@@ -42,7 +42,7 @@ char	*get_line(void)
 {
 	char	*line;
 
-	line = readline("\x1B[32mMyshell>\x1B[0m ");
+	line = readline("\x1B[32mMyShell>\x1B[0m ");
 	if (!line || ft_strncmp(line, "exit", 5) == 0)
 	{
 		if (line)
