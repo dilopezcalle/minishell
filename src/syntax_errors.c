@@ -6,14 +6,13 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 11:02:41 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/18 09:54:48 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/22 11:38:44 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
+#include "syntax_errors.h"
 
-static int	print_syntax_error(char *str);
-
+// Comprueba que existan cosas luego de un >, < ó |
 int	check_syntax_errors(char **separate)
 {
 	int	i;
@@ -36,6 +35,7 @@ int	check_syntax_errors(char **separate)
 	return (0);
 }
 
+// Printea error de sintáxis
 static int	print_syntax_error(char *str)
 {
 	printf("minishell: syntax error near unexpected token `%s'\n", str);

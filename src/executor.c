@@ -6,12 +6,13 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 14:38:24 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/18 15:50:34 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/22 10:04:16 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
+// "Liberar" las señales controladas para ejecutar los comandos en hijos
 void	executor(t_command *commands, char *envp[])
 {
 	int	pid;
@@ -35,6 +36,7 @@ void	executor(t_command *commands, char *envp[])
 	}
 }
 
+// Recorre todos los comandos y crea las pipes que los comunicarán
 static void	iter_execute_commands(t_command *commands, char *envp[])
 {
 	int	fd[2];
@@ -53,6 +55,7 @@ static void	iter_execute_commands(t_command *commands, char *envp[])
 	}
 }
 
+// Crea un proceso hijo para luego ejecutar un comando en él
 static void	create_and_execute_child(t_command *commands, int fd[2], \
 										char *envp[], int i)
 {
@@ -74,12 +77,15 @@ static void	create_and_execute_child(t_command *commands, int fd[2], \
 	{
 		wait(NULL);
 		close(fd[1]);
+		if (i + 1 >= commands->number_simple_commands)
+			exit(0);
 		if (((commands->simple_commands)[i + 1])->infile == 0)
 			((commands->simple_commands)[i + 1])->infile = dup(fd[0]);
 		close(fd[0]);
 	}
 }
 
+// Ejecuta un comando y controla la salida y entrada estandard
 static void	execute_command(t_simple_command *command, int fd[2], \
 							char *envp[], int last)
 {
@@ -98,6 +104,7 @@ static void	execute_command(t_simple_command *command, int fd[2], \
 	execve(command->path, command->arguments, envp);
 }
 
+// Señal en caso de ctrl + C (cat o grep a secas)
 static void	sig_handler_without_input(int signum)
 {
 	signum = 0;

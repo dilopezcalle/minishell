@@ -6,12 +6,13 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:11:18 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/18 09:45:48 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/22 08:59:04 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "access_parser.h"
 
+// Comprobar que exista el fichero de un comando en las rutas del environment
 int	access_parser(t_command *commands, char *envp[])
 {
 	t_simple_command	*command;
@@ -39,6 +40,7 @@ int	access_parser(t_command *commands, char *envp[])
 	return (0);
 }
 
+// Obtener todas las rutas de los comandos del environment
 static char	**ft_get_paths(char *envp[])
 {
 	int		i;
@@ -51,6 +53,7 @@ static char	**ft_get_paths(char *envp[])
 	return (paths);
 }
 
+// Contruir el string que representa el path de un comando
 static char	*ft_get_commands_path(char *command, char **paths)
 {
 	char	*command_path;

@@ -6,21 +6,21 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 08:33:15 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/18 15:54:16 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/22 11:38:24 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+// Lee la línea en búcle y llama al parser y executor
 void	minishell(char *envp[])
 {
 	t_command	*commands;
 	char		*line;
 
-	signal(SIGINT, sig_handler);
-	//signal(SIGQUIT, sig_handler);
 	while (1)
 	{
+		signal(SIGINT, sig_handler);
 		line = get_line();
 		if (line[0] != '\0')
 		{
@@ -36,22 +36,26 @@ void	minishell(char *envp[])
 		else
 			free(line);
 	}
+	exit_program(0);
+	envp = 0;
 }
 
+// Ejecuta y devuelve readline. Comprueba que se escriba algo
 char	*get_line(void)
 {
 	char	*line;
 
-	line = readline("\x1B[32mMyShell>\x1B[0m ");
+	line = readline("\001\033[0;33m\002MyShell \001\u27A4 \001\033[0m\002");
 	if (!line || ft_strncmp(line, "exit", 5) == 0)
 	{
 		if (line)
 			free(line);
 		exit_program(0);
 	}
-	return(line);
+	return (line);
 }
 
+// Gestiona el ctrl + C
 void	sig_handler(int signum)
 {
 	if (rl_on_new_line() == -1)
@@ -64,8 +68,10 @@ void	sig_handler(int signum)
 	}
 }
 
+// Limpiar la lista y cerrar el programa
 void	exit_program(int code)
 {
+	rl_clear_history();
 	printf("exit\n");
 	exit(code);
 }

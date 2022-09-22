@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:16:19 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/15 08:01:35 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/20 18:20:11 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ t_command	*parser(char *command_line)
 	command_args = lexer(command_line);
 	if (!command_args)
 		return (0);
-	free(command_line);
 	i = -1;
 	num_command = 1;
 	while (command_args[++i])
@@ -80,33 +79,28 @@ static int	create_and_append_simple_command(t_command	*commands, \
 static int	create_simple_command(t_simple_command **command_info, \
 								char **command_arg, int index)
 {
-	t_simple_command	*command;
-
-	command = *command_info;
-	if (!command)
+	if (!(*command_info))
 		return (1);
 	if (command_arg[index][0] == '>')
 	{
-		command->redirection_outfile = 1;
+		(*command_info)->redirection_outfile = 1;
 		if (command_arg[index][1] == '>')
-			command->redirection_outfile++;
-		check_access_outfile(command, command_arg[index + 1]);
-		if (command->outfile == -1)
+			(*command_info)->redirection_outfile++;
+		if (check_access_outfile((*command_info), command_arg[index + 1]))
 			return (1);
 	}
 	else if (command_arg[index][0] == '<')
 	{
-		command->redirection_infile = 1;
+		(*command_info)->redirection_infile = 1;
 		if (command_arg[index][1] == '<')
-			command->redirection_infile++;
-		check_access_infile(command, command_arg[index + 1]);
-		if (command->infile == -1)
+			(*command_info)->redirection_infile++;
+		if (check_access_infile((*command_info), command_arg[index + 1]))
 			return (1);
 	}
-	else if (command->arguments)
-		create_argument(command, command_arg[index]);
+	else if ((*command_info)->arguments)
+		create_argument((*command_info), command_arg[index]);
 	else
-		command->arguments = ft_split(command_arg[index], ' ');
+		(*command_info)->arguments = ft_split(command_arg[index], ' ');
 	return (0);
 }
 

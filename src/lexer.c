@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 09:34:54 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/14 09:14:17 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/20 18:21:53 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ char	**lexer(char *command_line)
 	size = 1;
 	i = -1;
 	separate_line = ft_split(command_line, ' ');
+	free(command_line);
 	if (check_syntax_errors(separate_line))
 		return (free_double_array((void **)separate_line), NULL);
 	while (separate_line[++i])
@@ -35,9 +36,8 @@ char	**lexer(char *command_line)
 			size++;
 	}
 	command_args = (char **)ft_calloc((size + 1), sizeof(char *));
-	if (!command_line || !command_args)
-		return (0);
-	if (mix_args_command(&command_args, separate_line, -1) == -1)
+	if (!command_args \
+		|| mix_args_command(&command_args, separate_line, -1) == -1)
 		return (0);
 	return (free_double_array((void **)separate_line), command_args);
 }

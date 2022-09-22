@@ -6,7 +6,7 @@
 #    By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 11:04:00 by almirand          #+#    #+#              #
-#    Updated: 2022/08/27 07:29:20 by dilopez-         ###   ########.fr        #
+#    Updated: 2022/09/20 17:42:12 by dilopez-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,14 +72,18 @@ CC			=	gcc
 
 FLAGS		=	-Wall -Wextra -Werror -I $(INC_DIR)
 
+YELLOW			=	"\\x1b[33m"
+RESET			=	"\\x1b[37m"
+
 # =================================== RULES ===================================
 
 $(NAME):		$(PREFIXED)
-	@echo "Libft's library generate with ar -crs"
+	@printf \
+	"$(YELLOW)----------- Libft's files compiled -----------\n$(RESET)%-33.33s\r"
 	@ar -crs $@ $^
 
 $(OBJ_DIR)/%.o:	%.c
-	@echo "$(CC) $(FLAGS) : \t $<"
+	@printf "$(YELLOW)Compiling libft's file -> $(RESET)%-33.33s\r" $<
 	@mkdir -p $(OBJ_DIR)/libft
 	@$(CC) $(FLAGS) -c $< -o $@
 
