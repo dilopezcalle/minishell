@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 08:33:15 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/22 11:38:24 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/23 13:28:24 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	minishell(char *envp[])
 	while (1)
 	{
 		signal(SIGINT, sig_handler);
+		signal(SIGQUIT, exit_program);
 		line = get_line();
 		if (line[0] != '\0')
 		{
@@ -28,6 +29,9 @@ void	minishell(char *envp[])
 			commands = parser(line);
 			if (commands)
 			{
+				if (ft_strncmp(commands->simple_commands[0]->arguments[0], \
+					"exit", 5) == 0)
+					break ;
 				if (!access_parser(commands, envp))
 					executor(commands, envp);
 				free_commands(&commands);
@@ -36,6 +40,7 @@ void	minishell(char *envp[])
 		else
 			free(line);
 	}
+	free_commands(&commands);
 	exit_program(0);
 	envp = 0;
 }
@@ -46,12 +51,8 @@ char	*get_line(void)
 	char	*line;
 
 	line = readline("\001\033[0;33m\002MyShell \001\u27A4 \001\033[0m\002");
-	if (!line || ft_strncmp(line, "exit", 5) == 0)
-	{
-		if (line)
-			free(line);
+	if (!line)
 		exit_program(0);
-	}
 	return (line);
 }
 
@@ -68,7 +69,7 @@ void	sig_handler(int signum)
 	}
 }
 
-// Limpiar la lista y cerrar el programa
+// Limpiar el historial y cerrar el programa
 void	exit_program(int code)
 {
 	rl_clear_history();

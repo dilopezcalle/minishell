@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:11:18 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/22 08:59:04 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/23 09:42:33 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,10 @@ int	access_parser(t_command *commands, char *envp[])
 	while ((commands->simple_commands)[i])
 	{
 		command = (commands->simple_commands)[i];
+		if (!command->arguments)
+			return (free_double_array((void **)paths), 1);
 		command_path = ft_get_commands_path((command->arguments)[0], paths);
-		if (!command_path)
+		if (!command_path && !is_command_builtin((command->arguments)[0]))
 		{
 			free_double_array((void **)paths);
 			printf("minishell: %s: command not found\n", \
@@ -61,6 +63,8 @@ static char	*ft_get_commands_path(char *command, char **paths)
 	char	*temp;
 	int		i;
 
+	if (is_command_builtin(command))
+		return (0);
 	i = 0;
 	path = 0;
 	while (paths[i])
