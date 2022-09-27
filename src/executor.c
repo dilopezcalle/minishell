@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 14:38:24 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/23 09:39:29 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/27 07:49:23 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ static void	execute_command(t_simple_command *command, int fd[2], \
 	}
 	close(fd[1]);
 	if (is_command_builtin(command->arguments[0]))
-		execute_builtin(command);
+		execute_child_builtin(command);
 	execve(command->path, command->arguments, envp);
 }
 

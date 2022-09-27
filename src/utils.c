@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 13:23:51 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/23 13:26:27 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/25 14:15:36 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,40 @@ int	is_command_builtin(char *command)
 	return (0);
 }
 
+int	join_home_folder(char **str_dir)
+{
+	char	*home;
+	char	*new_str;
+
+	home = getenv("HOME");
+	if (!home)
+		return (1);
+	new_str = ft_strjoin(home, (*str_dir) + 1);
+	free(*str_dir);
+	*str_dir = ft_strdup(new_str);
+	return (0);
+}
+
+char	**ft_copy_double_array(char **envp_main)
+{
+	char	**envp;
+	int		i;
+
+	i = 0;
+	while (envp_main[i])
+		i++;
+	envp = (char **)ft_calloc(i + 1, sizeof(char *));
+	if (!envp)
+		return (0);
+	while (envp_main[--i])
+	{
+		envp[i] = ft_strdup(envp_main[i]);
+		if (!envp[i])
+			return (free_double_array((void **)envp), NULL);
+	}
+	return (envp);
+}
+
 // Liberar la memoria de todos los elementos de la estructura
 void	free_commands(t_command **commands_dir)
 {
@@ -69,4 +103,3 @@ void	free_commands(t_command **commands_dir)
 	}
 	return (free(commands->simple_commands), free(commands));
 }
-

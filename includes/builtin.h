@@ -1,24 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   builtin.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/06 14:49:00 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/25 13:42:07 by dilopez-         ###   ########.fr       */
+/*   Created: 2022/09/25 14:00:42 by dilopez-          #+#    #+#             */
+/*   Updated: 2022/09/25 14:09:01 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
-# include "structs.h"
 # include "libft.h"
+# include "structs.h"
 
-# include <stdio.h>
-# include <stdlib.h>
-
-# include <stdlib.h>
+int	builtin_echo(t_simple_command *command);
 
 #endif

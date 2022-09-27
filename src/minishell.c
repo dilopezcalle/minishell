@@ -6,18 +6,20 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 08:33:15 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/23 13:28:24 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/25 13:58:35 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 // Lee la línea en búcle y llama al parser y executor
-void	minishell(char *envp[])
+void	minishell(char *envp_main[])
 {
 	t_command	*commands;
 	char		*line;
+	char		**envp;
 
+	envp = ft_copy_double_array(envp_main);
 	while (1)
 	{
 		signal(SIGINT, sig_handler);
@@ -33,7 +35,13 @@ void	minishell(char *envp[])
 					"exit", 5) == 0)
 					break ;
 				if (!access_parser(commands, envp))
-					executor(commands, envp);
+				{
+					if (ft_strncmp(commands->simple_commands[0]->arguments[0], \
+					"cd", 3) == 0 && commands->number_simple_commands == 1)
+						cd_builtin(commands->simple_commands[0]);
+					else
+						executor(commands, envp);
+				}
 				free_commands(&commands);
 			}
 		}

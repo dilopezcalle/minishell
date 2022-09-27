@@ -6,12 +6,12 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 09:50:12 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/23 09:50:37 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/25 13:56:13 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FILES_ACCESS_H
-# define FILES_ACCESS_H
+#ifndef ECHO_H
+# define ECHO_H
 
 # include "structs.h"
 # include "libft.h"

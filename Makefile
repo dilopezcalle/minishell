@@ -6,7 +6,7 @@
 #    By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 15:17:17 by dilopez-          #+#    #+#              #
-#    Updated: 2022/09/23 08:27:19 by dilopez-         ###   ########.fr        #
+#    Updated: 2022/09/25 14:15:55 by dilopez-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ BUIL_DIR		=	$(SRC_DIR)/builtins
 
 RM				=	rm -rf
 CC				=	gcc
-CFLAGS			=	-I $(INC_DIR) -g3 -Wall -Werror -Wextra
+CFLAGS			=	-I $(INC_DIR) -g3 #-Wall -Werror -Wextra
 RLFLAGS			=	-lreadline -L /Users/$(USER)/.brew/opt/readline/lib \
 					-I /Users/$(USER)/.brew/opt/readline/include
 
@@ -35,7 +35,8 @@ SRCS			=	$(SRC_DIR)/main.c			\
 					$(SRC_DIR)/executor.c		\
 					$(SRC_DIR)/minishell.c		\
 					$(BUIL_DIR)/builtin.c		\
-					$(BUIL_DIR)/echo.c		\
+					$(BUIL_DIR)/echo.c			\
+					$(BUIL_DIR)/cd.c			\
 
 OBJS			=	$(SRCS:.c=.o)
 PREFIXED		=	$(addprefix $(OBJ_DIR)/, $(OBJS))
@@ -53,7 +54,7 @@ $(NAME):	$(PREFIXED)
 	@make -C ./$(SRC_DIR)/libft
 	@cp ./$(SRC_DIR)/libft/$(LIBFT) .
 	@$(CC) $(CFLAGS) $(RLFLAGS) $(PREFIXED) $(LIBFT) -o $(NAME)
-	@echo "\n${GREEN}------------ Mandatory part compiled! ------------${RESET}"
+	@echo "\n${GREEN}------------ Mandatory part compiled! ------------${RESET}\n"
 
 $(OBJ_DIR)/%.o:	%.c
 	@mkdir -p $(OBJ_DIR)/$(BUIL_DIR)
@@ -67,7 +68,7 @@ all:	$(NAME)
 clean:
 	@make -C ./src/libft clean
 	@$(RM) $(OBJ) $(OBJ_DIR)
-	@echo "\n${GREEN}------------------- Cleaned! -------------------${RESET}\n"
+	@echo "\n${GREEN}-------------------- Cleaned! --------------------${RESET}\n"
 
 fclean:	clean
 	@make -C ./src/libft fclean
