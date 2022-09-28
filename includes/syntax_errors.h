@@ -1,24 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.h                                            :+:      :+:    :+:   */
+/*   syntax_errors.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/06 14:49:00 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/25 13:42:07 by dilopez-         ###   ########.fr       */
+/*   Created: 2022/09/22 08:52:30 by dilopez-          #+#    #+#             */
+/*   Updated: 2022/09/22 08:53:37 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef UTILS_H
-# define UTILS_H
-
-# include "structs.h"
-# include "libft.h"
+#ifndef SYNTAX_ERRORS_H
+# define SYNTAX_ERRORS_H
 
 # include <stdio.h>
-# include <stdlib.h>
 
-# include <stdlib.h>
+static int	print_syntax_error(char *str);
 
 #endif
