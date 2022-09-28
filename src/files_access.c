@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 16:52:00 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/22 10:09:44 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/27 08:15:34 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ int	check_access_outfile(t_simple_command *command, char *file_name)
 int	check_access_infile(t_simple_command *command, char *file_name)
 {
 	int		fd;
+	char	*aux;
 	char	*join;
 
 	fd = -1;
