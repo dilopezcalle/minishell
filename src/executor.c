@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 14:38:24 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/27 07:49:23 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/28 11:31:23 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,28 +17,30 @@ void	executor(t_command *commands, char *envp[])
 {
 	int	pid;
 
-	signal(SIGINT, 0);
-	pid = fork();
-	if (pid == -1)
-	{
-		perror("minishell: fork");
-		exit(1);
-	}
-	else if (!pid)
-	{
-		signal(SIGINT, 0);
+	// signal(SIGINT, 0);
+	// pid = fork();
+	// if (pid == -1)
+	// {
+	// 	perror("minishell: fork");
+	// 	/* GLOBAL = 1 */
+	// 	exit(1);
+	// }
+	// else if (!pid)
+	// {
+	// 	signal(SIGINT, 0);
 		iter_execute_commands(commands, envp);
-	}
-	else
-	{
-		signal(SIGINT, sig_handler_without_input);
-		wait(NULL);
-	}
+	// }
+	// else
+	// {
+	// 	signal(SIGINT, sig_handler_without_input);
+	// 	wait(NULL);
+	// }
 }
 
 // Recorre todos los comandos y crea las pipes que los comunicarán
 static void	iter_execute_commands(t_command *commands, char *envp[])
 {
+	int	status;
 	int	fd[2];
 	int	i;
 
@@ -48,15 +50,19 @@ static void	iter_execute_commands(t_command *commands, char *envp[])
 		if (pipe(fd) == -1)
 		{
 			perror("minishell: pipe");
-			exit(1);
+			/* GLOBAL = 1 */
+			break ;
 		}
-		create_and_execute_child(commands, fd, envp, i);
+		signal(SIGINT, 0);
+		status = create_and_execute_child(commands, fd, envp, i);
 		i++;
 	}
+	// printf("%d\n", status);
+	/* GLOBAL = 0 */
 }
 
 // Crea un proceso hijo para luego ejecutar un comando en él
-static void	create_and_execute_child(t_command *commands, int fd[2], \
+static int	create_and_execute_child(t_command *commands, int fd[2], \
 										char *envp[], int i)
 {
 	int	pid;
@@ -65,10 +71,8 @@ static void	create_and_execute_child(t_command *commands, int fd[2], \
 	if (pid == -1)
 	{
 		perror("minishell: fork");
-		exit(1);
+		return (1);
 	}
-	if (!pid)
-		signal(SIGINT, 0);
 	if (!pid && !commands->simple_commands)
 		exit(0);
 	if (!pid && i + 1 < commands->number_simple_commands)
@@ -77,14 +81,19 @@ static void	create_and_execute_child(t_command *commands, int fd[2], \
 		execute_command((commands->simple_commands)[i], fd, envp, 1);
 	else
 	{
+		signal(SIGINT, sig_handler_without_input);
 		wait(NULL);
 		close(fd[1]);
 		if (i + 1 >= commands->number_simple_commands)
-			exit(0);
+		{
+			return (0);
+			/* GLOBAL = 0 */
+		}
 		if (((commands->simple_commands)[i + 1])->infile == 0)
 			((commands->simple_commands)[i + 1])->infile = dup(fd[0]);
-		close(fd[0]);
+		close(fd[0]); 
 	}
+	return (1);
 }
 
 // Ejecuta un comando y controla la salida y entrada estandard

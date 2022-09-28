@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 08:33:15 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/25 13:58:35 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/09/28 11:11:17 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,15 @@ void	minishell(char *envp_main[])
 				{
 					if (ft_strncmp(commands->simple_commands[0]->arguments[0], \
 					"cd", 3) == 0 && commands->number_simple_commands == 1)
-						cd_builtin(commands->simple_commands[0]);
+						if (cd_builtin(commands->simple_commands[0]))
+						{/* GLOBAL = 1 */}
+						else
+						{/* GLOBAL = 0 */}
 					else
 						executor(commands, envp);
 				}
+				else
+				{/* GLOBAL = 1 */}
 				free_commands(&commands);
 			}
 		}
@@ -74,6 +79,7 @@ void	sig_handler(int signum)
 		printf("\n");
 		rl_replace_line("", 0);
 		rl_redisplay();
+		/* GLOBAL = 1 */
 	}
 }
 
@@ -82,5 +88,6 @@ void	exit_program(int code)
 {
 	rl_clear_history();
 	printf("exit\n");
+	/* GLOBAL = code */
 	exit(code);
 }
