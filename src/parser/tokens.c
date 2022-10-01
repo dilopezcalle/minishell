@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:12 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/01 16:23:44 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/01 15:17:52 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,7 +167,8 @@ int	len_expand(char	*token, int *i, char	**envp)
 	char	*getenv;
 
 	start = *i;
-	/* if (token[*i] == '?')*/
+	if (token[*i] == '?')
+		return (1);
 	while (token[*i] && ft_isvalidchar(token[*i]))
 		(*i)++;
 	substr = ft_substr(token, start, *i - start);
@@ -189,7 +190,7 @@ int	ft_lenresize(char	*token, char	**envp)
 	len = 0;
 	while (token[i])
 	{
-		if (token[i] == '$' && quote != '\'')
+		if (token[i] == '$' && quote != '\'' && token[i + 1] != '\0')
 		{
 			i++;
 			len += len_expand(token, &i, envp);
@@ -269,15 +270,16 @@ char	*clean(char	*token, char **envp)
 			new_token = ft_free_strjoin(new_token, ft_substr(token, start, i - start));
 			start = ++i;
 		}
-		else if (token[i] == '$' && quote != '\'')
+		else if (token[i] == '$' && quote != '\'' && token[i + 1] != '\0')
 		{
 			if (start != i)
 				new_token = ft_free_strjoin(new_token, ft_substr(token, start, i - start));
 			start = ++i;
 			if (token[i] == '?')
-				printf("ERROR STATUS\n"); //ft_strdup(ft_itoa(g_exit_status))
-			else if (token[i] == '_')
-				printf("LAST COMMAND\n");
+			{
+				new_token = ft_itoa(g_exit_status);
+				i++;
+			}
 			else
 			{
 				while (token[i] && ft_isvalidchar(token[i]))
@@ -285,8 +287,8 @@ char	*clean(char	*token, char **envp)
 				aux = ft_substr(token, start, i - start);
 				new_token = ft_free_strjoin(new_token, ft_getenv(aux, envp));
 				free(aux);
-				start = i;
 			}
+			start = i;
 		}
 		else
 			i++;
@@ -317,6 +319,8 @@ char	**tokens(char *line, char	**envp)
 {
 	int		words;
 	char	**token;
+	char	*prompt;
+	int		i;
 
 	words = ft_countwords(line);
 	if (words == -1)
