@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 14:38:24 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/01 08:54:24 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/01 18:15:50 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	executor(t_command *commands, char *envp[])
 	i = 0;
 	if (is_command_builtin(commands->simple_commands[0]-> arguments[0]) \
 		&& commands->number_simple_commands == 1 \
-		&& execute_parent_builtin(commands->simple_commands[0]))
+		&& execute_parent_builtin(commands->simple_commands[0], envp))
 	{
 		g_exit_status = 1;
 		return ;
@@ -93,6 +93,6 @@ static void	execute_command(t_simple_command *command, int fd[2], \
 	}
 	close(fd[1]);
 	if (is_command_builtin(command->arguments[0]))
-		execute_child_builtin(command);
+		execute_child_builtin(command, envp);
 	execve(command->path, command->arguments, envp);
 }
