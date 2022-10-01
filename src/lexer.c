@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 09:34:54 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/28 11:12:30 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/01 10:05:33 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
 // Separar en "argumentos" los comandos con sus argumentos, el input y el output
-char	**lexer(char *command_line)
+char	**lexer(char *command_line, char	**envp)
 {
 	char	**separate_line;
 	char	**command_args;
@@ -22,7 +22,7 @@ char	**lexer(char *command_line)
 
 	size = 1;
 	i = -1;
-	separate_line = tokens(command_line);
+	separate_line = tokens(command_line, envp);
 	free(command_line);
 	if (check_syntax_errors(separate_line))
 		return (free_double_array((void **)separate_line), NULL);
@@ -88,7 +88,7 @@ static int	check_end_command(char **separate, int i, int *start)
 	return (end);
 }
 
-// Agrega al final de el array command_args los strings 
+// Agrega al final de el array command_args los strings
 // de los indices start y end de separate_line
 static int	append_command_array(char ***command_args, char **separate, \
 									int start, int end)

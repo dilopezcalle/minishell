@@ -1,31 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_getenv.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/22 09:28:40 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/01 10:50:59 by almirand         ###   ########.fr       */
+/*   Created: 2022/10/01 09:56:01 by almirand          #+#    #+#             */
+/*   Updated: 2022/10/01 09:56:56 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#ifndef FT_GETENV_H
+# define FT_GETENV_H
 
-/*
- * Calculates the length of a string
- *
- * @param {str} String to measure.
- * @return {i} Length of str
- */
-size_t	ft_strlen(const char *str)
-{
-	size_t	i;
+char	*ft_getenv(char	*var, char	**envp);
 
-	i = 0;
-	if (str == NULL)
-		return (0);
-	while (str[i])
-		i++;
-	return (i);
-}
+#endif

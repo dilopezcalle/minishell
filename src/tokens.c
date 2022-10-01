@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:12 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/28 11:39:21 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/01 12:51:23 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "structs.h"
 #include "libft.h"
+#include "ft_getenv.h"
 #include <readline/readline.h>
 
 t_command	*parser(char *command_line);
@@ -46,10 +47,13 @@ static void	treat_quote(int	*i, int	*n_words, char	*s)
 			(*i)++;
 	}
 	if (s[*i] == '\0' && quote != 0)
+	{
+		printf("minishell: syntax error, quotes not closed.\n");
 		*n_words = -1;
+	}
 }
 
-static void	treat_split(int	*i, int	*n_words, char	*s)
+static int	treat_split(int	*i, int	*n_words, char	*s)
 {
 	while (s[*i] != ' ' && s[*i] != '\'' && s[*i] != '"' && s[*i])
 	{
@@ -67,6 +71,11 @@ static void	treat_split(int	*i, int	*n_words, char	*s)
 		}
 		else if (s[(*i)++] == '|')
 		{
+			if (s[(*i)] == '|')
+			{
+				printf("minishell: syntax error near unexpected token `|'\n");
+				return (-1);
+			}
 			(*n_words)++;
 			if (s[*i] != ' ' && s[*i] != '<' && s[*i] != '>' && s[*i] != '\0')
 				(*n_words)++;
@@ -74,6 +83,7 @@ static void	treat_split(int	*i, int	*n_words, char	*s)
 		}
 	}
 	treat_quote(i, n_words, s);
+	return (0);
 }
 
 static int	ft_countwords(char	*s)
@@ -89,7 +99,8 @@ static int	ft_countwords(char	*s)
 			i++;
 		if (s[i] != '\0' && s[i] != '<' && s[i] != '>' && s[i] != '|')
 			n_words++;
-		treat_split(&i, &n_words, s);
+		if (treat_split(&i, &n_words, s) == -1)
+			return (-1);
 	}
 	return (n_words);
 }
@@ -120,7 +131,7 @@ char	**tokenize(char	*line, int n_words)
 			quote = line[i];
 		else if (quote == line[i])
 			quote = 0;
-		if (start >= 0 && quote == 0 &&(line[i + 1] == ' ' || line[i + 1] == '|' || line[i + 1] == '<' || line[i + 1] == '>' || i + 1 == size)) //quitar line[i]
+		if (start >= 0 && quote == 0 &&(line[i + 1] == ' ' || line[i + 1] == '|' || line[i + 1] == '<' || line[i + 1] == '>' || i + 1 == size))
 		{
 			token[j++] = ft_substr(line, start, i - start + 1);
 			start = -1;
@@ -135,7 +146,6 @@ char	**tokenize(char	*line, int n_words)
 			else
 				token[j++] = ft_substr(line, i, 1);
 		}
-		//WIP: una palabra o un pipe dan new line, problemas basura con clean_expand, hola$USER@, $? $$ $_
 	}
 	token[j] = NULL;
 	return (token);
@@ -149,25 +159,26 @@ int	ft_isvalidchar(int c)
 	return (0);
 }
 
-int	len_expand(char	*token, int *i)
+int	len_expand(char	*token, int *i, char	**envp)
 {
 	int		start;
 	char	*substr;
 	int		size;
+	char	*getenv;
 
 	start = *i;
-	/* if (token[*i] == '?')
-	else if (token[*i] == '$')
-	else if (token[*i] == '_') */
+	/* if (token[*i] == '?')*/
 	while (token[*i] && ft_isvalidchar(token[*i]))
 		(*i)++;
 	substr = ft_substr(token, start, *i - start);
-	size = ft_strlen(getenv(substr));
+	getenv = ft_getenv(substr, envp);
+	size = ft_strlen(getenv);
 	free (substr);
+	free (getenv);
 	return (size);
 }
 
-int	ft_lenresize(char	*token)
+int	ft_lenresize(char	*token, char	**envp)
 {
 	int	i;
 	int	quote;
@@ -181,7 +192,7 @@ int	ft_lenresize(char	*token)
 		if (token[i] == '$' && quote != '\'')
 		{
 			i++;
-			len += len_expand(token, &i);
+			len += len_expand(token, &i, envp);
 		}
 		else if (token[i] == '"' || token[i] == '\'')
 		{
@@ -222,18 +233,17 @@ char	*ft_free_strjoin(char *s1, char *s2)
 	return (join);
 }
 
-char	*clean(char	*token)
+char	*clean(char	*token, char **envp)
 {
 	int		i;
 	char	*new_token;
 	int		start;
 	int		quote;
 	char	*aux;
-	char	*aux2;
 	int		size;
 
 	i = 0;
-	size = ft_lenresize(token);
+	size = ft_lenresize(token, envp);
 	quote = 0;
 	new_token = (char *) calloc((size + 1), sizeof(char));
 	if (size == 0)
@@ -265,20 +275,16 @@ char	*clean(char	*token)
 				new_token = ft_free_strjoin(new_token, ft_substr(token, start, i - start));
 			start = ++i;
 			if (token[i] == '?')
-				printf("ERROR STATUS\n"); //ft_strdup(ft_itoa(g_status))
+				printf("ERROR STATUS\n"); //ft_strdup(ft_itoa(g_exit_status))
 			else if (token[i] == '_')
 				printf("LAST COMMAND\n");
-			else if (token[i] == '$')
-				printf("PID\n"); //ft_strdup(ft_itoa(pid))
 			else
 			{
 				while (token[i] && ft_isvalidchar(token[i]))
 					i++;
 				aux = ft_substr(token, start, i - start);
-				aux2 = new_token;
-				new_token = ft_strjoin(aux2, getenv(aux));
+				new_token = ft_free_strjoin(new_token, ft_getenv(aux, envp));
 				free(aux);
-				free(aux2);
 				start = i;
 			}
 		}
@@ -290,7 +296,7 @@ char	*clean(char	*token)
 	return (new_token);
 }
 
-char	**clean_expand(int words, char	**token)
+char	**clean_expand(int words, char	**token, char	**envp)
 {
 	int		i;
 	char	**new_token;
@@ -300,14 +306,14 @@ char	**clean_expand(int words, char	**token)
 	new_token[words] = NULL;
 	while (i < words)
 	{
-		new_token[i] = clean(token[i]);
+		new_token[i] = clean(token[i], envp);
 		free(token[i++]);
 	}
 	free(token);
 	return (new_token);
 }
 
-char	**tokens(char *line)
+char	**tokens(char *line, char	**envp)
 {
 	int		words;
 	char	**token;
@@ -316,12 +322,7 @@ char	**tokens(char *line)
 
 	words = ft_countwords(line);
 	if (words == -1)
-	{
-		printf("syntax error\n");
 		return (NULL);
-	}
-	token = clean_expand(words, tokenize(line, words));
-	if (!token)
-		return (free(token), NULL);
+	token = clean_expand(words, tokenize(line, words), envp);
 	return (token);
 }

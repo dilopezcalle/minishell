@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 08:33:15 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/28 11:11:17 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/01 11:59:56 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include "ft_getenv.h"
 
 // Lee la línea en búcle y llama al parser y executor
 void	minishell(char *envp_main[])
@@ -28,7 +29,7 @@ void	minishell(char *envp_main[])
 		if (line[0] != '\0')
 		{
 			add_history(line);
-			commands = parser(line);
+			commands = parser(line, envp);
 			if (commands)
 			{
 				if (ft_strncmp(commands->simple_commands[0]->arguments[0], \

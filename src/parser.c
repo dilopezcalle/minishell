@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:16:19 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/20 18:20:11 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/01 10:03:37 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@ static void	create_argument(t_simple_command *command, char *arg);
 void		free_commands(t_command **commands_dir);
 
 // Crea la estructura general de los comandos que se utilizarán
-t_command	*parser(char *command_line)
+t_command	*parser(char *command_line, char	**envp)
 {
 	t_command	*commands;
 	char		**command_args;
 	int			num_command;
 	int			i;
 
-	command_args = lexer(command_line);
+	command_args = lexer(command_line, envp);
 	if (!command_args)
 		return (0);
 	i = -1;

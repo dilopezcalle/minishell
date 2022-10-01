@@ -1,31 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   ft_getenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/02/22 09:28:40 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/01 10:50:59 by almirand         ###   ########.fr       */
+/*   Created: 2022/09/28 14:41:13 by almirand          #+#    #+#             */
+/*   Updated: 2022/10/01 12:49:39 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-/*
- * Calculates the length of a string
- *
- * @param {str} String to measure.
- * @return {i} Length of str
- */
-size_t	ft_strlen(const char *str)
+char	*ft_getenv(char	*var, char	**envp)
 {
-	size_t	i;
+	int	i;
+	int	j;
 
 	i = 0;
-	if (str == NULL)
-		return (0);
-	while (str[i])
+	j = 0;
+	ft_strlcat(var, "=", ft_strlen(var));
+	while (envp[i])
+	{
+		if (ft_strncmp(envp[i], var, ft_strlen(var)) == 0)
+		{
+			while (envp[i][j] != '=' && envp[i][j])
+				j++;
+			return (ft_substr(envp[i], j + 1, ft_strlen(envp[i]) - ft_strlen(var)));
+		}
 		i++;
-	return (i);
+	}
+	return (NULL);
 }
