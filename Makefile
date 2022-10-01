@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: almirand <almirand@student.42.fr>          +#+  +:+       +#+         #
+#    By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 15:17:17 by dilopez-          #+#    #+#              #
-#    Updated: 2022/10/01 11:59:24 by almirand         ###   ########.fr        #
+#    Updated: 2022/10/01 16:11:44 by dilopez-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,20 +25,23 @@ CFLAGS			=	-I $(INC_DIR) -g3 #-Wall -Werror -Wextra
 RLFLAGS			=	-lreadline -L /Users/$(USER)/.brew/opt/readline/lib \
 					-I /Users/$(USER)/.brew/opt/readline/include
 
-SRCS			=	$(SRC_DIR)/main.c			\
-					$(SRC_DIR)/utils.c			\
-					$(SRC_DIR)/syntax_errors.c	\
-					$(SRC_DIR)/parser.c			\
-					$(SRC_DIR)/lexer.c			\
-					$(SRC_DIR)/tokens.c			\
-					$(SRC_DIR)/access_parser.c	\
-					$(SRC_DIR)/files_access.c	\
-					$(SRC_DIR)/executor.c		\
-					$(SRC_DIR)/minishell.c		\
+SRCS			=	$(SRC_DIR)/minishell.c			\
+					$(SRC_DIR)/executor.c			\
+					$(SRC_DIR)/signals.c			\
+					$(SRC_DIR)/utils.c				\
+					$(SRC_DIR)/main.c				\
+					$(BUIL_DIR)/builtin_parent.c	\
+					$(BUIL_DIR)/builtin_child.c		\
+					$(BUIL_DIR)/exit.c				\
+					$(BUIL_DIR)/echo.c				\
+					$(BUIL_DIR)/cd.c				\
+					$(PARSER_DIR)/syntax_errors.c	\
+					$(PARSER_DIR)/access_parser.c	\
+					$(PARSER_DIR)/files_access.c	\
 					$(SRC_DIR)/ft_getenv.c			\
-					$(BUIL_DIR)/builtin.c		\
-					$(BUIL_DIR)/echo.c			\
-					$(BUIL_DIR)/cd.c			\
+					$(PARSER_DIR)/parser.c			\
+					$(PARSER_DIR)/tokens.c			\
+					$(PARSER_DIR)/lexer.c			\
 
 OBJS			=	$(SRCS:.c=.o)
 PREFIXED		=	$(addprefix $(OBJ_DIR)/, $(OBJS))
