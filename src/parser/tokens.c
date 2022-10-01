@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:12 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/01 15:17:52 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/01 17:03:53 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,7 +285,8 @@ char	*clean(char	*token, char **envp)
 				while (token[i] && ft_isvalidchar(token[i]))
 					i++;
 				aux = ft_substr(token, start, i - start);
-				new_token = ft_free_strjoin(new_token, ft_getenv(aux, envp));
+				if (ft_getenv(aux, envp))
+					new_token = ft_free_strjoin(new_token, ft_getenv(aux, envp));
 				free(aux);
 			}
 			start = i;
