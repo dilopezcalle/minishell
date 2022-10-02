@@ -1,26 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   builtin_child.c                                    :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/23 07:57:04 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/01 18:16:36 by almirand         ###   ########.fr       */
+/*   Created: 2022/10/01 17:29:45 by almirand          #+#    #+#             */
+/*   Updated: 2022/10/01 17:59:14 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "builtin_child.h"
+#include <stdio.h>
 
-void	env_builtin(char	**envp);
-
-int	execute_child_builtin(t_simple_command *command, char	**envp)
+void	env_builtin(char	**envp)
 {
-	if (ft_strncmp(command->arguments[0], "echo", 5) == 0)
-		echo_builtin(command);
-	else if (ft_strncmp(command->arguments[0], "env", 6) == 0)
-		env_builtin(envp);
-	else
-		exit (0);
-	return (0);
+	int	i;
+
+	i = 0;
+	while (envp[i])
+		printf("%s\n", envp[i++]);
+	//g_exit_status = 0;
 }
