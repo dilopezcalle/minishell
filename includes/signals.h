@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 11:58:09 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/01 08:55:59 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/02 15:46:58 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,12 @@
 
 # include <readline/readline.h>
 # include <stdlib.h>
-# include <stdio.h>
 # include <signal.h>
+# include <stdio.h>
 
 # include "structs.h"
 
 void	rl_replace_line(const char *text, int clear_undo);
+//int 	rl_insert_text (char *text);
 
 #endif

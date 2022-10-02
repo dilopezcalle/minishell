@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:12 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/01 18:28:44 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/02 10:01:06 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -345,8 +345,6 @@ char	**tokens(char *line, char	**envp)
 {
 	int		words;
 	char	**token;
-	char	*prompt;
-	int		i;
 
 	words = ft_countwords(line);
 	if (words == -1)

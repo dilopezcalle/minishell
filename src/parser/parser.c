@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:16:19 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/01 16:21:47 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/02 11:46:44 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	create_argument(t_simple_command *command, char *arg);
 void		free_commands(t_command **commands_dir);
 
 // Crea la estructura general de los comandos que se utilizarán
-t_command	*parser(char *command_line, char	**envp)
+t_command	*parser(char *command_line, char **envp)
 {
 	t_command	*commands;
 	char		**command_args;

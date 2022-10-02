@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 08:33:15 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/01 16:21:27 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/02 16:22:19 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,34 +17,40 @@
 void	minishell(char *envp_main[])
 {
 	t_command	*commands;
-	char		*line;
 	char		**envp;
 
 	envp = ft_copy_double_array(envp_main);
 	while (1)
 	{
+		//rl_catch_signals = 0;
 		signal(SIGINT, sig_handler);
-		signal(SIGQUIT, exit_program);
-		line = get_line();
-		if (line)
-		{
-			commands = parser(line, envp);
-			if (!commands)
-				continue ;
-			if (!access_parser(commands, envp))
-			{
-				executor(commands, envp);
-				if (ft_strncmp(commands->simple_commands[0]->arguments[0], \
-					"exit", 5) == 0)
-					break ;
-			}
-			else
-				g_exit_status = 1;
-			free_commands(&commands);
-		}
+		signal(SIGQUIT, sig_handler);
+		if (check_and_execute_line(get_line(), envp))
+			break ;
 	}
-	free_commands(&commands);
 	exit_program(g_exit_status);
+}
+
+static int	check_and_execute_line(char *line, char **envp)
+{
+	t_command	*commands;
+
+	if (!line)
+		return (0);
+	commands = parser(line, envp);
+	if (!commands)
+		return (0);
+	if (!access_parser(commands, envp))
+	{
+		executor(commands, envp);
+		if (ft_strncmp(commands->simple_commands[0]->arguments[0], \
+			"exit", 5) == 0)
+			return (free_commands(&commands), 1);
+	}
+	else
+		g_exit_status = 1;
+	free_commands(&commands);
+	return (0);
 }
 
 // Ejecuta y devuelve readline. Comprueba que se escriba algo

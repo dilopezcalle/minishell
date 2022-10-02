@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 14:38:24 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/02 09:28:18 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/02 13:08:17 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,10 @@ void	executor(t_command *commands, char *envp[])
 		{
 			perror("minishell: pipe");
 			g_exit_status = 1;
-			break ;
+			return ;
 		}
 		signal(SIGINT, 0);
+		signal(SIGQUIT, 0);
 		create_and_execute_child(commands, fd, envp, i);
 		i++;
 	}
@@ -59,20 +60,15 @@ static int	create_and_execute_child(t_command *commands, int fd[2], \
 		execute_command((commands->simple_commands)[i], fd, envp, 0);
 	else if (!pid && i + 1 >= commands->number_simple_commands)
 		execute_command((commands->simple_commands)[i], fd, envp, 1);
-	else
-	{
-		signal(SIGINT, sig_handler_without_input);
-		close(fd[1]);
-		wait(NULL);
-		if (i + 1 >= commands->number_simple_commands)
-		{
-			close(fd[0]);
-			return (0);
-		}
-		if (((commands->simple_commands)[i + 1])->infile == 0)
-			((commands->simple_commands)[i + 1])->infile = dup(fd[0]);
-		close(fd[0]);
-	}
+	signal(SIGINT, sig_handler_without_input);
+	signal(SIGQUIT, sig_handler_without_input);
+	close(fd[1]);
+	wait(NULL);
+	if (i + 1 >= commands->number_simple_commands)
+		return (close(fd[0]), 0);
+	if (((commands->simple_commands)[i + 1])->infile == 0)
+		((commands->simple_commands)[i + 1])->infile = dup(fd[0]);
+	close(fd[0]);
 	return (1);
 }
 

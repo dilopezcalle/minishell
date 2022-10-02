@@ -1,4 +1,7 @@
 .vscode
+.DS_Store
+._.DS_Store
 outfile
 infile
 a.out
+a.out.dSYM

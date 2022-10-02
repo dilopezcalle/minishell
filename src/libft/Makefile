@@ -6,7 +6,7 @@
 #    By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/31 11:04:00 by almirand          #+#    #+#              #
-#    Updated: 2022/09/23 08:24:28 by dilopez-         ###   ########.fr        #
+#    Updated: 2022/10/02 10:05:12 by dilopez-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,7 +79,7 @@ RESET			=	"\\x1b[37m"
 
 $(NAME):		$(PREFIXED)
 	@printf \
-	"$(YELLOW)------------- Libft's files compiled -------------\n$(RESET)%-33.33s\r"
+	"$(YELLOW)--------------- Libft's files compiled ---------------\n$(RESET)%-33.33s\r"
 	@ar -crs $@ $^
 
 $(OBJ_DIR)/%.o:	%.c
