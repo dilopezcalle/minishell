@@ -6,11 +6,13 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 13:23:51 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/01 08:36:39 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/01 18:26:04 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "utils.h"
+
+char	*ft_getenv(char	*var, char	**envp);
 
 // Liberar la memotia de un array doble
 void	free_double_array(void **array)
@@ -41,17 +43,19 @@ int	is_command_builtin(char *command)
 	return (0);
 }
 
-int	join_home_folder(char **str_dir)
+int	join_home_folder(char **str_dir, char **envp)
 {
 	char	*home;
 	char	*new_str;
 
-	home = getenv("HOME");
+	home = ft_getenv("HOME", envp);
 	if (!home)
 		return (1);
 	new_str = ft_strjoin(home, (*str_dir) + 1);
+	free(home);
 	free(*str_dir);
 	*str_dir = ft_strdup(new_str);
+	free(new_str);
 	return (0);
 }
 

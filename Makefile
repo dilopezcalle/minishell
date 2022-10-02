@@ -6,7 +6,7 @@
 #    By: almirand <almirand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 15:17:17 by dilopez-          #+#    #+#              #
-#    Updated: 2022/10/01 17:58:24 by almirand         ###   ########.fr        #
+#    Updated: 2022/10/02 09:02:12 by dilopez-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ PARSER_DIR		=	$(SRC_DIR)/parser
 
 RM				=	rm -rf
 CC				=	gcc
-CFLAGS			=	-I $(INC_DIR) -g3 #-Wall -Werror -Wextra
+CFLAGS			=	-I $(INC_DIR) -g3 -Wall -Werror -Wextra
 RLFLAGS			=	-lreadline -L /Users/$(USER)/.brew/opt/readline/lib \
 					-I /Users/$(USER)/.brew/opt/readline/include
 

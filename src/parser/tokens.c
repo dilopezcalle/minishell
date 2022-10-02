@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:12 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/01 17:03:53 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/01 18:28:44 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ t_command	*parser(char *command_line);
 char		**lexer(char *command_line);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 size_t		ft_strlen(const char *s);
+char	*ft_getenv(char	*var, char	**envp);
+int	join_home_folder(char **str_dir, char **envp);
 
 static void	treat_quote(int	*i, int	*n_words, char	*s)
 {
@@ -179,6 +181,18 @@ int	len_expand(char	*token, int *i, char	**envp)
 	return (size);
 }
 
+int	get_virgulilla_size(char **envp)
+{
+	char	*home;
+	int		len;
+
+	home = ft_getenv("HOME", envp);
+	len = ft_strlen(home);
+	if (home)
+		free(home);
+	return (len);
+}
+
 int	ft_lenresize(char	*token, char	**envp)
 {
 	int	i;
@@ -194,6 +208,11 @@ int	ft_lenresize(char	*token, char	**envp)
 		{
 			i++;
 			len += len_expand(token, &i, envp);
+		}		
+		else if (quote != '\'' && quote != '"' && (i == 0 && token[i] == '~' && (token[i + 1] == '\0' || token[i + 1] == '/')))
+		{
+			len += get_virgulilla_size(envp);
+			i++;
 		}
 		else if (token[i] == '"' || token[i] == '\'')
 		{
@@ -290,6 +309,12 @@ char	*clean(char	*token, char **envp)
 				free(aux);
 			}
 			start = i;
+		}
+		else if (quote != '\'' && quote != '"' && (i == 0 && token[i] == '~' && (token[i + 1] == '\0' || token[i + 1] == '/')))
+		{
+			if (join_home_folder(&new_token, envp))
+				return (0);
+			start = ++i;
 		}
 		else
 			i++;
