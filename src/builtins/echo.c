@@ -6,13 +6,13 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 08:25:23 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/01 17:13:06 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/02 08:50:11 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "echo.h"
 
-int	echo_builtin(t_simple_command *command)
+void	echo_builtin(t_simple_command *command)
 {
 	char	*flag_n;
 	int		num_arg;
@@ -20,7 +20,9 @@ int	echo_builtin(t_simple_command *command)
 
 	num_arg = 1;
 	flag_n = 0;
-	while (ft_strncmp(command->arguments[num_arg], "-n", 2) == 0)
+	i = 0;
+	while (command->arguments[num_arg] \
+			&& ft_strncmp(command->arguments[num_arg], "-n", 2) == 0)
 	{
 		i = 1;
 		flag_n = command->arguments[num_arg];
@@ -36,10 +38,9 @@ int	echo_builtin(t_simple_command *command)
 	if (!flag_n || (flag_n && flag_n[i] != '\0'))
 		write(1, "\n", 1);
 	exit(0);
-	return (0);
 }
 
-int	execute_echo(char **arguments)
+static void	execute_echo(char **arguments)
 {
 	int	i;
 
@@ -51,5 +52,4 @@ int	execute_echo(char **arguments)
 			write(1, " ", 1);
 		i++;
 	}
-	return (0);
 }
