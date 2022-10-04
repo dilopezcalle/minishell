@@ -6,11 +6,12 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 17:29:45 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/01 17:59:14 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/03 17:53:57 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include "minishell.h"
 
 void	env_builtin(char	**envp)
 {
@@ -19,5 +20,5 @@ void	env_builtin(char	**envp)
 	i = 0;
 	while (envp[i])
 		printf("%s\n", envp[i++]);
-	//g_exit_status = 0;
+	g_exit_status = 0;
 }

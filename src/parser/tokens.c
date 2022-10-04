@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:12 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/02 10:01:06 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/03 16:44:27 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ int	ft_lenresize(char	*token, char	**envp)
 		{
 			i++;
 			len += len_expand(token, &i, envp);
-		}		
+		}
 		else if (quote != '\'' && quote != '"' && (i == 0 && token[i] == '~' && (token[i + 1] == '\0' || token[i + 1] == '/')))
 		{
 			len += get_virgulilla_size(envp);
