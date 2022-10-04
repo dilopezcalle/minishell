@@ -6,14 +6,14 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 14:38:24 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/02 13:08:17 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/04 09:18:01 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "executor.h"
 
 // Recorre todos los comandos y crea las pipes que los comunicarán
-void	executor(t_command *commands, char *envp[])
+void	executor(t_command *commands, char **envp[])
 {
 	int	fd[2];
 	int	i;
@@ -36,7 +36,7 @@ void	executor(t_command *commands, char *envp[])
 		}
 		signal(SIGINT, 0);
 		signal(SIGQUIT, 0);
-		create_and_execute_child(commands, fd, envp, i);
+		create_and_execute_child(commands, fd, *envp, i);
 		i++;
 	}
 	g_exit_status = 0;

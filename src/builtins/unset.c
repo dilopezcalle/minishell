@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 17:36:08 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/03 17:55:39 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/04 09:37:44 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	unset_builtin(char	*var, char	***envp)
 	g_exit_status = 0;
 	if (!var)
 		return (0);
-	new_envp = (char **) malloc(ft_arraylen(*envp) * sizeof(char *));
+	new_envp = (char **) malloc((ft_arraylen(*envp) + 1) * sizeof(char *));
 	var2 = ft_strjoin(var, "=");
 	while ((*envp)[i])
 	{
@@ -48,7 +48,7 @@ int	unset_builtin(char	*var, char	***envp)
 	}
 	new_envp[j] = NULL;
 	free_double_array((void **)*envp);
-	envp = &new_envp;
+	*envp = new_envp;
 	free(var2);
 	return (0);
 }

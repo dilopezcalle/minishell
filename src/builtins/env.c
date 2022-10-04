@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 17:29:45 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/03 17:53:57 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/04 09:29:53 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,4 +21,5 @@ void	env_builtin(char	**envp)
 	while (envp[i])
 		printf("%s\n", envp[i++]);
 	g_exit_status = 0;
+	exit(0);
 }

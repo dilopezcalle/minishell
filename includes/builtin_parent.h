@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 14:00:42 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/02 10:25:46 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/04 09:21:25 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,6 @@
 # include "structs.h"
 # include "libft.h"
 
-int	cd_builtin(t_simple_command *command, char **envp);
+int	cd_builtin(t_simple_command *command, char **envp[]);
 
 #endif

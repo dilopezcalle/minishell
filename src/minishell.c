@@ -6,12 +6,11 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 08:33:15 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/02 16:22:19 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/04 12:08:50 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-#include "ft_getenv.h"
 
 // Lee la línea en búcle y llama al parser y executor
 void	minishell(char *envp_main[])
@@ -22,25 +21,26 @@ void	minishell(char *envp_main[])
 	envp = ft_copy_double_array(envp_main);
 	while (1)
 	{
-		//rl_catch_signals = 0;
+		rl_catch_signals = 0;
+		rl_set_signals();
 		signal(SIGINT, sig_handler);
 		signal(SIGQUIT, sig_handler);
-		if (check_and_execute_line(get_line(), envp))
+		if (check_and_execute_line(get_line(), &envp))
 			break ;
 	}
 	exit_program(g_exit_status);
 }
 
-static int	check_and_execute_line(char *line, char **envp)
+static int	check_and_execute_line(char *line, char **envp[])
 {
 	t_command	*commands;
 
 	if (!line)
 		return (0);
-	commands = parser(line, envp);
+	commands = parser(line, *envp);
 	if (!commands)
 		return (0);
-	if (!access_parser(commands, envp))
+	if (!access_parser(commands, *envp))
 	{
 		executor(commands, envp);
 		if (ft_strncmp(commands->simple_commands[0]->arguments[0], \

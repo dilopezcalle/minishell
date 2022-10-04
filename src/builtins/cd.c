@@ -6,13 +6,13 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 09:21:48 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/02 13:00:16 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/04 09:22:05 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cd.h"
 
-int	cd_builtin(t_simple_command *command, char **envp)
+int	cd_builtin(t_simple_command *command, char **envp[])
 {
 	char	*path;
 
@@ -28,11 +28,11 @@ int	cd_builtin(t_simple_command *command, char **envp)
 	return (0);
 }
 
-static int	cd_without_argument(t_simple_command *command, char **envp)
+static int	cd_without_argument(t_simple_command *command, char **envp[])
 {
 	char	*home;
 
-	home = ft_getenv("HOME", envp);
+	home = ft_getenv("HOME", *envp);
 	if (!home)
 		return (1);
 	if (chdir(home) != 0)
@@ -42,7 +42,6 @@ static int	cd_without_argument(t_simple_command *command, char **envp)
 		perror("minishell: cd: ~");
 		return (1);
 	}
-	printf("llega\n");
 	free(home);
 	return (0);
 }

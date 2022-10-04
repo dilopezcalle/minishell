@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: almirand <almirand@student.42.fr>          +#+  +:+       +#+         #
+#    By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 15:17:17 by dilopez-          #+#    #+#              #
-#    Updated: 2022/10/03 18:35:36 by almirand         ###   ########.fr        #
+#    Updated: 2022/10/04 11:51:09 by dilopez-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,31 +23,28 @@ PARSER_DIR		=	$(SRC_DIR)/parser
 RM				=	rm -rf
 CC				=	gcc
 CFLAGS			=	-I $(INC_DIR) -g3 #-Wall -Werror -Wextra
-RLFLAGS			=	-lreadline -L/Users/$(USER)/.brew/opt/readline/lib \
-					-I/Users/$(USER)/.brew/opt/readline/include
+RLFLAGS			=	-lreadline -L${HOME}/.brew/opt/readline/lib \
+					#-I/Users/$(USER)/.brew/opt/readline/include
 
-SRCS			=	$(SRC_DIR)/minishell.c			\
-					$(PARSER_DIR)/files_access.c	\
-					$(SRC_DIR)/ft_getenv.c			\
-					$(SRC_DIR)/executor.c			\
-					$(SRC_DIR)/signals.c			\
-					$(SRC_DIR)/utils.c				\
-					$(SRC_DIR)/main.c				\
+SRCS			=	$(BUIL_DIR)/env.c				\
 					$(BUIL_DIR)/echo.c				\
-					$(BUIL_DIR)/cd.c				\
-					$(BUIL_DIR)/env.c				\
 					$(BUIL_DIR)/unset.c				\
-					$(BUIL_DIR)/export.c				\
+					$(BUIL_DIR)/exit.c				\
+					$(BUIL_DIR)/cd.c				\
+					$(SRC_DIR)/ft_getenv.c			\
+					$(BUIL_DIR)/builtin_child.c		\
+					$(BUIL_DIR)/builtin_parent.c	\
+					$(SRC_DIR)/executor.c			\
+					$(PARSER_DIR)/files_access.c	\
+					$(PARSER_DIR)/access_parser.c	\
+					$(PARSER_DIR)/syntax_errors.c	\
 					$(PARSER_DIR)/tokens.c			\
 					$(PARSER_DIR)/lexer.c			\
 					$(PARSER_DIR)/parser.c			\
-					$(PARSER_DIR)/access_parser.c	\
-					$(PARSER_DIR)/syntax_errors.c	\
-					$(BUIL_DIR)/builtin_child.c		\
-					$(BUIL_DIR)/builtin_parent.c	\
-					$(BUIL_DIR)/exit.c				\
-#					$(BUIL_DIR)/env.c
-#					$(BUIL_DIR)/unset.c
+					$(SRC_DIR)/signals.c			\
+					$(SRC_DIR)/utils.c				\
+					$(SRC_DIR)/minishell.c			\
+					$(SRC_DIR)/main.c				\
 
 OBJS			=	$(SRCS:.c=.o)
 PREFIXED		=	$(addprefix $(OBJ_DIR)/, $(OBJS))
