@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+         #
+#    By: almirand <almirand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 15:17:17 by dilopez-          #+#    #+#              #
-#    Updated: 2022/10/04 11:51:09 by dilopez-         ###   ########.fr        #
+#    Updated: 2022/10/05 15:42:40 by almirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,7 @@ RLFLAGS			=	-lreadline -L${HOME}/.brew/opt/readline/lib \
 
 SRCS			=	$(BUIL_DIR)/env.c				\
 					$(BUIL_DIR)/echo.c				\
+					$(BUIL_DIR)/export.c			\
 					$(BUIL_DIR)/unset.c				\
 					$(BUIL_DIR)/exit.c				\
 					$(BUIL_DIR)/cd.c				\

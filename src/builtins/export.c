@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 17:57:45 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/03 18:54:30 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/05 16:03:19 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ int	export_print(char	**envp)
 	i = 0;
 	while (envp[i])
 		printf("declare -x %s\n", envp[i++]);
-	g_exit_status = 0;
 	return (0);
 }
 
@@ -44,7 +43,7 @@ void	export_create(char	*var, char	***envp)
 	new_envp[j++] = ft_strdup(var);
 	new_envp[j] = NULL;
 	free_double_array((void **)*envp);
-	envp = &new_envp;
+	*envp = new_envp;
 }
 
 char	*export_varname(char	*var)
@@ -71,7 +70,7 @@ int	check_replace(char	*var, char	***envp)
 	var_name = export_varname(var);
 	while ((*envp)[i])
 	{
-		if (ft_strncmp((*envp)[i], var_name, ft_strlen(var_name) != 0))
+		if (ft_strncmp((*envp)[i], var_name, ft_strlen(var_name)) == 0)
 		{
 			free((*envp)[i]);
 			(*envp)[i] = ft_strdup(var);
@@ -93,12 +92,11 @@ int	export_builtin(char	*var, char	***envp)
 	if (var[0] == '=')
 	{
 		g_exit_status = 1;
-		printf("export: '%s': not a valid identifier", var);
+		printf("export: '%s': not a valid identifier\n", var);
 		return (1);
 	}
 	exists = check_replace(var, envp);
-	if (exists == 0) //crear nuevo envp con la variable si no existe
+	if (exists == 0)
 		export_create(var, envp);
-	env_builtin(*envp);
 	return (0);
 }
