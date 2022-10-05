@@ -6,11 +6,14 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 08:33:15 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/04 12:08:50 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/05 08:10:46 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+#include <sys/ioctl.h>
+#include <unistd.h>
+#include <stdio.h>
 
 // Lee la línea en búcle y llama al parser y executor
 void	minishell(char *envp_main[])
@@ -21,8 +24,8 @@ void	minishell(char *envp_main[])
 	envp = ft_copy_double_array(envp_main);
 	while (1)
 	{
-		rl_catch_signals = 0;
-		rl_set_signals();
+		// rl_catch_signals = 0;
+		// rl_set_signals();
 		signal(SIGINT, sig_handler);
 		signal(SIGQUIT, sig_handler);
 		if (check_and_execute_line(get_line(), &envp))

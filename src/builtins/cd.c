@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 09:21:48 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/04 09:22:05 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/05 08:13:55 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,10 @@ int	cd_builtin(t_simple_command *command, char **envp[])
 	//path = getcwd(NULL, 0);
 	if (!command->arguments[1])
 		return (cd_without_argument(command, envp));
-	path = command->arguments[1];
+	if (command->arguments[1][0] == '-' && command->arguments[1][1] == '\0')
+		path = ft_getenv("OLDPWD", *envp);
+	else
+		path = command->arguments[1];
 	if (chdir(path) != 0)
 	{
 		printf("minishell: cd: %s: %s\n", path, strerror(errno));
