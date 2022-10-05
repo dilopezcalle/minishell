@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 11:35:57 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/02 13:03:36 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/05 16:17:13 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	*ft_getenv(char	*var, char	**envp)
 	var2 = ft_strjoin(var, "=");
 	while (envp[i])
 	{
-		if (ft_strncmp(envp[i], var2, ft_strlen(var)) == 0)
+		if (ft_strncmp(envp[i], var2, ft_strlen(var2)) == 0)
 		{
 			while (envp[i][j] != '=' && envp[i][j])
 				j++;
