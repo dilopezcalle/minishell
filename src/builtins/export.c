@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 17:57:45 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/05 16:03:19 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/05 16:24:51 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ int	check_replace(char	*var, char	***envp)
 	return (0);
 }
 
-int	export_builtin(char	*var, char	***envp)
+int	export_builtin(char *var, char ***envp)
 {
 	int		exists;
 

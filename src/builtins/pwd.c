@@ -1,30 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cd.h                                               :+:      :+:    :+:   */
+/*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/25 11:58:09 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/05 16:42:21 by dilopez-         ###   ########.fr       */
+/*   Created: 2022/10/05 16:17:09 by dilopez-          #+#    #+#             */
+/*   Updated: 2022/10/05 16:22:29 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef CD_H
-# define CD_H
-
+# include <unistd.h>
 # include <stdlib.h>
-# include <string.h>
-# include <errno.h>
+# include <stdio.h>
 
 # include "structs.h"
-# include "libft.h"
 
-static int	cd_without_argument(t_simple_command *command, char **envp[]);
-static int	export_pwd(char *var, char **envp[]);
+int	pwd_builtin(t_simple_command *command)
+{
+	char	*path;
 
-int			export_builtin(char *var, char ***envp);
-char		*ft_getenv(char	*var, char	**envp);
-int			join_home_folder(char **str_dir);
-
-#endif
+	path = getcwd(NULL, 0);
+	printf("%s\n", path);
+	free(path);
+	exit(0);
+	return (1);
+}

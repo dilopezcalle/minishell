@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: almirand <almirand@student.42.fr>          +#+  +:+       +#+         #
+#    By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 15:17:17 by dilopez-          #+#    #+#              #
-#    Updated: 2022/10/05 15:42:40 by almirand         ###   ########.fr        #
+#    Updated: 2022/10/05 16:21:23 by dilopez-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ SRCS			=	$(BUIL_DIR)/env.c				\
 					$(BUIL_DIR)/unset.c				\
 					$(BUIL_DIR)/exit.c				\
 					$(BUIL_DIR)/cd.c				\
+					$(BUIL_DIR)/pwd.c				\
 					$(SRC_DIR)/ft_getenv.c			\
 					$(BUIL_DIR)/builtin_child.c		\
 					$(BUIL_DIR)/builtin_parent.c	\
