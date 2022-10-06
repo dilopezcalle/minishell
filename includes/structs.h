@@ -6,12 +6,19 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 07:48:56 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/02 09:57:30 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/06 09:58:37 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCTS_H
 # define STRUCTS_H
+
+typedef struct s_token
+{
+	char				*str;
+	int					*quote;
+	int					len;
+}						t_token;
 
 typedef struct s_simple_command
 {

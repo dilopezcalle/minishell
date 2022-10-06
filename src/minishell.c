@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 08:33:15 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/05 08:10:46 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/06 09:48:42 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,12 @@ static int	check_and_execute_line(char *line, char **envp[])
 	commands = parser(line, *envp);
 	if (!commands)
 		return (0);
+	int i = 0;
+	while (commands->simple_commands[0]->arguments[i])
+	{
+		printf("%s\n", commands->simple_commands[0]->arguments[i]);
+		i++;
+	}
 	if (!access_parser(commands, *envp))
 	{
 		executor(commands, envp);

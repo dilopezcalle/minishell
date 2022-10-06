@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 08:49:37 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/04 12:08:41 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/06 10:15:38 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	sig_handler(int signum)
 		rl_replace_line("", 0);
 		rl_redisplay();
 	}
-	if (signum == SIGINT)
+	if (signum == SIGQUIT)
 	{
 		
 	}

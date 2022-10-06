@@ -6,24 +6,40 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:16:19 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/02 11:46:44 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/06 15:09:15 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
 static void	create_argument(t_simple_command *command, char *arg);
+char	**copy_tokens_to_array(t_token **ar_token);
 void		free_commands(t_command **commands_dir);
 
 // Crea la estructura general de los comandos que se utilizarán
 t_command	*parser(char *command_line, char **envp)
 {
 	t_command	*commands;
+	t_token		*ar_token;
 	char		**command_args;
 	int			num_command;
 	int			i;
+	int j;
 
-	command_args = lexer(command_line, envp);
+	ar_token = lexer(command_line, envp);
+	i = 0;
+	while (ar_token[i].str)
+	{
+		j = 0;
+		while (j < 1)
+		{
+			printf("%c es %c\n", ar_token[i].str[j], ar_token[i].quote[j]);
+			j++;
+		}
+		i++;
+	}
+	command_args = copy_tokens_to_array(&ar_token);
+	/*
 	if (!command_args)
 		return (0);
 	i = -1;
@@ -42,7 +58,32 @@ t_command	*parser(char *command_line, char **envp)
 		return (free_commands(&commands), \
 				free_double_array((void **)command_args), NULL);
 	return (commands);
+	*/
+	return (0);
 }
+
+char	**copy_tokens_to_array(t_token **ar_token)
+{
+	char	**command_args;
+	int		i;
+
+	i = 0;
+	while ((*ar_token)[i].str)
+		i++;
+	command_args = (char **)ft_calloc(i + 1, sizeof(char *));
+	if (!command_args)
+		return (0);
+	i = 0;
+	while ((*ar_token)[i].str)
+	{
+		command_args[i] = ft_strdup((*ar_token)[i].str);
+		free((*ar_token)[i].str);
+		i++;
+	}
+	command_args[i] = 0;
+	return (command_args);
+}
+
 
 // Iterar y juntar argumentos para construir la estructura
 static int	create_and_append_simple_command(t_command	*commands, \
@@ -53,7 +94,7 @@ static int	create_and_append_simple_command(t_command	*commands, \
 
 	i = -1;
 	num_command = 0;
-	while ((*command_args)[++i] && (*command_args)[i][0])
+	while ((*command_args)[++i]/* && (*command_args)[i][0]*/)
 	{
 		if (!(commands->simple_commands)[num_command])
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:12 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/05 18:35:22 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/06 15:09:35 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,7 +281,7 @@ char	*free_join(char *s1, char *s2)
 	return (join);
 }
 
-char	*clean(char	*token, char **envp)
+t_token	clean(char	*token, char **envp)
 {
 	int		i;
 	char	*new_token;
@@ -289,19 +289,34 @@ char	*clean(char	*token, char **envp)
 	int		quote;
 	char	*aux;
 	int		size;
+	int		index;
+	int		*type_quote;
+	t_token	s_token;
 
 	i = 0;
 	size = ft_lenresize(token, envp);
 	quote = 0;
+	index = 0;
 	new_token = (char *) calloc((size + 1), sizeof(char));
+	s_token.quote = (int *) ft_calloc(size, sizeof(int));
+	s_token.len = 0;
 	if (size == 0)
 	{
 		ft_strlcpy(new_token, "", 1);
-		return (new_token);
+		return (s_token);
 	}
 	start = -1;
 	while (token[i])
 	{
+		if (token[i] != '\'' && token[i] != '"')
+		{
+			if (token[i] != quote)
+			{
+				s_token.quote[index] = quote;
+				index++;
+			}
+			s_token.len++;
+		}
 		if (start == -1)
 			start = i;
 		if ((token[i] == '"' || token[i] == '\'') && quote == 0)
@@ -345,7 +360,7 @@ char	*clean(char	*token, char **envp)
 		else if (quote != '\'' && quote != '"' && (i == 0 && token[i] == '~' && (token[i + 1] == '\0' || token[i + 1] == '/')))
 		{
 			if (join_home_folder(&new_token, envp))
-				return (0);
+				return (s_token);
 			start = ++i;
 		}
 		else
@@ -353,34 +368,39 @@ char	*clean(char	*token, char **envp)
 	}
 	if (start != i)
 		new_token = free_join(new_token, ft_substr(token, start, i - start));
-	return (new_token);
+	printf("llega %d\n", s_token.len);
+	s_token.str = new_token;
+	return (s_token);
 }
 
-char	**clean_expand(int words, char	**token, char	**envp)
+t_token	*clean_expand(int words, char	**token, char	**envp)
 {
 	int		i;
+	t_token	*ar_token;
 	char	**new_token;
 
 	i = 0;
 	new_token = (char **) calloc((words + 1), sizeof(char *));
+	ar_token = (t_token *) ft_calloc(words + 1, sizeof(t_token));
 	new_token[words] = NULL;
 	while (i < words)
 	{
-		new_token[i] = clean(token[i], envp);
+		ar_token[i] = clean(token[i], envp);
 		free(token[i++]);
 	}
 	free(token);
-	return (new_token);
+	ar_token[i].str = 0;
+	return (ar_token);
 }
 
-char	**tokens(char *line, char	**envp)
+t_token	*tokens(char *line, char	**envp)
 {
 	int		words;
-	char	**token;
+	t_token	*ar_token;
 
 	words = ft_countwords(line);
 	if (words == -1)
 		return (NULL);
-	token = clean_expand(words, tokenize(line, words), envp);
-	return (token);
+	ar_token = clean_expand(words, tokenize(line, words), envp);
+	return (ar_token);
 }

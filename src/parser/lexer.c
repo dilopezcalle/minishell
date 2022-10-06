@@ -6,41 +6,49 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 09:34:54 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/05 16:23:57 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/06 09:18:34 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lexer.h"
 
 // Separar en "argumentos" los comandos con sus argumentos, el input y el output
-char	**lexer(char *command_line, char	**envp)
+t_token	*lexer(char *command_line, char	**envp)
 {
-	char	**separate_line;
+	t_token	*ar_token;
 	char	**command_args;
+	char	**separate_line;
 	int		size;
 	int		i;
 
 	size = 1;
 	i = -1;
-	separate_line = tokens(command_line, envp);
+	ar_token = tokens(command_line, envp);
 	free(command_line);
-	if (!separate_line || check_syntax_errors(separate_line))
-		return (free_double_array((void **)separate_line), NULL);
-	while (separate_line[++i])
-	{
-		if (separate_line[i][0] == '|' || separate_line[i][0] == '>' \
-			|| separate_line[i][0] == '<')
-			size += 2;
-		if (i > 2 && (separate_line[i - 2][0] == '>' \
-			|| separate_line[i - 2][0] == '<'))
-			size++;
-	}
-	command_args = (char **)ft_calloc((size + 1), sizeof(char *));
-	if (!command_args \
-		|| mix_args_command(&command_args, separate_line, -1) == -1)
-		return (free_double_array((void **)separate_line), NULL);
-	return (free_double_array((void **)separate_line), command_args);
+	return (ar_token);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 //Comprueba si hay un >, < ó | que represente el final de cada comando / archivo
 static int	mix_args_command(char ***command_args, char **separate, int i)
@@ -118,3 +126,22 @@ static int	append_command_array(char ***command_args, char **separate, \
 	}
 	return (0);
 }
+
+/*
+	if (!separate_line || check_syntax_errors(separate_line))
+		return (free_double_array((void **)separate_line), NULL);
+	while (separate_line[++i])
+	{
+		if (separate_line[i][0] == '|' || separate_line[i][0] == '>' \
+			|| separate_line[i][0] == '<')
+			size += 2;
+		if (i > 2 && (separate_line[i - 2][0] == '>' \
+			|| separate_line[i - 2][0] == '<'))
+			size++;
+	}
+	command_args = (char **)ft_calloc((size + 1), sizeof(char *));
+	if (!command_args \
+		|| mix_args_command(&command_args, separate_line, -1) == -1)
+		return (free_double_array((void **)separate_line), NULL);
+	return (free_double_array((void **)separate_line), command_args);
+	*/
