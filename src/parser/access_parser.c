@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   access_parser.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:11:18 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/07 09:32:03 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/07 17:42:45 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,13 @@ static char	**ft_get_paths(char *envp[])
 	i = 0;
 	while (envp[i] && ft_strncmp(envp[i], "PATH", 4) != 0)
 		i++;
-	paths = ft_split(envp[i] + 5, ':');
-	return (paths);
+	if (envp[i])
+	{
+		paths = ft_split(envp[i] + 5, ':');
+		return (paths);
+	}
+	else
+		return (NULL);
 }
 
 // Contruir el string que representa el path de un comando
@@ -63,7 +68,7 @@ static char	*ft_get_commands_path(char *command, char **paths)
 	char	*temp;
 	int		i;
 
-	if (is_command_builtin(command) || command[0] == '\0')
+	if (is_command_builtin(command) || command[0] == '\0' || paths == NULL)
 		return (0);
 	i = 0;
 	path = 0;

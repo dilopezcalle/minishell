@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:12 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/07 15:03:59 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/07 18:54:40 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,26 @@ size_t		ft_strlen(const char *s);
 char		*ft_getenv(char	*var, char	**envp);
 int			join_home_folder(char **str_dir, char **envp);
 
-static void	quote_error(int quote, char	c, int	*n_words)
+static void	quote_error(int quote, char c, int	*n_words)
 {
 	if (c == '\0' && quote != 0)
 	{
 		printf("minishell: syntax error, quotes not closed.\n");
 		*n_words = -1;
 	}
+}
+
+int	is_equals(char c, char	*chars)
+{
+	int	i;
+
+	i = 0;
+	while (chars[i])
+	{
+		if (chars[i++] == c)
+			return (1);
+	}
+	return (0);
 }
 
 static void	treat_quote(int	*i, int	*n_words, char	*s)
@@ -52,9 +65,9 @@ static void	treat_quote(int	*i, int	*n_words, char	*s)
 				(*i)++;
 			}
 		}
-		if (s[*i] == ' ' || s[*i] == '|' || s[*i] == '<' || s[*i] == '>')
+		if (is_equals(s[*i], "| <>") == 1)
 			break ;
-		while (s[*i] != ' ' && s[*i] != '<' && s[*i] != '>' && s[*i] != '|' && s[*i] != '"' && s[*i] != '\'' && s[*i]) // FUNCION
+		while (is_equals(s[*i], "<> |'\"") == 0 && s[*i])
 			(*i)++;
 	}
 	quote_error(quote, s[*i], n_words);
@@ -70,7 +83,7 @@ static int	treat_split(int	*i, int	*n_words, char	*s)
 			(*i)++;
 			if (s[*i] == s[(*i) - 1])
 				(*i)++;
-			else if (s[*i] != ' ' && s[*i] != '"' && s[*i] != '\'' && s[*i] != '|' && s[*i] != '\0') //FUNCION
+			else if (is_equals(s[*i], " \"'|") == 0 && s[*i] != '\0')
 			{
 				(*i)++;
 				(*n_words)++;
@@ -156,7 +169,7 @@ char	**tokenize(char	*line, int n_words)
 	while (line[++i])
 	{
 		tokenize_quote(&start, &quote, line[i], i);
-		if (start >= 0 && quote == 0 && (line[i + 1] == ' ' || line[i + 1] == '|' || line[i + 1] == '<' || line[i + 1] == '>' || i + 1 == ft_strlen(line)))
+		if (start >= 0 && quote == 0 && is_equals(line[i + 1], " |<>") == 1 || i + 1 == ft_strlen(line))
 		{
 			token[j++] = ft_substr(line, start, i - start + 1);
 			start = -1;
@@ -281,13 +294,67 @@ char	*free_join(char *s1, char *s2)
 	return (join);
 }
 
+void	clean_expand1(char	*token, int	*i, int	*start, char	**new_token)
+{
+	int	len;
+
+	len = (*i) - (*start);
+	while (token[*i] == '$')
+		(*i)++;
+	if (*start != *i && token[(*i) + 1] != '\0')
+		*new_token = free_join(*new_token, ft_substr(token, *start, len - 1));
+	else if (*start != *i && token[(*i) + 1] == '\0')
+		*new_token = free_join(*new_token, ft_substr(token, *start, len));
+	*start = *i;
+}
+
+int	clean_expand2(char	*token, int	*i, char	**envp, char	**new_token)
+{
+	int		start;
+	char	*aux;
+
+	start = *i;
+	if (token[*i] == '?')
+	{
+		*new_token = ft_itoa(g_exit_status);
+		(*i)++;
+	}
+	else
+	{
+		while (token[*i] && ft_isvalidchar(token[*i]))
+			(*i)++;
+		aux = ft_substr(token, start, (*i) - start);
+		if (ft_getenv(aux, envp))
+			*new_token = free_join(*new_token, ft_getenv(aux, envp));
+		free(aux);
+	}
+	return (*i);
+}
+
+int	quotize1(int	*start, char	*token, int	*i, char	**new_token)
+{
+	int	len;
+
+	len = (*i) - (*start);
+	if (*start != *i)
+		*new_token = free_join(*new_token, ft_substr(token, *start, len));
+	*start = ++(*i);
+	return (token[(*i) - 1]);
+}
+
+int	quotize2(int	*start, char	*token, int	*i, char	**new_token)
+{
+	*new_token = free_join(*new_token, ft_substr(token, *start, *i - *start));
+	*start = ++(*i);
+	return (0);
+}
+
 t_token	clean(char	*token, char **envp)
 {
 	int		i;
 	char	*new_token;
 	int		start;
 	int		quote;
-	char	*aux;
 	int		size;
 	int		index;
 	int		*type_quote;
@@ -303,6 +370,7 @@ t_token	clean(char	*token, char **envp)
 	if (size == 0)
 	{
 		ft_strlcpy(new_token, "", 1);
+		s_token.str = new_token;
 		return (s_token);
 	}
 	start = -1;
@@ -320,47 +388,21 @@ t_token	clean(char	*token, char **envp)
 		if (start == -1)
 			start = i;
 		if ((token[i] == '"' || token[i] == '\'') && quote == 0)
-		{
-			quote = token[i];
-			if (start != i)
-				new_token = free_join(new_token, ft_substr(token, start, i - start));
-			start = ++i;
-		}
+			quote = quotize1(&start, token, &i, &new_token);
 		else if (token[i] == quote)
-		{
-			quote = 0;
-			new_token = free_join(new_token, ft_substr(token, start, i - start));
-			start = ++i;
-		}
+			quote = quotize2(&start, token, &i, &new_token);
 		else if (token[i] == '$' && quote != '\'' && token[i + 1] != '\0')
 		{
-			while (token[i] == '$')
-				i++;
-			if (start != i && token[i + 1] != '\0')
-				new_token = free_join(new_token, ft_substr(token, start, i - start - 1));
-			else if (start != i && token[i + 1] == '\0')
-				new_token = free_join(new_token, ft_substr(token, start, i - start));
-			start = i;
-			if (token[i] == '?')
-			{
-				new_token = ft_itoa(g_exit_status);
-				i++;
-			}
-			else
-			{
-				while (token[i] && ft_isvalidchar(token[i]))
-					i++;
-				aux = ft_substr(token, start, i - start);
-				if (ft_getenv(aux, envp))
-					new_token = free_join(new_token, ft_getenv(aux, envp));
-				free(aux);
-			}
-			start = i;
+			clean_expand1(token, &i, &start, &new_token);
+			start = clean_expand2(token, &i, envp, &new_token);
 		}
 		else if (quote != '\'' && quote != '"' && (i == 0 && token[i] == '~' && (token[i + 1] == '\0' || token[i + 1] == '/')))
 		{
 			if (join_home_folder(&new_token, envp))
+			{
+				s_token.str = new_token;
 				return (s_token);
+			}
 			start = ++i;
 		}
 		else
