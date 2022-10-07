@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:12 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/06 15:09:35 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/07 15:03:59 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -368,8 +368,9 @@ t_token	clean(char	*token, char **envp)
 	}
 	if (start != i)
 		new_token = free_join(new_token, ft_substr(token, start, i - start));
-	printf("llega %d\n", s_token.len);
 	s_token.str = new_token;
+	if (s_token.len == 0)
+		s_token.len = 1;
 	return (s_token);
 }
 
@@ -377,12 +378,9 @@ t_token	*clean_expand(int words, char	**token, char	**envp)
 {
 	int		i;
 	t_token	*ar_token;
-	char	**new_token;
 
 	i = 0;
-	new_token = (char **) calloc((words + 1), sizeof(char *));
 	ar_token = (t_token *) ft_calloc(words + 1, sizeof(t_token));
-	new_token[words] = NULL;
 	while (i < words)
 	{
 		ar_token[i] = clean(token[i], envp);

@@ -6,15 +6,17 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:16:19 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/06 15:09:15 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/07 15:11:10 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
 static void	create_argument(t_simple_command *command, char *arg);
-char	**copy_tokens_to_array(t_token **ar_token);
+char		**copy_tokens_to_array(t_token **ar_token);
 void		free_commands(t_command **commands_dir);
+char		**ft_copy_double_array(char **envp_main);
+void		free_ar_token(t_token **ar_token);
 
 // Crea la estructura general de los comandos que se utilizarán
 t_command	*parser(char *command_line, char **envp)
@@ -24,42 +26,30 @@ t_command	*parser(char *command_line, char **envp)
 	char		**command_args;
 	int			num_command;
 	int			i;
-	int j;
 
 	ar_token = lexer(command_line, envp);
-	i = 0;
-	while (ar_token[i].str)
-	{
-		j = 0;
-		while (j < 1)
-		{
-			printf("%c es %c\n", ar_token[i].str[j], ar_token[i].quote[j]);
-			j++;
-		}
-		i++;
-	}
+	if (!ar_token)
+		return (0);
 	command_args = copy_tokens_to_array(&ar_token);
-	/*
 	if (!command_args)
 		return (0);
 	i = -1;
 	num_command = 1;
 	while (command_args[++i])
-		if (command_args[i][0] == '|')
+		if (!ar_token[i].quote[0] && command_args[i][0] == '|')
 			num_command++;
 	commands = (t_command *) ft_calloc(1, sizeof(t_command));
 	if (!commands)
-		return (0);
+		return (free_ar_token(&ar_token), NULL);
 	commands->simple_commands = (t_simple_command **) \
 					ft_calloc((num_command + 1), sizeof(t_simple_command *));
 	if (!commands->simple_commands)
-		return (0);
-	if (create_and_append_simple_command(commands, &command_args))
+		return (free_ar_token(&ar_token), NULL);
+	if (create_and_append_simple_command(commands, ar_token, &command_args))
 		return (free_commands(&commands), \
-				free_double_array((void **)command_args), NULL);
-	return (commands);
-	*/
-	return (0);
+				free_double_array((void **)command_args), \
+				free_ar_token(&ar_token),  NULL);
+	return (free_ar_token(&ar_token), commands);
 }
 
 char	**copy_tokens_to_array(t_token **ar_token)
@@ -87,7 +77,7 @@ char	**copy_tokens_to_array(t_token **ar_token)
 
 // Iterar y juntar argumentos para construir la estructura
 static int	create_and_append_simple_command(t_command	*commands, \
-											char ***command_args)
+											t_token *ar_token, char ***command_args)
 {
 	int			i;
 	int			num_command;
@@ -103,12 +93,12 @@ static int	create_and_append_simple_command(t_command	*commands, \
 			((commands->simple_commands)[num_command])->infile = 0;
 			((commands->simple_commands)[num_command])->outfile = 1;
 		}
-		if ((*command_args)[i][0] == '|')
+		if (!ar_token[i].quote[0] && (*command_args)[i][0] == '|')
 			num_command++;
 		else if (create_simple_command(\
-				&(commands->simple_commands)[num_command], *command_args, i))
+				&(commands->simple_commands)[num_command], ar_token, *command_args, i))
 			return (1);
-		if ((*command_args)[i][0] == '>' || (*command_args)[i][0] == '<')
+		if (!ar_token[i].quote[0] && ((*command_args)[i][0] == '>' || (*command_args)[i][0] == '<'))
 			i++;
 	}
 	commands->number_simple_commands = ++num_command;
@@ -118,11 +108,11 @@ static int	create_and_append_simple_command(t_command	*commands, \
 
 // Guardar datos y comprobar que se guardan correctamente
 static int	create_simple_command(t_simple_command **command_info, \
-								char **command_arg, int index)
+								t_token *ar_token, char **command_arg, int index)
 {
 	if (!(*command_info))
 		return (1);
-	if (command_arg[index][0] == '>')
+	if (!ar_token[index].quote[0] && command_arg[index][0] == '>')
 	{
 		(*command_info)->redirection_outfile = 1;
 		if (command_arg[index][1] == '>')
@@ -130,7 +120,7 @@ static int	create_simple_command(t_simple_command **command_info, \
 		if (check_access_outfile((*command_info), command_arg[index + 1]))
 			return (1);
 	}
-	else if (command_arg[index][0] == '<')
+	else if (!ar_token[index].quote[0] && command_arg[index][0] == '<')
 	{
 		(*command_info)->redirection_infile = 1;
 		if (command_arg[index][1] == '<')
@@ -138,34 +128,42 @@ static int	create_simple_command(t_simple_command **command_info, \
 		if (check_access_infile((*command_info), command_arg[index + 1]))
 			return (1);
 	}
-	else if ((*command_info)->arguments)
+	else/* if ((*command_info)->arguments)*/
 		create_argument((*command_info), command_arg[index]);
-	else
-		(*command_info)->arguments = ft_split(command_arg[index], ' ');
+	// else
+	// 	(*command_info)->arguments = ft_split(command_arg[index], ' ');
 	return (0);
 }
 
 static void	create_argument(t_simple_command *command, char *arg)
 {
-	char	*command_line;
-	char	*aux;
+	char	**aux;
 	int		i;
 
 	i = 0;
-	command_line = ft_substr((command->arguments)[0], 0, \
-								ft_strlen((command->arguments)[0]));
-	while ((command->arguments)[++i])
+	if (!command->arguments)
 	{
-		aux = ft_strjoin(command_line, " ");
-		free(command_line);
-		command_line = ft_strjoin(aux, (command->arguments)[i]);
-		free(aux);
+		command->arguments = (char **)ft_calloc(i + 2, sizeof(char *));
+		command->arguments[0] = ft_strdup(arg);
+		command->number_arguments = 1;
+		return ;
 	}
-	aux = ft_strjoin(command_line, " ");
-	free(command_line);
-	command_line = ft_strjoin(aux, arg);
-	free_double_array((void **)command->arguments);
-	command->arguments = ft_split(command_line, ' ');
-	free(command_line);
+	aux = (char **)ft_calloc(command->number_arguments + 2, sizeof(char *));
+	i = 0;
+	while (i < command->number_arguments)
+	{
+		aux[i] = ft_strdup(command->arguments[i]);
+		free(command->arguments[i]);
+		i++;
+	}
+	aux[i++] = ft_strdup(arg);
+	free(command->arguments);
+	command->arguments = (char **)ft_calloc(i + 1, sizeof(char *));
+	while (--i >= 0)
+	{
+		command->arguments[i] = ft_strdup(aux[i]);
+		free(aux[i]);
+	}
 	free(aux);
+	command->number_arguments++;
 }

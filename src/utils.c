@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 13:23:51 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/01 18:26:04 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/07 13:59:58 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,3 +107,5 @@ void	free_commands(t_command **commands_dir)
 	}
 	return (free(commands->simple_commands), free(commands));
 }
+
+
