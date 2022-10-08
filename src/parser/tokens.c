@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:12 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/07 18:54:40 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/08 10:44:54 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -298,9 +298,10 @@ void	clean_expand1(char	*token, int	*i, int	*start, char	**new_token)
 {
 	int	len;
 
-	len = (*i) - (*start);
+
 	while (token[*i] == '$')
 		(*i)++;
+	len = (*i) - (*start);
 	if (*start != *i && token[(*i) + 1] != '\0')
 		*new_token = free_join(*new_token, ft_substr(token, *start, len - 1));
 	else if (*start != *i && token[(*i) + 1] == '\0')
