@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 08:33:15 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/07 13:44:16 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/08 12:03:56 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,9 @@ char	*get_line(void)
 	char	*line;
 
 	if (g_exit_status)
-		line = readline("\001\033[0;31m\002MyShell \001\u27A4 \001\033[0m\002");
+		line = readline("\001\033[0;31m\002Concha_Diminuta_triste \001\u27A4 \001\033[0m\002");
 	else
-		line = readline("\001\033[0;33m\002MyShell \001\u27A4 \001\033[0m\002");
+		line = readline("\001\033[0;33m\002Concha_Diminuta \001\u27A4 \001\033[0m\002");
 	if (!line)
 		exit_program(0);
 	if (line[0] != '\0')

@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:12 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/08 10:44:54 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/08 11:50:16 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 #include "libft.h"
 #include "ft_getenv.h"
 #include <readline/readline.h>
+#include "tokens.h"
 
 t_command	*parser(char *command_line);
 char		**lexer(char *command_line);
@@ -24,87 +25,6 @@ char		*ft_substr(char const *s, unsigned int start, size_t len);
 size_t		ft_strlen(const char *s);
 char		*ft_getenv(char	*var, char	**envp);
 int			join_home_folder(char **str_dir, char **envp);
-
-static void	quote_error(int quote, char c, int	*n_words)
-{
-	if (c == '\0' && quote != 0)
-	{
-		printf("minishell: syntax error, quotes not closed.\n");
-		*n_words = -1;
-	}
-}
-
-int	is_equals(char c, char	*chars)
-{
-	int	i;
-
-	i = 0;
-	while (chars[i])
-	{
-		if (chars[i++] == c)
-			return (1);
-	}
-	return (0);
-}
-
-static void	treat_quote(int	*i, int	*n_words, char	*s)
-{
-	int	quote;
-
-	quote = 0;
-	while (s[*i])
-	{
-		if (s[*i] == '\'' || s[*i] == '"')
-		{
-			quote = s[(*i)++];
-			while (s[*i] != quote && s[*i])
-				(*i)++;
-			if (s[*i] == quote)
-			{
-				quote = 0;
-				(*i)++;
-			}
-		}
-		if (is_equals(s[*i], "| <>") == 1)
-			break ;
-		while (is_equals(s[*i], "<> |'\"") == 0 && s[*i])
-			(*i)++;
-	}
-	quote_error(quote, s[*i], n_words);
-}
-
-static int	treat_split(int	*i, int	*n_words, char	*s)
-{
-	while (s[*i] != ' ' && s[*i] != '\'' && s[*i] != '"' && s[*i])
-	{
-		if (s[*i] == '<' || s[*i] == '>')
-		{
-			(*n_words)++;
-			(*i)++;
-			if (s[*i] == s[(*i) - 1])
-				(*i)++;
-			else if (is_equals(s[*i], " \"'|") == 0 && s[*i] != '\0')
-			{
-				(*i)++;
-				(*n_words)++;
-			}
-		}
-		else if (s[(*i)++] == '|')
-		{
-			if (s[(*i)] == '|')
-			{
-				printf("minishell: syntax error near unexpected token `|'\n");
-				return (-1);
-			}
-			(*n_words)++;
-			if (s[*i] != ' ' && s[*i] != '<' && s[*i] != '>' && s[*i] != '\0')
-				(*n_words)++;
-			break ;
-		}
-	}
-	treat_quote(i, n_words, s);
-	return (0);
-}
 
 static int	ft_countwords(char	*s)
 {
@@ -272,82 +192,6 @@ int	ft_lenresize(char	*token, char	**envp)
 		}
 	}
 	return (len);
-}
-
-char	*free_join(char *s1, char *s2)
-{
-	size_t	len_s1;
-	size_t	len_s2;
-	char	*join;
-
-	if (!s1 || !s2)
-		return (NULL);
-	len_s1 = ft_strlen(s1);
-	len_s2 = ft_strlen(s2);
-	join = malloc (len_s1 + len_s2 + 1);
-	if (!join)
-		return (NULL);
-	ft_strlcpy(join, s1, len_s1 + 1);
-	ft_strlcat(join, s2, len_s2 + len_s1 + 1);
-	free(s1);
-	free(s2);
-	return (join);
-}
-
-void	clean_expand1(char	*token, int	*i, int	*start, char	**new_token)
-{
-	int	len;
-
-
-	while (token[*i] == '$')
-		(*i)++;
-	len = (*i) - (*start);
-	if (*start != *i && token[(*i) + 1] != '\0')
-		*new_token = free_join(*new_token, ft_substr(token, *start, len - 1));
-	else if (*start != *i && token[(*i) + 1] == '\0')
-		*new_token = free_join(*new_token, ft_substr(token, *start, len));
-	*start = *i;
-}
-
-int	clean_expand2(char	*token, int	*i, char	**envp, char	**new_token)
-{
-	int		start;
-	char	*aux;
-
-	start = *i;
-	if (token[*i] == '?')
-	{
-		*new_token = ft_itoa(g_exit_status);
-		(*i)++;
-	}
-	else
-	{
-		while (token[*i] && ft_isvalidchar(token[*i]))
-			(*i)++;
-		aux = ft_substr(token, start, (*i) - start);
-		if (ft_getenv(aux, envp))
-			*new_token = free_join(*new_token, ft_getenv(aux, envp));
-		free(aux);
-	}
-	return (*i);
-}
-
-int	quotize1(int	*start, char	*token, int	*i, char	**new_token)
-{
-	int	len;
-
-	len = (*i) - (*start);
-	if (*start != *i)
-		*new_token = free_join(*new_token, ft_substr(token, *start, len));
-	*start = ++(*i);
-	return (token[(*i) - 1]);
-}
-
-int	quotize2(int	*start, char	*token, int	*i, char	**new_token)
-{
-	*new_token = free_join(*new_token, ft_substr(token, *start, *i - *start));
-	*start = ++(*i);
-	return (0);
 }
 
 t_token	clean(char	*token, char **envp)

@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/31 09:59:17 by almirand          #+#    #+#             */
-/*   Updated: 2022/04/08 11:39:46 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/08 11:51:35 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char		**ft_split(char const *s, char c);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strdup(const char *s1);
 char		*ft_strjoin(char const *s1, char const *s2);
+char		*free_join(char *s1, char *s2);
 size_t		ft_strlcat(char *dest, const char *src, size_t dstsize);
 size_t		ft_strlcpy(char	*dst, const char	*src, size_t dstsize);
 size_t		ft_strlen(const char *str);
