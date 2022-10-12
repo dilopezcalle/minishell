@@ -6,12 +6,13 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 11:41:51 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/08 11:59:24 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/12 11:05:20 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "libft.h"
+
 char	*ft_getenv(char	*var, char	**envp);
 int		ft_isvalidchar(int c);
 
@@ -19,14 +20,13 @@ void	clean_expand1(char	*token, int	*i, int	*start, char	**new_token)
 {
 	int	len;
 
-
 	while (token[*i] == '$')
 		(*i)++;
 	len = (*i) - (*start);
-	if (*start != *i && token[(*i) + 1] != '\0')
-		*new_token = free_join(*new_token, ft_substr(token, *start, len - 1));
-	else if (*start != *i && token[(*i) + 1] == '\0')
+	if (*start != *i && (token[*i] == '\0' || ft_isvalidchar(token[*i]) == 0))
 		*new_token = free_join(*new_token, ft_substr(token, *start, len));
+	else if (*start != *i && token[*i] != '\0')
+		*new_token = free_join(*new_token, ft_substr(token, *start, len - 1));
 	*start = *i;
 }
 
