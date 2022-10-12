@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:16:19 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 15:19:19 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:36:39 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,6 @@ t_command	*parser(char *command_line, char **envp)
 
 	ar_token = lexer(command_line, envp);
 	i = 0;
-	while (ar_token[i].str)
-	{
-		printf("%s\n", ar_token[i].str);
-		i++;
-	}
 	if (!ar_token->str)
 		return (0);
 	command_args = copy_tokens_to_array(&ar_token);
@@ -55,7 +50,7 @@ t_command	*parser(char *command_line, char **envp)
 	if (create_and_append_simple_command(commands, ar_token, &command_args))
 		return (free_commands(&commands), \
 				free_double_array((void **)command_args), \
-				free_ar_token(&ar_token),  NULL);
+				free_ar_token(&ar_token), NULL);
 	return (free_ar_token(&ar_token), commands);
 }
 
