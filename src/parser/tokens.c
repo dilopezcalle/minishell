@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:12 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/08 11:50:16 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/12 11:40:50 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ char	**tokenize(char	*line, int n_words)
 	int		quote;
 
 	init_tokenize(&i, &j, &start, &quote);
-	token = (char **) malloc((n_words + 1) * sizeof(char *));
-	if (!token || sizeof(token) == 0)
-		return (NULL);
+	token = (char **) ft_calloc((n_words + 1), sizeof(char *));
+	if (!token)
+		return (token);
 	while (line[++i])
 	{
 		tokenize_quote(&start, &quote, line[i], i);

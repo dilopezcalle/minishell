@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:16:19 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/07 15:11:10 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/12 11:47:21 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ t_command	*parser(char *command_line, char **envp)
 	int			i;
 
 	ar_token = lexer(command_line, envp);
-	if (!ar_token)
+	if (!ar_token->str)
 		return (0);
 	command_args = copy_tokens_to_array(&ar_token);
 	if (!command_args)

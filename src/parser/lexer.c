@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 09:34:54 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/08 11:38:57 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/12 11:47:15 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@ t_token	*lexer(char *command_line, char	**envp)
 	int		i;
 
 	ar_token = tokens(command_line, envp);
+	if (ar_token->str && ar_token->str[0] == '\0')
+	{
+		free(ar_token->str);
+		ar_token->str = NULL;
+	}
 	return (ar_token);
 }
 
