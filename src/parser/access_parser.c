@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   access_parser.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:11:18 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/07 17:42:45 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:43:35 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,12 @@ static char	*ft_get_commands_path(char *command, char **paths)
 	{
 		command_path = ft_strjoin("/", command);
 		temp = ft_strjoin(paths[i], command_path);
-		if (access(temp, F_OK) == 0)
+		if (access(command, F_OK) == 0)
+		{
+			path = ft_strdup(command);
+			free(temp);
+		}
+		else if (access(temp, F_OK) == 0)
 			path = temp;
 		else
 			free(temp);
