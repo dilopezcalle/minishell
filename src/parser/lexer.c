@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 09:34:54 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 15:15:59 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:28:07 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@ t_token	*lexer(char *command_line, char	**envp)
 
 	i = 0;
 	ar_token = tokens(command_line, envp);
-	if (ar_token->str && ar_token->str[0] == '\0')
+	if (!ar_token)
+		ar_token = (t_token *)ft_calloc(1, sizeof(t_token));
+	else if (ar_token->str && ar_token->str[0] == '\0')
 	{
 		free(ar_token->str);
 		ar_token->str = NULL;

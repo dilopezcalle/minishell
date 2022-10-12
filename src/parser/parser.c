@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:16:19 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 11:47:21 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:19:19 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ char		**copy_tokens_to_array(t_token **ar_token);
 void		free_commands(t_command **commands_dir);
 char		**ft_copy_double_array(char **envp_main);
 void		free_ar_token(t_token **ar_token);
+int			check_syntax_errors(char **separate);
 
 // Crea la estructura general de los comandos que se utilizarán
 t_command	*parser(char *command_line, char **envp)
@@ -28,11 +29,17 @@ t_command	*parser(char *command_line, char **envp)
 	int			i;
 
 	ar_token = lexer(command_line, envp);
+	i = 0;
+	while (ar_token[i].str)
+	{
+		printf("%s\n", ar_token[i].str);
+		i++;
+	}
 	if (!ar_token->str)
 		return (0);
 	command_args = copy_tokens_to_array(&ar_token);
 	if (!command_args)
-		return (0);
+		return (free_ar_token(&ar_token), NULL);
 	i = -1;
 	num_command = 1;
 	while (command_args[++i])
@@ -71,6 +78,8 @@ char	**copy_tokens_to_array(t_token **ar_token)
 		i++;
 	}
 	command_args[i] = 0;
+	if (check_syntax_errors(command_args))
+		return (free_double_array((void **)command_args), NULL);
 	return (command_args);
 }
 

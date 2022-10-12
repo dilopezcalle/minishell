@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_parent.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 10:20:55 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/05 15:48:26 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:07:04 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int	execute_parent_builtin(t_simple_command *command, char **envp[])
 {
 	if (ft_strncmp(command->arguments[0], "cd", 3) == 0)
 		return (cd_builtin(command, envp));
-	if (ft_strncmp(command->arguments[0], "exit", 5) == 0)
-		return (exit_builtin(command));
+	// if (ft_strncmp(command->arguments[0], "exit", 5) == 0)
+	// 	return (exit_builtin(command));
 	if (ft_strncmp(command->arguments[0], "unset", 6) == 0)
 		return (unset_builtin(command->arguments[1], envp));
 	if (ft_strncmp(command->arguments[0], "export", 7) == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 08:33:15 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 11:52:09 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:09:11 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 #include <sys/ioctl.h>
 #include <unistd.h>
 #include <stdio.h>
+
+int		exit_builtin(t_simple_command *command);
 
 // Lee la línea en búcle y llama al parser y executor
 void	minishell(char *envp_main[])
@@ -24,8 +26,7 @@ void	minishell(char *envp_main[])
 	envp = ft_copy_double_array(envp_main);
 	while (1)
 	{
-		// rl_catch_signals = 0;
-		// rl_set_signals();
+		g_exit_status = 0;
 		signal(SIGINT, sig_handler);
 		signal(SIGQUIT, sig_handler);
 		if (check_and_execute_line(get_line(), &envp))
@@ -49,8 +50,9 @@ static int	check_and_execute_line(char *line, char **envp[])
 	if (!access_parser(commands, *envp))
 	{
 		executor(commands, envp);
-		if (ft_strncmp(commands->simple_commands[0]->arguments[0], \
-			"exit", 5) == 0)
+		if (commands->number_simple_commands == 1 && \
+	ft_strncmp(commands->simple_commands[0]->arguments[0], "exit", 5) == 0 \
+	&& !exit_builtin(commands->simple_commands[0]))
 			return (free_commands(&commands), 1);
 	}
 	else

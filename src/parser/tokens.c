@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:12 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 15:15:32 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:24:13 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -279,12 +279,14 @@ t_token	*tokens(char *line, char	**envp)
 {
 	int		words;
 	t_token	*ar_token;
+	char	**token;
 	int		i;
 
 	i = 0;
 	words = ft_countwords(line);
 	if (words == -1)
 		return (NULL);
+	//token =tokenize(line, words);
 	ar_token = clean_expand(words, tokenize(line, words), envp);
 	return (ar_token);
 }
