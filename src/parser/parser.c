@@ -3,21 +3,29 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:16:19 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 15:36:39 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/12 19:35:37 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
+#include <stddef.h>
+#include <stdlib.h>
 
+#include "syntax_errors.h"
+#include "files_access.h"
+#include "parser.h"
+#include "libft.h"
+#include "utils.h"
+#include "lexer.h"
+
+static int	create_simple_command(t_simple_command **command_info, \
+							t_token *ar_token, char **command_arg, int index);
+static int	create_and_append_simple_command(t_command	*commands, \
+							t_token *ar_token, char ***command_args);
 static void	create_argument(t_simple_command *command, char *arg);
-char		**copy_tokens_to_array(t_token **ar_token);
-void		free_commands(t_command **commands_dir);
-char		**ft_copy_double_array(char **envp_main);
-void		free_ar_token(t_token **ar_token);
-int			check_syntax_errors(char **separate);
+static char	**copy_tokens_to_array(t_token **ar_token);
 
 // Crea la estructura general de los comandos que se utilizarán
 t_command	*parser(char *command_line, char **envp)
@@ -54,7 +62,7 @@ t_command	*parser(char *command_line, char **envp)
 	return (free_ar_token(&ar_token), commands);
 }
 
-char	**copy_tokens_to_array(t_token **ar_token)
+static char	**copy_tokens_to_array(t_token **ar_token)
 {
 	char	**command_args;
 	int		i;
@@ -81,7 +89,7 @@ char	**copy_tokens_to_array(t_token **ar_token)
 
 // Iterar y juntar argumentos para construir la estructura
 static int	create_and_append_simple_command(t_command	*commands, \
-											t_token *ar_token, char ***command_args)
+										t_token *ar_token, char ***command_args)
 {
 	int			i;
 	int			num_command;

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: almirand <almirand@student.42.fr>          +#+  +:+       +#+         #
+#    By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/08/16 15:17:17 by dilopez-          #+#    #+#              #
-#    Updated: 2022/10/08 11:49:20 by almirand         ###   ########.fr        #
+#    Updated: 2022/10/12 19:20:46 by dilopez-         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,8 +37,8 @@ SRCS			=	$(BUIL_DIR)/env.c				\
 					$(BUIL_DIR)/builtin_child.c		\
 					$(BUIL_DIR)/builtin_parent.c	\
 					$(SRC_DIR)/executor.c			\
-					$(PARSER_DIR)/files_access.c	\
 					$(PARSER_DIR)/access_parser.c	\
+					$(PARSER_DIR)/files_access.c	\
 					$(PARSER_DIR)/syntax_errors.c	\
 					$(PARSER_DIR)/tokens.c			\
 					$(PARSER_DIR)/clean.c			\

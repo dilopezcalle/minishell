@@ -6,11 +6,12 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 10:02:21 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 15:11:14 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:40:33 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "exit.h"
+#include "libft.h"
 
 int	exit_builtin(t_simple_command *command)
 {

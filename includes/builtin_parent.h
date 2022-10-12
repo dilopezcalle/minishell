@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 14:00:42 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/04 09:21:25 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:07:18 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 # define BUILTIN_PARENT_H
 
 # include "structs.h"
-# include "libft.h"
 
-int	cd_builtin(t_simple_command *command, char **envp[]);
+int	execute_parent_builtin(t_simple_command *command, char **envp[]);
 
 #endif

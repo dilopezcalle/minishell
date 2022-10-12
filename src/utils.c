@@ -3,16 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 13:23:51 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/07 16:57:35 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/12 18:42:22 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "utils.h"
+#include <stddef.h>
+#include <stdlib.h>
 
-char	*ft_getenv(char	*var, char	**envp);
+#include "ft_getenv.h"
+#include "utils.h"
+#include "libft.h"
 
 // Liberar la memotia de un array doble
 void	free_double_array(void **array)

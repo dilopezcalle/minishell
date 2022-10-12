@@ -6,11 +6,14 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 08:25:23 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/02 08:50:11 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:37:57 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libft.h"
 #include "echo.h"
+
+static void	execute_echo(char **arguments);
 
 void	echo_builtin(t_simple_command *command)
 {

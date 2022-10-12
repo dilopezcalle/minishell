@@ -6,16 +6,30 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 08:33:15 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 16:29:52 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/12 19:38:27 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
-#include <sys/ioctl.h>
-#include <unistd.h>
-#include <stdio.h>
+#include <signal.h>
+#include <stdlib.h>
 
-int		exit_builtin(t_simple_command *command);
+#include <readline/readline.h>
+#include <readline/history.h>
+#include "access_parser.h"
+#include "minishell.h"
+#include "executor.h"
+#include "structs.h"
+#include "signals.h"
+#include "parser.h"
+#include "utils.h"
+#include "libft.h"
+#include "exit.h"
+
+static int	check_and_execute_line(char *line, char **envp[]);
+static void	exit_program(int code);
+static char	*get_line(void);
+
+void rl_clear_history(void);
 
 // Lee la línea en búcle y llama al parser y executor
 void	minishell(char *envp_main[])
@@ -41,7 +55,6 @@ static int	check_and_execute_line(char *line, char **envp[])
 	if (!line)
 		return (0);
 	commands = parser(line, *envp);
-	g_exit_status = 1;
 	if (!commands)
 		return (0);
 	if (!access_parser(commands, *envp))
@@ -58,7 +71,7 @@ static int	check_and_execute_line(char *line, char **envp[])
 }
 
 // Ejecuta y devuelve readline. Comprueba que se escriba algo
-char	*get_line(void)
+static char	*get_line(void)
 {
 	char	*line;
 
@@ -79,7 +92,7 @@ char	*get_line(void)
 }
 
 // Limpiar el historial y cerrar el programa
-void	exit_program(int code)
+static void	exit_program(int code)
 {
 	rl_clear_history();
 	printf("exit\n");

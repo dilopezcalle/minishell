@@ -6,14 +6,17 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 17:29:45 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/04 09:29:53 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:47:28 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "env.h"
 #include <stdio.h>
-#include "minishell.h"
+#include <stdlib.h>
 
-void	env_builtin(char	**envp)
+#include "structs.h"
+
+void	env_builtin(char **envp)
 {
 	int	i;
 

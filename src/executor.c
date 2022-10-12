@@ -6,12 +6,28 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 14:38:24 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 16:32:17 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/12 18:20:54 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "executor.h"
 #include <sys/errno.h>
+#include <sys/wait.h>
+#include <stddef.h>
+#include <signal.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <stdio.h>
+
+#include "builtin_parent.h"
+#include "builtin_child.h"
+#include "executor.h"
+#include "signals.h"
+#include "utils.h"
+
+static int	create_and_execute_child(t_command *commands, int fd[2], \
+										char *envp[], int i);
+static void	execute_command(t_simple_command *command, int fd[2], \
+							char *envp[], int last);
 
 // Recorre todos los comandos y crea las pipes que los comunicarán
 void	executor(t_command *commands, char **envp[])

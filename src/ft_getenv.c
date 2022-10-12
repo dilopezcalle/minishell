@@ -3,12 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_getenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 11:35:57 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/07 17:42:38 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:45:19 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <stddef.h>
+#include <stdlib.h>
 
 #include "libft.h"
 

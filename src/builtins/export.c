@@ -3,20 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 17:57:45 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/07 17:42:36 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:39:14 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include <stddef.h>
 
-int		ft_arraylen(char	**envp);
-void	free_double_array(void **array);
-void	env_builtin(char	**envp);
+#include "structs.h"
+#include "export.h"
+#include "unset.h"
+#include "libft.h"
+#include "utils.h"
 
-int	export_print(char	**envp)
+static int	export_print(char	**envp)
 {
 	int	i;
 
@@ -26,7 +28,7 @@ int	export_print(char	**envp)
 	return (0);
 }
 
-void	export_create(char	*var, char	***envp)
+static void	export_create(char	*var, char	***envp)
 {
 	int		i;
 	int		j;
@@ -46,7 +48,7 @@ void	export_create(char	*var, char	***envp)
 	*envp = new_envp;
 }
 
-char	*export_varname(char	*var)
+static char	*export_varname(char	*var)
 {
 	int		i;
 	char	*varname;
@@ -61,7 +63,7 @@ char	*export_varname(char	*var)
 	return (NULL);
 }
 
-int	check_replace(char	*var, char	***envp)
+static int	check_replace(char	*var, char	***envp)
 {
 	int		i;
 	char	*var_name;

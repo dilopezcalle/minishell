@@ -6,11 +6,22 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 09:21:48 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 16:22:25 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:43:23 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <sys/errno.h>
+#include <stddef.h>
+#include <string.h>
+#include <stdio.h>
+
+#include "ft_getenv.h"
+#include "export.h"
+#include "libft.h"
 #include "cd.h"
+
+static int	cd_without_argument(t_simple_command *command, char **envp[]);
+static int	export_pwd(char *var, char **envp[]);
 
 int	cd_builtin(t_simple_command *command, char **envp[])
 {

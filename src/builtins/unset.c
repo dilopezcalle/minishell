@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 17:36:08 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/05 16:00:19 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:39:54 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include <stddef.h>
+
 #include "structs.h"
+#include "libft.h"
+#include "utils.h"
 
-void	free_double_array(void **array);
-void	env_builtin(char	**envp);
-
-int	ft_arraylen(char	**envp)
+int	ft_arraylen(char **envp)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ int	ft_arraylen(char	**envp)
 	return (i);
 }
 
-int	unset_builtin(char	*var, char	***envp)
+int	unset_builtin(char *var, char ***envp)
 {
 	int		i;
 	int		j;

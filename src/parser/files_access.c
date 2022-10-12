@@ -6,11 +6,26 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 16:52:00 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 16:33:56 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/12 18:25:58 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+# include <readline/readline.h>
+#include <sys/errno.h>
+#include <stddef.h>
+#include <signal.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <fcntl.h>
+
 #include "files_access.h"
+#include "signals.h"
+#include "libft.h"
+
+static void	dub_stdin_infile(t_simple_command *command, char *join);
+static char	*readline_infile(char *end_word);
+static int	fork_error_infile(void);
 
 // Guardar el fd de un fichero output dependiendo de su tipo de redirección
 int	check_access_outfile(t_simple_command *command, char *file_name)

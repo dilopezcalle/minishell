@@ -6,12 +6,21 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:11:18 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 16:37:54 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/12 18:27:18 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stddef.h>
+#include <unistd.h>
+#include <stdlib.h>
+
 #include "access_parser.h"
-#include <sys/errno.h>
+#include "structs.h"
+#include "libft.h"
+#include "utils.h"
+
+static char	**ft_get_paths(char *envp[]);
+static char	*ft_get_commands_path(char *command, char **paths);
 
 // Comprobar que exista el fichero de un comando en las rutas del environment
 int	access_parser(t_command *commands, char *envp[])
