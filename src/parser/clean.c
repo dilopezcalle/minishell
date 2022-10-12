@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 11:41:51 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/12 11:05:20 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/12 13:06:59 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	clean_expand1(char	*token, int	*i, int	*start, char	**new_token)
 	while (token[*i] == '$')
 		(*i)++;
 	len = (*i) - (*start);
-	if (*start != *i && (token[*i] == '\0' || ft_isvalidchar(token[*i]) == 0))
+	if (*start != *i && (token[*i] == '\0'
+			|| (ft_isvalidchar(token[*i]) == 0 && token[*i] != '?')))
 		*new_token = free_join(*new_token, ft_substr(token, *start, len));
 	else if (*start != *i && token[*i] != '\0')
 		*new_token = free_join(*new_token, ft_substr(token, *start, len - 1));
@@ -38,7 +39,7 @@ int	clean_expand2(char	*token, int	*i, char	**envp, char	**new_token)
 	start = *i;
 	if (token[*i] == '?')
 	{
-		*new_token = ft_itoa(g_exit_status);
+		*new_token = free_join(*new_token, ft_itoa(g_exit_status));
 		(*i)++;
 	}
 	else
