@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 16:52:00 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/09/29 13:45:47 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:33:56 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	check_access_outfile(t_simple_command *command, char *file_name)
 		fd = open(file_name, O_RDWR | O_APPEND | O_CREAT, 0644);
 	if (fd < 0)
 	{
+		g_exit_status = errno;
 		printf("minishell: %s: %s\n", file_name, strerror(2));
 		command->outfile = -1;
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 08:33:15 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 15:09:11 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:29:52 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	minishell(char *envp_main[])
 	envp = ft_copy_double_array(envp_main);
 	while (1)
 	{
-		g_exit_status = 0;
 		signal(SIGINT, sig_handler);
 		signal(SIGQUIT, sig_handler);
 		if (check_and_execute_line(get_line(), &envp))
@@ -42,21 +41,18 @@ static int	check_and_execute_line(char *line, char **envp[])
 	if (!line)
 		return (0);
 	commands = parser(line, *envp);
+	g_exit_status = 1;
 	if (!commands)
-	{
-		g_exit_status = 1;
 		return (0);
-	}
 	if (!access_parser(commands, *envp))
 	{
+		g_exit_status = 0;
 		executor(commands, envp);
 		if (commands->number_simple_commands == 1 && \
 	ft_strncmp(commands->simple_commands[0]->arguments[0], "exit", 5) == 0 \
 	&& !exit_builtin(commands->simple_commands[0]))
 			return (free_commands(&commands), 1);
 	}
-	else
-		g_exit_status = 1;
 	free_commands(&commands);
 	return (0);
 }

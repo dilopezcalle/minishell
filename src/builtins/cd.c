@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 09:21:48 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/05 16:46:00 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:22:25 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,5 @@ static int	export_pwd(char *var, char **envp[])
 		return (1);
 	if (export_builtin(path, envp))
 		return (free(pwd), free(path), 1);
-	printf("%s\n", path);
 	return (free(pwd), free(path), 0);
 }
