@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:17:09 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 17:44:33 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 10:40:17 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 #include "pwd.h"
 
-int	pwd_builtin(t_simple_command *command)
+int	pwd_builtin(void)
 {
 	char	*path;
 

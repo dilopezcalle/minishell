@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 17:33:06 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 17:34:09 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 10:40:28 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,6 @@
 
 # include "structs.h"
 
-int	pwd_builtin(t_simple_command *command);
+int	pwd_builtin(void);
 
 #endif

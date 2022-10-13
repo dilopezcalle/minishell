@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 08:49:37 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 18:41:39 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 11:29:51 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	sig_handler(int signum)
 	{
 		if (rl_on_new_line() == -1)
 			exit(-1);
-		g_exit_status = 1;
+		g_exit_status = 1;	
 		printf("\n");
 		rl_replace_line("", 0);
 		rl_redisplay();
