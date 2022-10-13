@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 08:33:15 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 12:29:21 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 12:50:26 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,6 @@ void		rl_clear_history(void);
 // Lee la línea en búcle y llama al parser y executor
 void	minishell(char *envp_main[])
 {
-	t_command	*commands;
 	char		**envp;
 
 	envp = ft_copy_double_array(envp_main);
