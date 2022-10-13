@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 08:49:37 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 15:48:06 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 17:02:23 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@
 
 void	rl_replace_line(const char *text, int clear_undo);
 
-// Gestiona el ctrl + C
 void	sig_handler(int signum)
 {
 	if (signum == SIGINT)
@@ -40,7 +39,6 @@ void	sig_handler(int signum)
 	}
 }
 
-// Señal en caso de ctrl + C (cat o grep a secas)
 void	sig_handler_without_input(int signum)
 {
 	if (signum == SIGQUIT)

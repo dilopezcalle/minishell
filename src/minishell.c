@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 08:33:15 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 12:50:26 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 17:02:14 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ static void	exit_program(int code);
 static char	*get_line(void);
 void		rl_clear_history(void);
 
-// Lee la línea en búcle y llama al parser y executor
 void	minishell(char *envp_main[])
 {
 	char		**envp;
@@ -68,7 +67,6 @@ static int	check_and_execute_line(char *line, char **envp[])
 	return (0);
 }
 
-// Ejecuta y devuelve readline. Comprueba que se escriba algo
 static char	*get_line(void)
 {
 	char	*line;
@@ -89,7 +87,6 @@ static char	*get_line(void)
 	return (line);
 }
 
-// Limpiar el historial y cerrar el programa
 static void	exit_program(int code)
 {
 	rl_clear_history();

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   access_parser.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:11:18 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 15:34:30 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 17:00:47 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@ int	command_notfound(char	**paths, t_simple_command	*command)
 	return (1);
 }
 
-// Comprobar que exista el fichero de un comando en las rutas del environment
 int	access_parser(t_command *commands, char *envp[])
 {
 	t_simple_command	*command;
@@ -56,7 +55,6 @@ int	access_parser(t_command *commands, char *envp[])
 	return (0);
 }
 
-// Obtener todas las rutas de los comandos del environment
 static char	**ft_get_paths(char *envp[])
 {
 	int		i;
@@ -81,7 +79,6 @@ char	*free_return(char	*command, char	*temp, char	*command_path)
 	return (ft_strdup(command));
 }
 
-// Contruir el string que representa el path de un comando
 static char	*ft_get_commands_path(char *command, char **paths)
 {
 	char	*command_path;

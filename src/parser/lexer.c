@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 09:34:54 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 16:27:50 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 17:01:24 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@
 #include "lexer.h"
 #include "libft.h"
 
-// Separar en "argumentos" los comandos con sus argumentos, el input y el output
 t_token	*lexer(char *command_line, char	**envp)
 {
 	t_token	*ar_token;

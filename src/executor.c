@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 14:38:24 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 18:20:54 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 17:02:00 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static int	create_and_execute_child(t_command *commands, int fd[2], \
 static void	execute_command(t_simple_command *command, int fd[2], \
 							char *envp[], int last);
 
-// Recorre todos los comandos y crea las pipes que los comunicarán
 void	executor(t_command *commands, char **envp[])
 {
 	int	fd[2];
@@ -56,7 +55,6 @@ void	executor(t_command *commands, char **envp[])
 	g_exit_status = 0;
 }
 
-// Crea un proceso hijo para luego ejecutar un comando en él
 static int	create_and_execute_child(t_command *commands, int fd[2], \
 										char *envp[], int i)
 {
@@ -87,7 +85,6 @@ static int	create_and_execute_child(t_command *commands, int fd[2], \
 	return (1);
 }
 
-// Ejecuta comando hijos y controla la salida y entrada estandard
 static void	execute_command(t_simple_command *command, int fd[2], \
 							char *envp[], int last)
 {

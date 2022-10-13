@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   syntax_errors.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/04 11:02:41 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 15:37:18 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 17:01:37 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 #include "syntax_errors.h"
 
-// Comprueba que existan cosas luego de un >, < ó |
 int	check_syntax_errors(char **separate, t_token *ar_token)
 {
 	int	i;
@@ -42,7 +41,6 @@ int	check_syntax_errors(char **separate, t_token *ar_token)
 	return (0);
 }
 
-// Printea error de sintáxis
 int	print_syntax_error(char *str)
 {
 	g_exit_status = 258;

@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 16:52:00 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 16:30:58 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 17:01:17 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	dub_stdin_infile(t_simple_command *command, char *file_name);
 static char	*readline_infile(char *end_word);
 static int	fork_error_infile(void);
 
-// Guardar el fd de un fichero output dependiendo de su tipo de redirección
 int	check_access_outfile(t_simple_command *command, char *file_name)
 {
 	int	fd;
@@ -51,7 +50,6 @@ int	check_access_outfile(t_simple_command *command, char *file_name)
 	return (0);
 }
 
-// Guardar el fd de un fichero input dependiendo de su tipo de redirección
 int	check_access_infile(t_simple_command *command, char *file_name)
 {
 	int		fd;
@@ -77,7 +75,6 @@ int	check_access_infile(t_simple_command *command, char *file_name)
 	return (0);
 }
 
-// En el caso de ("<<"), leer desde la entrada estándar y guardar string
 static char	*readline_infile(char *end_word)
 {
 	char	*actual;
@@ -106,7 +103,6 @@ static char	*readline_infile(char *end_word)
 	return (join);
 }
 
-// En el caso de ("<<"), guardar el string estándar en un fd
 static void	dub_stdin_infile(t_simple_command *command, char *file_name)
 {
 	int		fd_pipe[2];
@@ -136,7 +132,6 @@ static void	dub_stdin_infile(t_simple_command *command, char *file_name)
 	dub_stdin_infile_2(fd_pipe, command);
 }
 
-// Comprobar que el fork no de error (norminette)
 static int	fork_error_infile(void)
 {
 	int	pid;

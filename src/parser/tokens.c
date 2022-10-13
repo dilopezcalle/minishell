@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:12 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 15:12:22 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:58:22 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	**tokenize(char	*line, int n_words)
 			start = -1;
 		}
 	}
-	token[j] = NULL;
+	token[n_words] = 0;
 	return (token);
 }
 

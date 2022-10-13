@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:16:19 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 16:17:54 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 17:00:08 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static int	create_and_append_simple_command(t_command	*commands, \
 static void	create_argument(t_simple_command *command, char *arg);
 static char	**copy_tokens_to_array(t_token **ar_token);
 
-// Crea la estructura general de los comandos que se utilizarán
 t_command	*parser(char *command_line, char **envp)
 {
 	t_command	*commands;
@@ -73,7 +72,6 @@ static char	**copy_tokens_to_array(t_token **ar_token)
 	return (command_args);
 }
 
-// Iterar y juntar argumentos para construir la estructura
 static int	create_and_append_simple_command(t_command	*commands, \
 										t_token *ar_token, char ***command_args)
 {
@@ -104,7 +102,6 @@ static int	create_and_append_simple_command(t_command	*commands, \
 	return (free_double_array((void **)(*command_args)), 0);
 }
 
-// Guardar datos y comprobar que se guardan correctamente
 static int	create_simple_command(t_simple_command **command_info, \
 t_token *ar_token, char **command_arg, int index)
 {
@@ -136,7 +133,6 @@ static void	create_argument(t_simple_command *command, char *arg)
 	char	**aux;
 	int		i;
 
-	i = 0;
 	if (!command->arguments)
 		return (create_first_argument(command, arg));
 	aux = (char **)ft_calloc(command->number_arguments + 2, sizeof(char *));
