@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files_access.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 16:52:00 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 18:25:58 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 10:32:35 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	check_access_outfile(t_simple_command *command, char *file_name)
 		fd = open(file_name, O_RDWR | O_APPEND | O_CREAT, 0644);
 	if (fd < 0)
 	{
-		g_exit_status = errno;
+		g_exit_status = 1;
 		printf("minishell: %s: %s\n", file_name, strerror(2));
 		command->outfile = -1;
 		return (1);
@@ -69,6 +69,7 @@ int	check_access_infile(t_simple_command *command, char *file_name)
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
 	{
+		g_exit_status = 1;
 		printf("minishell: %s: %s\n", file_name, strerror(errno));
 		command->infile = -1;
 		return (1);

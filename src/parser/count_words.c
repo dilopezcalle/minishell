@@ -3,19 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   count_words.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 11:46:53 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/12 18:29:09 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 10:24:15 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
+#include "structs.h"
 
 static void	quote_error(int quote, char c, int	*n_words)
 {
 	if (c == '\0' && quote != 0)
 	{
+		g_exit_status = 1;
 		printf("minishell: syntax error, quotes not closed.\n");
 		*n_words = -1;
 	}
