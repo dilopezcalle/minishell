@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:16:19 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 15:14:37 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:17:54 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 #include "syntax_errors.h"
 #include "files_access.h"
+#include "parser_utils.h"
 #include "parser.h"
 #include "libft.h"
 #include "utils.h"
@@ -33,28 +34,14 @@ t_command	*parser(char *command_line, char **envp)
 	t_command	*commands;
 	t_token		*ar_token;
 	char		**command_args;
-	int			num_command;
-	int			i;
 
 	ar_token = lexer(command_line, envp);
-	i = 0;
 	if (!ar_token->str)
 		return (0);
 	command_args = copy_tokens_to_array(&ar_token);
 	if (!command_args)
 		return (free_ar_token(&ar_token), NULL);
-	i = -1;
-	num_command = 1;
-	while (command_args[++i])
-		if (!ar_token[i].quote[0] && command_args[i][0] == '|')
-			num_command++;
-	commands = (t_command *) ft_calloc(1, sizeof(t_command));
-	if (!commands)
-		return (free_ar_token(&ar_token), NULL);
-	commands->simple_commands = (t_simple_command **) \
-					ft_calloc((num_command + 1), sizeof(t_simple_command *));
-	if (!commands->simple_commands)
-		return (free_ar_token(&ar_token), NULL);
+	commands = malloc_commands(&ar_token, command_args);
 	if (create_and_append_simple_command(commands, ar_token, &command_args))
 		return (free_commands(&commands), \
 				free_double_array((void **)command_args), \
@@ -114,8 +101,7 @@ static int	create_and_append_simple_command(t_command	*commands, \
 			i++;
 	}
 	commands->number_simple_commands = ++num_command;
-	free_double_array((void **)(*command_args));
-	return (0);
+	return (free_double_array((void **)(*command_args)), 0);
 }
 
 // Guardar datos y comprobar que se guardan correctamente
@@ -152,12 +138,7 @@ static void	create_argument(t_simple_command *command, char *arg)
 
 	i = 0;
 	if (!command->arguments)
-	{
-		command->arguments = (char **)ft_calloc(i + 2, sizeof(char *));
-		command->arguments[0] = ft_strdup(arg);
-		command->number_arguments = 1;
-		return ;
-	}
+		return (create_first_argument(command, arg));
 	aux = (char **)ft_calloc(command->number_arguments + 2, sizeof(char *));
 	i = 0;
 	while (i < command->number_arguments)

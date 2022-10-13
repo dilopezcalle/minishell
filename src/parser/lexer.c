@@ -6,16 +6,17 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 09:34:54 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 12:47:12 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:27:50 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdlib.h>
 #include <stddef.h>
 
+#include "signals.h"
+#include "tokens.h"
 #include "lexer.h"
 #include "libft.h"
-#include "tokens.h"
 
 // Separar en "argumentos" los comandos con sus argumentos, el input y el output
 t_token	*lexer(char *command_line, char	**envp)
@@ -47,4 +48,13 @@ void	free_ar_token(t_token **ar_token)
 		i++;
 	}
 	free(*ar_token);
+}
+
+void	dub_stdin_infile_2(int fd_pipe[2], t_simple_command *command)
+{
+	signal(SIGINT, sig_handler_without_input);
+	signal(SIGQUIT, sig_handler_heredoc);
+	close(fd_pipe[1]);
+	wait(NULL);
+	command->infile = fd_pipe[0];
 }

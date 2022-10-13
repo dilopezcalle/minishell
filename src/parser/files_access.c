@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 16:52:00 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 15:48:23 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:30:58 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 #include "files_access.h"
 #include "signals.h"
 #include "libft.h"
+#include "lexer.h"
 
 static void	dub_stdin_infile(t_simple_command *command, char *file_name);
 static char	*readline_infile(char *end_word);
@@ -55,13 +56,13 @@ int	check_access_infile(t_simple_command *command, char *file_name)
 {
 	int		fd;
 
-	fd = -1;
 	if (command->redirection_infile == 2)
 	{
 		command->infile = 0;
 		dub_stdin_infile(command, file_name);
 		return (0);
 	}
+	fd = -1;
 	fd = open(file_name, O_RDONLY);
 	if (fd < 0)
 	{
@@ -132,11 +133,7 @@ static void	dub_stdin_infile(t_simple_command *command, char *file_name)
 		free(join);
 		exit(0);
 	}
-	signal(SIGINT, sig_handler_without_input);
-	signal(SIGQUIT, sig_handler_heredoc);
-	close(fd_pipe[1]);
-	wait(NULL);
-	command->infile = fd_pipe[0];
+	dub_stdin_infile_2(fd_pipe, command);
 }
 
 // Comprobar que el fork no de error (norminette)
