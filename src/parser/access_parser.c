@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:11:18 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 14:02:19 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:34:30 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,14 @@
 
 static char	**ft_get_paths(char *envp[]);
 static char	*ft_get_commands_path(char *command, char **paths);
+
+int	command_notfound(char	**paths, t_simple_command	*command)
+{
+	free_double_array((void **)paths);
+	printf("minishell: %s: command not found\n", \
+			(command->arguments)[0]);
+	return (1);
+}
 
 // Comprobar que exista el fichero de un comando en las rutas del environment
 int	access_parser(t_command *commands, char *envp[])
@@ -39,12 +47,7 @@ int	access_parser(t_command *commands, char *envp[])
 			return (free_double_array((void **)paths), 1);
 		command_path = ft_get_commands_path((command->arguments)[0], paths);
 		if (!command_path && !is_command_builtin((command->arguments)[0]))
-		{
-			free_double_array((void **)paths);
-			printf("minishell: %s: command not found\n", \
-					(command->arguments)[0]);
-			return (1);
-		}
+			return (command_notfound(paths, command));
 		g_exit_status = 0;
 		command->path = command_path;
 		i++;
@@ -71,6 +74,13 @@ static char	**ft_get_paths(char *envp[])
 		return (NULL);
 }
 
+char	*free_return(char	*command, char	*temp, char	*command_path)
+{
+	free(temp);
+	free(command_path);
+	return (ft_strdup(command));
+}
+
 // Contruir el string que representa el path de un comando
 static char	*ft_get_commands_path(char *command, char **paths)
 {
@@ -81,19 +91,14 @@ static char	*ft_get_commands_path(char *command, char **paths)
 
 	if (is_command_builtin(command) || command[0] == '\0' || paths == NULL)
 		return (0);
-	i = 0;
+	i = -1;
 	path = 0;
-	while (paths[i])
+	while (paths[++i])
 	{
 		command_path = ft_strjoin("/", command);
 		temp = ft_strjoin(paths[i], command_path);
 		if (access(command, F_OK) == 0)
-		{
-			path = ft_strdup(command);
-			free(temp);
-			free(command_path);
-			return (path);
-		}
+			return (free_return(command, temp, command_path));
 		else if (access(temp, F_OK) == 0)
 			path = temp;
 		else
@@ -102,7 +107,6 @@ static char	*ft_get_commands_path(char *command, char **paths)
 			free(temp);
 		}
 		free(command_path);
-		i++;
 	}
 	return (path);
 }
