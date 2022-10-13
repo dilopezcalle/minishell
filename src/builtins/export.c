@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 17:57:45 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/12 19:41:27 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 12:50:32 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static int	check_replace(char	*var, char	***envp)
 		{
 			free((*envp)[i]);
 			(*envp)[i] = ft_strdup(var);
+			free(var_name);
 			return (1);
 		}
 		i++;
