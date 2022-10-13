@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   access_parser.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:11:18 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 12:33:02 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 13:02:43 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ static char	*ft_get_commands_path(char *command, char **paths)
 		{
 			path = ft_strdup(command);
 			free(temp);
+			free(command_path);
+			return (path);
 		}
 		else if (access(temp, F_OK) == 0)
 			path = temp;

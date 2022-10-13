@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/02 11:35:57 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 17:45:19 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 13:12:47 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,5 +39,6 @@ char	*ft_getenv(char	*var, char	**envp)
 		}
 		i++;
 	}
+	free(var2);
 	return (NULL);
 }

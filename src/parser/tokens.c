@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokens.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:12 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 12:49:54 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 13:18:03 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,7 @@ t_token	*clean_expand(int words, char	**token, char	**envp)
 	t_token	*ar_token;
 
 	i = 0;
-	ar_token = (t_token *) ft_calloc(words + 1, sizeof(t_token));
+	ar_token = (t_token *)ft_calloc(words + 1, sizeof(t_token));
 	while (i < words)
 	{
 		ar_token[i] = clean(token[i], envp);
