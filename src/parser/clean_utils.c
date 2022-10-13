@@ -6,13 +6,14 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 11:18:45 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/13 11:35:35 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 11:51:51 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "structs.h"
 #include "clean_utils.h"
 #include "libft.h"
+#include "utils.h"
 
 t_clean	init_clean(t_clean s_clean, char	*token, char	**envp)
 {
@@ -46,7 +47,7 @@ void	clean_1(t_clean *cl, char	*token, char	**envp)
 		if (join_home_folder(&((*cl).new_token), envp))
 		{
 			(*cl).s_token.str = (*cl).new_token;
-			return ((*cl).s_token);
+			//return ((*cl).s_token);
 		}
 		(*cl).start = ++((*cl).i);
 	}

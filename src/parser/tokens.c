@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:12 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 11:26:06 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 11:55:56 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@
 
 t_command	*parser(char *command_line);
 char		**lexer(char *command_line);
-char		*ft_substr(char const *s, unsigned int start, size_t len);
-size_t		ft_strlen(const char *s);
 char		*ft_getenv(char	*var, char	**envp);
 int			join_home_folder(char **str_dir, char **envp);
 

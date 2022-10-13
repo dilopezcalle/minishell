@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+         #
+#    By: almirand <almirand@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/13 11:44:09 by dilopez-          #+#    #+#              #
-#    Updated: 2022/10/13 11:44:28 by dilopez-         ###   ########.fr        #
+#    Updated: 2022/10/13 11:57:43 by almirand         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,6 +45,7 @@ SRCS			=	$(BUIL_DIR)/env.c				\
 					$(PARSER_DIR)/tokens.c			\
 					$(PARSER_DIR)/tokens_utils.c	\
 					$(PARSER_DIR)/count_words.c		\
+					$(PARSER_DIR)/parser_utils.c	\
 					$(PARSER_DIR)/lexer.c			\
 					$(PARSER_DIR)/parser.c			\
 					$(SRC_DIR)/signals.c			\
