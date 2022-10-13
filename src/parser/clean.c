@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 11:41:51 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/12 16:45:31 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 11:08:30 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,60 +16,64 @@
 char	*ft_getenv(char	*var, char	**envp);
 int		ft_isvalidchar(int c);
 
-void	clean_expand1(char	*token, int	*i, int	*start, char	**new_token)
+void	clean_expand1(char	*token, t_clean *cl)
 {
 	int	len;
 
-	while (token[*i] == '$')
-		(*i)++;
-	len = (*i) - (*start);
-	if (*start != *i && (token[*i] == '\0'
-			|| (ft_isvalidchar(token[*i]) == 0 && token[*i] != '?')))
-		*new_token = free_join(*new_token, ft_substr(token, *start, len));
-	else if (*start != *i && token[*i] != '\0')
-		*new_token = free_join(*new_token, ft_substr(token, *start, len - 1));
-	*start = *i;
+	while (token[(*cl).i] == '$')
+		((*cl).i)++;
+	len = ((*cl).i) - ((*cl).start);
+	if ((*cl).start != (*cl).i && (token[(*cl).i] == '\0'
+			|| (ft_isvalidchar(token[(*cl).i]) == 0 && token[(*cl).i] != '?')))
+		(*cl).new_token = free_join((*cl).new_token, \
+				ft_substr(token, (*cl).start, len));
+	else if ((*cl).start != (*cl).i && token[(*cl).i] != '\0')
+		(*cl).new_token = free_join((*cl).new_token, \
+				ft_substr(token, (*cl).start, len - 1));
+	(*cl).start = (*cl).i;
 }
 
-int	clean_expand2(char	*token, int	*i, char	**envp, char	**new_token)
+int	clean_expand2(char	*token, t_clean *cl, char	**envp)
 {
 	int		start;
 	char	*aux;
 	char	*env;
 
-	start = *i;
-	if (token[*i] == '?')
+	start = (*cl).i;
+	if (token[(*cl).i] == '?')
 	{
-		*new_token = free_join(*new_token, ft_itoa(g_exit_status));
-		(*i)++;
+		(*cl).new_token = free_join((*cl).new_token, ft_itoa(g_exit_status));
+		((*cl).i)++;
 	}
 	else
 	{
-		while (token[*i] && ft_isvalidchar(token[*i]))
-			(*i)++;
-		aux = ft_substr(token, start, (*i) - start);
+		while (token[(*cl).i] && ft_isvalidchar(token[(*cl).i]))
+			((*cl).i)++;
+		aux = ft_substr(token, start, ((*cl).i) - start);
 		env = ft_getenv(aux, envp);
 		if (env)
-			*new_token = free_join(*new_token, env);
+			(*cl).new_token = free_join((*cl).new_token, env);
 		free(aux);
 	}
-	return (*i);
+	return ((*cl).i);
 }
 
-int	quotize1(int	*start, char	*token, int	*i, char	**new_token)
+int	quotize1(t_clean	*cl, char	*token)
 {
 	int	len;
 
-	len = (*i) - (*start);
-	if (*start != *i)
-		*new_token = free_join(*new_token, ft_substr(token, *start, len));
-	*start = ++(*i);
-	return (token[(*i) - 1]);
+	len = (*cl).i - (*cl).start;
+	if ((*cl).start != (*cl).i)
+		(*cl).new_token = free_join((*cl).new_token, \
+				ft_substr(token, (*cl).start, len));
+	(*cl).start = ++((*cl).i);
+	return (token[((*cl).i) - 1]);
 }
 
-int	quotize2(int	*start, char	*token, int	*i, char	**new_token)
+int	quotize2(t_clean	*cl, char	*token)
 {
-	*new_token = free_join(*new_token, ft_substr(token, *start, *i - *start));
-	*start = ++(*i);
+	(*cl).new_token = free_join((*cl).new_token, \
+			ft_substr(token, (*cl).start, (*cl).i - (*cl).start));
+	(*cl).start = ++((*cl).i);
 	return (0);
 }
