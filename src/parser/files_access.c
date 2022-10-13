@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 16:52:00 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 12:34:53 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 12:41:08 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ int	check_access_outfile(t_simple_command *command, char *file_name)
 int	check_access_infile(t_simple_command *command, char *file_name)
 {
 	int		fd;
-	char	*join;
 
 	fd = -1;
 	if (command->redirection_infile == 2)

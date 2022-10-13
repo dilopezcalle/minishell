@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 11:18:45 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/13 12:34:24 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 12:40:21 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,10 @@ int	error_syntax(void)
 	return (-1);
 }
 
-t_clean	init_clean(t_clean s_clean, char	*token, char	**envp)
+t_clean	init_clean(char	*token, char	**envp)
 {
+	t_clean	s_clean;
+
 	s_clean.i = 0;
 	s_clean.size = ft_lenresize(token, envp);
 	s_clean.quote = 0;
@@ -81,7 +83,7 @@ t_token	clean(char	*token, char **envp)
 {
 	t_clean	cl;
 
-	cl = init_clean(cl, token, envp);
+	cl = init_clean(token, envp);
 	if (cl.size == 0)
 	{
 		ft_strlcpy(cl.new_token, "", 1);
