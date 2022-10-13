@@ -6,12 +6,14 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 11:46:53 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/13 10:24:15 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 12:20:30 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "structs.h"
+
+int	error_syntax(void);
 
 static void	quote_error(int quote, char c, int	*n_words)
 {
@@ -62,6 +64,12 @@ static void	treat_quote(int	*i, int	*n_words, char	*s)
 	quote_error(quote, s[*i], n_words);
 }
 
+void	add_var(int	*i, int	*n_words)
+{
+	(*i)++;
+	(*n_words)++;
+}
+
 int	treat_split(int	*i, int	*n_words, char	*s)
 {
 	while (s[*i] != ' ' && s[*i] != '\'' && s[*i] != '"' && s[*i])
@@ -73,18 +81,12 @@ int	treat_split(int	*i, int	*n_words, char	*s)
 			if (s[*i] == s[(*i) - 1])
 				(*i)++;
 			else if (is_equals(s[*i], " \"'|") == 0 && s[*i] != '\0')
-			{
-				(*i)++;
-				(*n_words)++;
-			}
+				add_var(i, n_words);
 		}
 		else if (s[(*i)++] == '|')
 		{
 			if (s[(*i)] == '|')
-			{
-				printf("minishell: syntax error near unexpected token `|'\n");
-				return (-1);
-			}
+				return (error_syntax());
 			(*n_words)++;
 			if (s[*i] != ' ' && s[*i] != '<' && s[*i] != '>' && s[*i] != '\0')
 				(*n_words)++;

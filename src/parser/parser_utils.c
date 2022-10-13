@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 11:23:58 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/13 11:26:31 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 12:06:42 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	init_tokenize(int *i, int *j, int	*start, int	*quote)
 	*quote = 0;
 }
 
-void	tokenize_quote(int	*start, int	*quote, char c, int i)
+int	tokenize_quote(int	*start, int	*quote, char c, int i)
 {
 	if (c != ' ' && c != '|' && c != '<' && c != '>' && *start < 0)
 		*start = i;
@@ -39,4 +39,5 @@ void	tokenize_quote(int	*start, int	*quote, char c, int i)
 		*quote = c;
 	else if (*quote == c)
 		*quote = 0;
+	return (1);
 }

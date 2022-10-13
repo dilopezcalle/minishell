@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 11:18:45 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/13 11:51:51 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 12:18:37 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,19 @@
 #include "libft.h"
 #include "utils.h"
 
+int	error_syntax(void)
+{
+	printf("minishell: syntax error near unexpected token `|'\n");
+	return (-1);
+}
+
 t_clean	init_clean(t_clean s_clean, char	*token, char	**envp)
 {
 	s_clean.i = 0;
 	s_clean.size = ft_lenresize(token, envp);
 	s_clean.quote = 0;
 	s_clean.index = 0;
-	s_clean.new_token = (char *) calloc((s_clean.size + 1), sizeof(char));
+	s_clean.new_token = (char *) ft_calloc((s_clean.size + 1), sizeof(char));
 	s_clean.s_token.quote = (int *) ft_calloc(s_clean.size, sizeof(int));
 	s_clean.s_token.len = 0;
 	s_clean.start = -1;

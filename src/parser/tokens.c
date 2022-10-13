@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:12 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 11:55:56 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 12:13:23 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,14 @@ char	**tokenize(char	*line, int n_words)
 	token = (char **) ft_calloc((n_words + 1), sizeof(char *));
 	if (!token)
 		return (token);
-	while (line[++i])
+	while (line[++i] && tokenize_quote(&start, &quote, line[i], i))
 	{
-		tokenize_quote(&start, &quote, line[i], i);
 		if (line[i] == '|' && quote == 0)
 			token[j++] = ft_substr(line, i, 1);
 		else if ((line[i] == '<' || line[i] == '>') && quote == 0)
 			redirect(line, &token, &i, &j);
-		else if (start >= 0 && quote == 0 && is_equals(line[i + 1], " |<>") == 1 || i + 1 == ft_strlen(line))
+		else if (start >= 0 && quote == 0 && is_equals(line[i + 1], " |<>") == 1
+			|| i + 1 == ft_strlen(line))
 		{
 			token[j++] = ft_substr(line, start, i - start + 1);
 			start = -1;
