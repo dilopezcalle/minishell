@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 11:44:26 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/13 12:06:51 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 12:27:44 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		len_expand(char	*token, int *i, char	**envp);
 int		get_virgulilla_size(char **envp);
 void	dollar(char	*token, char	**envp, int	*i, int	*len);
 void	quote_len(int *quote, char token, int	*len);
-int	tokenize_quote(int	*start, int	*quote, char c, int i);
+int		tokenize_quote(int	*start, int	*quote, char c, int i);
 void	init_tokenize(int *i, int *j, int	*start, int	*quote);
 void	redirect(char	*line, char	***token, int	*i, int	*j);
 

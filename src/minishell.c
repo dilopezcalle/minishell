@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 08:33:15 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 10:17:30 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 12:29:21 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,7 @@
 static int	check_and_execute_line(char *line, char **envp[]);
 static void	exit_program(int code);
 static char	*get_line(void);
-
-void rl_clear_history(void);
+void		rl_clear_history(void);
 
 // Lee la línea en búcle y llama al parser y executor
 void	minishell(char *envp_main[])

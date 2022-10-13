@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 11:18:45 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/13 12:18:37 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 12:34:24 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,7 @@ void	clean_1(t_clean *cl, char	*token, char	**envp)
 				|| token[(*cl).i + 1] == '/')))
 	{
 		if (join_home_folder(&((*cl).new_token), envp))
-		{
 			(*cl).s_token.str = (*cl).new_token;
-			//return ((*cl).s_token);
-		}
 		(*cl).start = ++((*cl).i);
 	}
 	else

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   files_access.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 16:52:00 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 11:34:46 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 12:34:53 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include <readline/readline.h>
+#include <readline/readline.h>
 #include <sys/errno.h>
 #include <stddef.h>
 #include <signal.h>
@@ -124,7 +124,6 @@ static void	dub_stdin_infile(t_simple_command *command, char *file_name)
 	pid = fork_error_infile();
 	if (!pid)
 	{
-		//printf("entra\n");
 		join = readline_infile(file_name);
 		if (!join)
 			exit(0);

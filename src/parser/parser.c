@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:16:19 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 19:35:37 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 12:37:33 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,6 @@ static char	**copy_tokens_to_array(t_token **ar_token)
 	return (command_args);
 }
 
-
 // Iterar y juntar argumentos para construir la estructura
 static int	create_and_append_simple_command(t_command	*commands, \
 										t_token *ar_token, char ***command_args)
@@ -96,7 +95,7 @@ static int	create_and_append_simple_command(t_command	*commands, \
 
 	i = -1;
 	num_command = 0;
-	while ((*command_args)[++i]/* && (*command_args)[i][0]*/)
+	while ((*command_args)[++i])
 	{
 		if (!(commands->simple_commands)[num_command])
 		{
@@ -108,9 +107,10 @@ static int	create_and_append_simple_command(t_command	*commands, \
 		if (!ar_token[i].quote[0] && (*command_args)[i][0] == '|')
 			num_command++;
 		else if (create_simple_command(\
-				&(commands->simple_commands)[num_command], ar_token, *command_args, i))
+		&(commands->simple_commands)[num_command], ar_token, *command_args, i))
 			return (1);
-		if (!ar_token[i].quote[0] && ((*command_args)[i][0] == '>' || (*command_args)[i][0] == '<'))
+		if (!ar_token[i].quote[0] && ((*command_args)[i][0] == '>' \
+		|| (*command_args)[i][0] == '<'))
 			i++;
 	}
 	commands->number_simple_commands = ++num_command;
@@ -120,7 +120,7 @@ static int	create_and_append_simple_command(t_command	*commands, \
 
 // Guardar datos y comprobar que se guardan correctamente
 static int	create_simple_command(t_simple_command **command_info, \
-								t_token *ar_token, char **command_arg, int index)
+t_token *ar_token, char **command_arg, int index)
 {
 	if (!(*command_info))
 		return (1);
@@ -140,10 +140,8 @@ static int	create_simple_command(t_simple_command **command_info, \
 		if (check_access_infile((*command_info), command_arg[index + 1]))
 			return (1);
 	}
-	else/* if ((*command_info)->arguments)*/
+	else
 		create_argument((*command_info), command_arg[index]);
-	// else
-	// 	(*command_info)->arguments = ft_split(command_arg[index], ' ');
 	return (0);
 }
 
