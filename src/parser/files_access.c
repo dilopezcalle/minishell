@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files_access.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 16:52:00 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 10:32:35 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 11:34:46 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 #include "signals.h"
 #include "libft.h"
 
-static void	dub_stdin_infile(t_simple_command *command, char *join);
+static void	dub_stdin_infile(t_simple_command *command, char *file_name);
 static char	*readline_infile(char *end_word);
 static int	fork_error_infile(void);
 
@@ -60,10 +60,7 @@ int	check_access_infile(t_simple_command *command, char *file_name)
 	if (command->redirection_infile == 2)
 	{
 		command->infile = 0;
-		join = readline_infile(file_name);
-		if (!join)
-			return (1);
-		dub_stdin_infile(command, join);
+		dub_stdin_infile(command, file_name);
 		return (0);
 	}
 	fd = open(file_name, O_RDONLY);
@@ -87,6 +84,7 @@ static char	*readline_infile(char *end_word)
 	char	*join;
 	char	*aux;
 
+	signal(SIGINT, 0);
 	aux = readline("> ");
 	join = 0;
 	while (aux && ft_strncmp(aux, end_word, ft_strlen(end_word) + 1) != 0)
@@ -110,11 +108,14 @@ static char	*readline_infile(char *end_word)
 }
 
 // En el caso de ("<<"), guardar el string estándar en un fd
-static void	dub_stdin_infile(t_simple_command *command, char *join)
+static void	dub_stdin_infile(t_simple_command *command, char *file_name)
 {
 	int		fd_pipe[2];
 	int		pid;
+	char	*join;
 
+	signal(SIGINT, 0);
+	signal(SIGQUIT, 0);
 	if (pipe(fd_pipe) == -1)
 	{
 		perror("minishell: pipe");
@@ -123,6 +124,10 @@ static void	dub_stdin_infile(t_simple_command *command, char *join)
 	pid = fork_error_infile();
 	if (!pid)
 	{
+		//printf("entra\n");
+		join = readline_infile(file_name);
+		if (!join)
+			exit(0);
 		close(fd_pipe[0]);
 		dup2(fd_pipe[1], 1);
 		close(fd_pipe[1]);
@@ -130,7 +135,8 @@ static void	dub_stdin_infile(t_simple_command *command, char *join)
 		free(join);
 		exit(0);
 	}
-	signal(SIGINT, sig_handler);
+	signal(SIGINT, sig_handler_without_input);
+	signal(SIGQUIT, sig_handler_without_input);
 	close(fd_pipe[1]);
 	wait(NULL);
 	command->infile = fd_pipe[0];

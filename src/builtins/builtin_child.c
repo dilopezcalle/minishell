@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 07:57:04 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 18:16:21 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 10:40:43 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	execute_child_builtin(t_simple_command *command, char **envp)
 	else if (ft_strncmp(command->arguments[0], "env", 6) == 0)
 		env_builtin(envp);
 	else if (ft_strncmp(command->arguments[0], "pwd", 4) == 0)
-		pwd_builtin(command);
+		pwd_builtin();
 	else
 		exit (0);
 	envp = 0;

@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 09:21:48 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 17:43:23 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/12 19:42:16 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,15 @@
 #include "libft.h"
 #include "cd.h"
 
-static int	cd_without_argument(t_simple_command *command, char **envp[]);
 static int	export_pwd(char *var, char **envp[]);
+static int	cd_without_argument(char **envp[]);
 
 int	cd_builtin(t_simple_command *command, char **envp[])
 {
 	char	*path;
-	char	*pwd;
 
 	if (!command->arguments[1])
-		return (cd_without_argument(command, envp));
+		return (cd_without_argument(envp));
 	if (command->arguments[1][0] == '-' && command->arguments[1][1] == '\0')
 		path = ft_getenv("OLDPWD", *envp);
 	else
@@ -46,7 +45,7 @@ int	cd_builtin(t_simple_command *command, char **envp[])
 	return (0);
 }
 
-static int	cd_without_argument(t_simple_command *command, char **envp[])
+static int	cd_without_argument(char **envp[])
 {
 	char	*home;
 

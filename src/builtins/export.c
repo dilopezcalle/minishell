@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 17:57:45 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/12 17:39:14 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/12 19:41:27 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,6 @@ static void	export_create(char	*var, char	***envp)
 static char	*export_varname(char	*var)
 {
 	int		i;
-	char	*varname;
 
 	i = 0;
 	while (var[i])
