@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   count_words.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/08 11:46:53 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/13 12:20:30 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:11:43 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	treat_split(int	*i, int	*n_words, char	*s)
 			(*i)++;
 			if (s[*i] == s[(*i) - 1])
 				(*i)++;
-			else if (is_equals(s[*i], " \"'|") == 0 && s[*i] != '\0')
+			if (is_equals(s[*i], " \"'|") == 0 && s[*i] != '\0')
 				add_var(i, n_words);
 		}
 		else if (s[(*i)++] == '|')

@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 09:51:12 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 13:18:03 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:12:22 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,9 +119,7 @@ t_token	*tokens(char *line, char **envp)
 {
 	int		words;
 	t_token	*ar_token;
-	int		i;
 
-	i = 0;
 	words = ft_countwords(line);
 	if (words == -1)
 	{

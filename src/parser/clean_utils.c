@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   clean_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 11:18:45 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/13 12:40:21 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 14:06:54 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_clean	init_clean(char	*token, char	**envp)
 	s_clean.quote = 0;
 	s_clean.index = 0;
 	s_clean.new_token = (char *) ft_calloc((s_clean.size + 1), sizeof(char));
-	s_clean.s_token.quote = (int *) ft_calloc(s_clean.size, sizeof(int));
+	s_clean.s_token.quote = (int *) ft_calloc(s_clean.size + 1, sizeof(int));
 	s_clean.s_token.len = 0;
 	s_clean.start = -1;
 	return (s_clean);

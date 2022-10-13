@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:16:19 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 12:37:33 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:14:37 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static char	**copy_tokens_to_array(t_token **ar_token)
 		i++;
 	}
 	command_args[i] = 0;
-	if (check_syntax_errors(command_args))
+	if (check_syntax_errors(command_args, *ar_token))
 		return (free_double_array((void **)command_args), NULL);
 	return (command_args);
 }
