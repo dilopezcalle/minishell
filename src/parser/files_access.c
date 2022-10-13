@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   files_access.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/12 16:52:00 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 12:41:08 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:48:23 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ static char	*readline_infile(char *end_word)
 	char	*join;
 	char	*aux;
 
-	signal(SIGINT, 0);
 	aux = readline("> ");
 	join = 0;
 	while (aux && ft_strncmp(aux, end_word, ft_strlen(end_word) + 1) != 0)
@@ -113,8 +112,8 @@ static void	dub_stdin_infile(t_simple_command *command, char *file_name)
 	int		pid;
 	char	*join;
 
-	signal(SIGINT, 0);
-	signal(SIGQUIT, 0);
+	signal(SIGINT, sig_handler_heredoc);
+	signal(SIGQUIT, sig_handler);
 	if (pipe(fd_pipe) == -1)
 	{
 		perror("minishell: pipe");
@@ -134,7 +133,7 @@ static void	dub_stdin_infile(t_simple_command *command, char *file_name)
 		exit(0);
 	}
 	signal(SIGINT, sig_handler_without_input);
-	signal(SIGQUIT, sig_handler_without_input);
+	signal(SIGQUIT, sig_handler_heredoc);
 	close(fd_pipe[1]);
 	wait(NULL);
 	command->infile = fd_pipe[0];

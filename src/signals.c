@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 08:49:37 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 14:19:35 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:48:06 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,13 @@ void	sig_handler_without_input(int signum)
 		printf ("Quit: 3\n");
 	else if (signum == SIGINT)
 		printf("\n");
+}
+
+void	sig_handler_heredoc(int signum)
+{
+	if (signum == SIGINT)
+		exit(0);
+	if (signum == SIGQUIT)
+		if (rl_on_new_line() == -1)
+			exit(-1);
 }
