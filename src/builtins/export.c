@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 17:57:45 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/14 18:39:35 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/14 18:59:57 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,25 +18,6 @@
 #include "libft.h"
 #include "utils.h"
 
-void	error_invalid_id(char *c)
-{
-	printf("concha_diminuta: export: `%s': not a valid identifier\n", c);
-	return ;
-}
-
-int	ft_str_isalnum(char	*str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		if (ft_isalnum(str[i++]))
-			return (0);
-	}
-	return (1);
-}
-
 static void	export_create(char	*var, char	***envp)
 {
 	int		i;
@@ -45,13 +26,11 @@ static void	export_create(char	*var, char	***envp)
 
 	i = 0;
 	j = 0;
-	if (ft_isdigit(var[0]))
+	if (ft_isdigit(var[0]) || !ft_str_isalnum(var))
 		return (error_invalid_id(var));
 	new_envp = (char **) malloc((ft_arraylen(*envp) + 2) * sizeof(char *));
 	while ((*envp)[i])
 	{
-		if (!ft_str_isalnum((*envp)[i]))
-			return (error_invalid_id(var));
 		new_envp[j++] = ft_strdup((*envp)[i]);
 		i++;
 	}
@@ -100,11 +79,10 @@ static int	check_replace(char	*var, char	***envp)
 	return (0);
 }
 
-int	export_builtin1(char *var, char ***envp) //Casos error: $=hola error, hola=$USER funciona, a_a=hola funciona
+int	export_builtin1(char *var, char ***envp)
 {
 	int		exists;
 
-	g_exit_status = 0;
 	if (var[0] == '=')
 	{
 		g_exit_status = 1;
@@ -123,7 +101,12 @@ int	export_builtin(char	**commands, char	***envp)
 
 	i = 1;
 	if (!commands[1])
-		return (export_print(*envp));
+	{
+		i = 0;
+		while ((*envp)[i])
+			printf("declare -x %s\n", (*envp)[i++]);
+		return (0);
+	}
 	while (commands[i])
 	{
 		export_builtin1(commands[i++], envp);

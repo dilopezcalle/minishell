@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 14:38:24 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/14 18:27:20 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/14 19:01:33 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	executor(t_command *commands, char **envp[])
 		g_exit_status = 130;
 	if (g_exit_status == 3)
 		g_exit_status = 131;
-	
 }
 
 static int	create_and_execute_child(t_command *commands, int fd[2], \
