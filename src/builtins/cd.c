@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/25 09:21:48 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 12:31:06 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/14 13:44:45 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	export_pwd(char *var, char **envp[])
 	path = ft_strjoin(var, pwd);
 	if (!path)
 		return (1);
-	if (export_builtin(path, envp))
+	if (export_builtin1(path, envp))
 		return (free(pwd), free(path), 1);
 	return (free(pwd), free(path), 0);
 }
