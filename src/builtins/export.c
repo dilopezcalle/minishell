@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 17:57:45 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/14 19:05:37 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/14 19:23:41 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*export_varname(char	*var)
 	while (var[i])
 	{
 		if (var[i] == '=')
-			return (ft_substr(var, 0, i + 1));
+			return (ft_substr(var, 0, i));
 		i++;
 	}
 	return (NULL);
@@ -60,9 +60,8 @@ static int	check_replace(char	*var, char	***envp)
 	char	*var_name;
 
 	i = 0;
-	if (export_varname(var) != NULL)
-		var_name = export_varname(var);
-	else
+	var_name = export_varname(var);
+	if (var == NULL)
 		var_name = ft_strdup(var);
 	while ((*envp)[i])
 	{
@@ -75,7 +74,8 @@ static int	check_replace(char	*var, char	***envp)
 		}
 		i++;
 	}
-	free(var_name);
+	if (var_name)
+		free(var_name);
 	return (0);
 }
 
@@ -100,6 +100,7 @@ int	export_builtin(char	**commands, char	***envp)
 	int	i;
 
 	i = 1;
+	g_exit_status = 0;
 	if (!commands[1])
 	{
 		i = 0;
