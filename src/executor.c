@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 14:38:24 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/14 13:42:59 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/14 14:03:38 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,14 +52,14 @@ void	executor(t_command *commands, char **envp[])
 		create_and_execute_child(commands, fd, *envp, i);
 		i++;
 	}
-	g_exit_status = 0;
+	if (g_exit_status == 1)
+		g_exit_status = 0;
 }
 
 static int	create_and_execute_child(t_command *commands, int fd[2], \
 										char *envp[], int i)
 {
 	int	pid;
-	int	r;
 
 	pid = fork();
 	if (pid == -1)
@@ -77,10 +77,7 @@ static int	create_and_execute_child(t_command *commands, int fd[2], \
 	signal(SIGINT, sig_handler_without_input);
 	signal(SIGQUIT, sig_handler_without_input);
 	close(fd[1]);
-	if (waitpid(pid, &r, 0) == -1)
-		printf("Error execve\n");
-	//printf("fe %d\n", WIFEXITED(r));
-	//printf("ex %d\n", WIFEXITED(r));
+	waitpid(pid, &g_exit_status, 0);
 	if (i + 1 >= commands->number_simple_commands)
 		return (close(fd[0]), 0);
 	if (((commands->simple_commands)[i + 1])->infile == 0)
