@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/06 10:11:18 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 17:00:47 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/14 12:57:27 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ int	access_parser(t_command *commands, char *envp[])
 			return (free_double_array((void **)paths), 1);
 		command_path = ft_get_commands_path((command->arguments)[0], paths);
 		if (!command_path && !is_command_builtin((command->arguments)[0]))
-			return (command_notfound(paths, command));
+			printf("minishell: %s: command not found\n", \
+				(command->arguments)[0]);
 		g_exit_status = 0;
 		command->path = command_path;
 		i++;
@@ -72,13 +73,6 @@ static char	**ft_get_paths(char *envp[])
 		return (NULL);
 }
 
-char	*free_return(char	*command, char	*temp, char	*command_path)
-{
-	free(temp);
-	free(command_path);
-	return (ft_strdup(command));
-}
-
 static char	*ft_get_commands_path(char *command, char **paths)
 {
 	char	*command_path;
@@ -86,6 +80,8 @@ static char	*ft_get_commands_path(char *command, char **paths)
 	char	*temp;
 	int		i;
 
+	if (access(command, F_OK) == 0)
+			return (ft_strdup(command));
 	if (is_command_builtin(command) || command[0] == '\0' || paths == NULL)
 		return (0);
 	i = -1;
@@ -94,9 +90,7 @@ static char	*ft_get_commands_path(char *command, char **paths)
 	{
 		command_path = ft_strjoin("/", command);
 		temp = ft_strjoin(paths[i], command_path);
-		if (access(command, F_OK) == 0)
-			return (free_return(command, temp, command_path));
-		else if (access(temp, F_OK) == 0)
+		if (access(temp, F_OK) == 0)
 			path = temp;
 		else
 		{
