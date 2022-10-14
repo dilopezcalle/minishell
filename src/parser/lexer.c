@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 09:34:54 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 17:01:24 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:39:37 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,20 @@
 
 t_token	*lexer(char *command_line, char	**envp)
 {
+	char	*command_line_clean;
 	t_token	*ar_token;
-	int		i;
 
-	i = 0;
-	ar_token = tokens(command_line, envp);
+	command_line_clean = ft_strtrim(command_line, " ");
+	ar_token = 0;
+	ar_token = tokens(command_line_clean, envp);
 	if (!ar_token)
 		ar_token = (t_token *)ft_calloc(1, sizeof(t_token));
-	else if (ar_token->str && ar_token->str[0] == '\0')
+	if (ar_token->str && ar_token->str[0] == '\0')
 	{
 		free(ar_token->str);
 		ar_token->str = NULL;
 	}
+	free(command_line_clean);
 	free(command_line);
 	return (ar_token);
 }

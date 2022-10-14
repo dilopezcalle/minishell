@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/18 08:16:19 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 17:00:08 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:04:47 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_command	*parser(char *command_line, char **envp)
 
 	ar_token = lexer(command_line, envp);
 	if (!ar_token->str)
-		return (0);
+		return (free(ar_token), NULL);
 	command_args = copy_tokens_to_array(&ar_token);
 	if (!command_args)
 		return (free_ar_token(&ar_token), NULL);
