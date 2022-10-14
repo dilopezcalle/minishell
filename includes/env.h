@@ -3,15 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   env.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 10:15:53 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/12 18:15:09 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/14 10:15:01 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENV_H
 # define ENV_H
+
+# include "libft.h"
 
 void	env_builtin(char **envp);
 

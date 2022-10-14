@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 17:36:08 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/12 17:39:54 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/14 12:46:11 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ int	unset_builtin(char *var, char ***envp)
 	var2 = ft_strjoin(var, "=");
 	while ((*envp)[i])
 	{
-		if (ft_strncmp((*envp)[i], var2, ft_strlen(var2)) != 0)
+		if ((ft_strncmp((*envp)[i], var2, ft_strlen(var2)) != 0) && \
+				(ft_strncmp((*envp)[i], var, ft_strlen(var)) != 0))
 			new_envp[j++] = ft_strdup((*envp)[i]);
 		i++;
 	}
