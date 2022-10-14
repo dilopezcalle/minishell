@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
+/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 17:57:45 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/14 13:42:38 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/14 18:02:20 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,16 +17,6 @@
 #include "unset.h"
 #include "libft.h"
 #include "utils.h"
-
-static int	export_print(char	**envp)
-{
-	int	i;
-
-	i = 0;
-	while (envp[i])
-		printf("declare -x %s\n", envp[i++]);
-	return (0);
-}
 
 static void	export_create(char	*var, char	***envp)
 {
@@ -110,10 +100,13 @@ int	export_builtin(char	**commands, char	***envp)
 
 	i = 1;
 	if (!commands[1])
-		return (export_print(*envp));
-	while (commands[i])
 	{
-		export_builtin1(commands[i++], envp);
+		i = 0;
+		while ((*envp)[i])
+			printf("declare -x %s\n", (*envp)[i++]);
+		return (0);
 	}
+	while (commands[i])
+		export_builtin1(commands[i++], envp);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/29 08:49:37 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 17:02:23 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:47:16 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,14 @@ void	sig_handler(int signum)
 void	sig_handler_without_input(int signum)
 {
 	if (signum == SIGQUIT)
+	{
 		printf ("Quit: 3\n");
+	}
 	else if (signum == SIGINT)
+	{
+		g_exit_status = 130;
 		printf("\n");
+	}
 }
 
 void	sig_handler_heredoc(int signum)

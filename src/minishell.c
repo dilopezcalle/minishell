@@ -6,7 +6,7 @@
 /*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/15 08:33:15 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/13 17:02:14 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/14 17:53:19 by dilopez-         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ static int	check_and_execute_line(char *line, char **envp[])
 		return (0);
 	if (!access_parser(commands, *envp))
 	{
-		g_exit_status = 0;
+		if (g_exit_status != 127)
+			g_exit_status = 1;
 		executor(commands, envp);
 		if (commands->number_simple_commands == 1 && \
 	ft_strncmp(commands->simple_commands[0]->arguments[0], "exit", 5) == 0 \
@@ -71,7 +72,7 @@ static char	*get_line(void)
 {
 	char	*line;
 
-	if (g_exit_status)
+	if (g_exit_status > 0)
 		line = readline("\001\033[0;31m\002concha_diminuta \001\u27A4 \001\033[0m\002");
 	else
 		line = readline("\001\033[0;33m\002concha_diminuta \001\u27A4 \001\033[0m\002");
