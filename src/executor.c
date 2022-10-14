@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   executor.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dilopez- <dilopez-@student.42.fr>          +#+  +:+       +#+        */
+/*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/07 14:38:24 by dilopez-          #+#    #+#             */
-/*   Updated: 2022/10/14 13:28:23 by dilopez-         ###   ########.fr       */
+/*   Updated: 2022/10/14 13:42:59 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ static int	create_and_execute_child(t_command *commands, int fd[2], \
 	close(fd[1]);
 	if (waitpid(pid, &r, 0) == -1)
 		printf("Error execve\n");
-	printf("fe %d\n", WIFEXITED(r));
-	printf("ex %d\n", WIFEXITED(r));
+	//printf("fe %d\n", WIFEXITED(r));
+	//printf("ex %d\n", WIFEXITED(r));
 	if (i + 1 >= commands->number_simple_commands)
 		return (close(fd[0]), 0);
 	if (((commands->simple_commands)[i + 1])->infile == 0)

@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 17:36:08 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/14 12:46:11 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/14 13:24:45 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ int	ft_arraylen(char **envp)
 	return (i);
 }
 
-int	unset_builtin(char *var, char ***envp)
+int	unset_builtin2(char *var, char ***envp)
 {
 	int		i;
 	int		j;
@@ -43,7 +43,7 @@ int	unset_builtin(char *var, char ***envp)
 	while ((*envp)[i])
 	{
 		if ((ft_strncmp((*envp)[i], var2, ft_strlen(var2)) != 0) && \
-				(ft_strncmp((*envp)[i], var, ft_strlen(var)) != 0))
+				(ft_strncmp((*envp)[i], var, ft_strlen(var) + 1) != 0))
 			new_envp[j++] = ft_strdup((*envp)[i]);
 		i++;
 	}
@@ -51,5 +51,17 @@ int	unset_builtin(char *var, char ***envp)
 	free_double_array((void **)*envp);
 	*envp = new_envp;
 	free(var2);
+	return (0);
+}
+
+int	unset_builtin(char	**var, char	***envp)
+{
+	int	i;
+
+	i = 1;
+	while (var[i])
+	{
+		unset_builtin2(var[i++], envp);
+	}
 	return (0);
 }

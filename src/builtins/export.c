@@ -6,7 +6,7 @@
 /*   By: almirand <almirand@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/03 17:57:45 by almirand          #+#    #+#             */
-/*   Updated: 2022/10/14 10:36:37 by almirand         ###   ########.fr       */
+/*   Updated: 2022/10/14 13:42:38 by almirand         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,10 @@ static int	check_replace(char	*var, char	***envp)
 	char	*var_name;
 
 	i = 0;
-	var_name = export_varname(var);
+	if (export_varname(var) != NULL)
+		var_name = export_varname(var);
+	else
+		var_name = ft_strdup(var);
 	while ((*envp)[i])
 	{
 		if (ft_strncmp((*envp)[i], var_name, ft_strlen(var_name)) == 0)
@@ -84,13 +87,11 @@ static int	check_replace(char	*var, char	***envp)
 	return (0);
 }
 
-int	export_builtin(char *var, char ***envp)
+int	export_builtin1(char *var, char ***envp)
 {
 	int		exists;
 
 	g_exit_status = 0;
-	if (!var)
-		return (export_print(*envp));
 	if (var[0] == '=')
 	{
 		g_exit_status = 1;
@@ -100,5 +101,19 @@ int	export_builtin(char *var, char ***envp)
 	exists = check_replace(var, envp);
 	if (exists == 0)
 		export_create(var, envp);
+	return (0);
+}
+
+int	export_builtin(char	**commands, char	***envp)
+{
+	int	i;
+
+	i = 1;
+	if (!commands[1])
+		return (export_print(*envp));
+	while (commands[i])
+	{
+		export_builtin1(commands[i++], envp);
+	}
 	return (0);
 }
